@@ -3,4 +3,10 @@ project(myfirstopengl)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(myfirstopengl main.cpp)
+file(GLOB_RECURSE "SOURCES" "main.cpp" "src/*.cpp")
+
+include_directories(include/glfw/include)
+add_subdirectory(include/glfw)
+
+add_executable(${PROJECT_NAME} ${SOURCES})
+target_link_libraries(${PROJECT_NAME} glfw ${GLFW_LIBRARIES})
