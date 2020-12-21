@@ -4,6 +4,12 @@
 #include "src/RuntimeException.h"
 #include "src/ShaderInitializationException.h"
 
+typedef unsigned int vertexBuffer;
+typedef unsigned int vertexArray;
+typedef unsigned int vertexShader;
+typedef unsigned int fragmentShader;
+typedef unsigned int shaderProgram;
+
 // settings
 const unsigned int SCREEN_WIDTH = 800;
 const unsigned int SCREEN_HEIGHT = 600;
@@ -37,7 +43,7 @@ void initializeGlfwWindow() {
  * @return pointer to the created window object
  */
 GLFWwindow *createGlfwWindow() {
-    GLFWwindow *window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "LearnOpenGL", nullptr, nullptr);
     if (window == nullptr) {
         glfwTerminate();
         throw RuntimeException("Failed to create GLFW window");
@@ -76,11 +82,16 @@ const float vertices[] = {
         0.0f, 0.5f, 0.0f
 };
 
-void draw(unsigned int vertexBuffer, unsigned int shaderProgram, unsigned int vertexArray) {
+void render() {
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void draw(vertexBuffer vertexBuffer, shaderProgram shaderProgram, vertexArray vertexArray) {
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) nullptr);
     glEnableVertexAttribArray(0);
 
     glUseProgram(shaderProgram);
@@ -90,7 +101,12 @@ void draw(unsigned int vertexBuffer, unsigned int shaderProgram, unsigned int ve
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-unsigned int initializeVertexArray(unsigned int vertexBuffer) {
+/**
+ * Create and bind vertex array
+ * @param vertexBuffer
+ * @return
+ */
+vertexArray initializeVertexArray(unsigned int vertexBuffer) {
     unsigned int vertexArrayObject;
     glGenVertexArrays(1, &vertexArrayObject);
 
@@ -99,7 +115,7 @@ unsigned int initializeVertexArray(unsigned int vertexBuffer) {
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) nullptr);
     glEnableVertexAttribArray(0);
 
     return vertexArrayObject;
@@ -111,12 +127,14 @@ unsigned int initializeVertexArray(unsigned int vertexBuffer) {
  */
 void runEngine(
         GLFWwindow *window,
-        unsigned int vertexBuffer,
-        unsigned int shaderProgram,
-        unsigned int vertexArray
+        vertexBuffer vertexBuffer,
+        shaderProgram shaderProgram,
+        vertexArray vertexArray
 ) {
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
+
+        render();
 
         draw(vertexBuffer, shaderProgram, vertexArray);
 
@@ -127,14 +145,14 @@ void runEngine(
     glfwTerminate();
 }
 
-unsigned int initializeVertexBuffer() {
+vertexBuffer initializeVertexBuffer() {
     unsigned int vertexBufferObject;
     glGenBuffers(1, &vertexBufferObject);
 
     return vertexBufferObject;
 }
 
-unsigned int initializeVertexShader() {
+vertexShader initializeVertexShader() {
     unsigned int vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -145,7 +163,7 @@ unsigned int initializeVertexShader() {
                                      "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
                                      "}\0";
 
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
     glCompileShader(vertexShader);
 
     int success;
@@ -153,14 +171,14 @@ unsigned int initializeVertexShader() {
 
     char infoLog[512];
     if (!success) {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
         throw ShaderInitializationException("ERROR::SHADER::VERTEX::COMPILATION_FAILED", infoLog);
     }
 
     return vertexShader;
 }
 
-unsigned int initializeFragmentShader() {
+fragmentShader initializeFragmentShader() {
     const char *fragmentShaderSource = "#version 330 core\n"
                                        "out vec4 FragColor;\n"
                                        "\n"
@@ -171,7 +189,7 @@ unsigned int initializeFragmentShader() {
 
     unsigned int fragmentShader;
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
     glCompileShader(fragmentShader);
 
     int success;
@@ -179,18 +197,18 @@ unsigned int initializeFragmentShader() {
 
     char infoLog[512];
     if (!success) {
-        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+        glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
         throw ShaderInitializationException("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED", infoLog);
     }
 
     return fragmentShader;
 }
 
-unsigned int initializeShaderProgram() {
-    unsigned int vertexShader = initializeVertexShader();
-    unsigned int fragmentShader = initializeFragmentShader();
+shaderProgram initializeShaderProgram() {
+    vertexShader vertexShader = initializeVertexShader();
+    fragmentShader fragmentShader = initializeFragmentShader();
 
-    unsigned int shaderProgram;
+    shaderProgram shaderProgram;
     shaderProgram = glCreateProgram();
 
     glAttachShader(shaderProgram, vertexShader);
@@ -205,7 +223,7 @@ unsigned int initializeShaderProgram() {
 
     char infoLog[512];
     if (!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+        glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
         throw ShaderInitializationException("ERROR::SHADER::PROGRAM::LINKING_FAILED", infoLog);
     }
 
@@ -222,10 +240,9 @@ int main() {
 
         initializeViewport(window);
 
-        unsigned int vertexBuffer = initializeVertexBuffer();
-        unsigned int shaderProgram = initializeShaderProgram();
-        unsigned int vertexArray = initializeVertexArray(vertexBuffer);
-
+        vertexBuffer vertexBuffer = initializeVertexBuffer();
+        shaderProgram shaderProgram = initializeShaderProgram();
+        vertexArray vertexArray = initializeVertexArray(vertexBuffer);
 
         runEngine(window, vertexBuffer, shaderProgram, vertexArray);
     }
