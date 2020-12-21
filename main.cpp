@@ -1,5 +1,5 @@
 #include <iostream>
-#include "src/OpenGl.h"
+#include "gl_lib/src/OpenGl.h"
 
 
 // settings

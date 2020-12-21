@@ -1,6 +1,9 @@
-[submodule "include/glfw"]
-	path = include/glfw
+[submodule "gl_lib/lib/glfw"]
+	path = gl_lib/lib/glfw
 	url = https://github.com/glfw/glfw.git
-[submodule "include/glad"]
-	path = include/glad
+[submodule "gl_lib/lib/glad"]
+	path = gl_lib/lib/glad
 	url = https://github.com/Dav1dde/glad.git
+[submodule "gl_test/lib/googletest"]
+	path = gl_test/lib/googletest
+	url = https://github.com/google/googletest.git
