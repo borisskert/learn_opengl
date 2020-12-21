@@ -79,13 +79,21 @@ void processInput(GLFWwindow *window) {
 
 float vertices[] = {
         0.5f, 0.5f, 0.0f,  // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
+        0.5f, 0.0f, 0.0f,  // bottom right
+        0.0f, 0.0f, 0.0f,  // bottom left
+        0.0f, 0.5f, 0.0f,   // top left
+
+        0.0f, 0.0f, 0.0f,  // top right
+        0.0f, -0.5f, 0.0f,  // bottom right
         -0.5f, -0.5f, 0.0f,  // bottom left
-        -0.5f, 0.5f, 0.0f   // top left
+        -0.5f, 0.0f, 0.0f   // top left
 };
 unsigned int indices[] = {
         0, 1, 3,   // first triangle
-        1, 2, 3    // second triangle
+        1, 2, 3,    // second triangle
+
+        4, 5, 7,   // first triangle
+        5, 6, 7    // second triangle
 };
 
 elementBuffer initializeElementBuffer() {
@@ -120,7 +128,7 @@ void draw(
     glBindVertexArray(vertexArray);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr);
 }
 
 /**
