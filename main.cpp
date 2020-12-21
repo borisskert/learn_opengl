@@ -8,6 +8,7 @@ typedef unsigned int vertexBuffer;
 typedef unsigned int vertexArray;
 typedef unsigned int vertexShader;
 typedef unsigned int fragmentShader;
+typedef unsigned int elementBuffer;
 typedef unsigned int shaderProgram;
 
 // settings
@@ -76,18 +77,38 @@ void processInput(GLFWwindow *window) {
         glfwSetWindowShouldClose(window, true);
 }
 
-const float vertices[] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
+float vertices[] = {
+        0.5f, 0.5f, 0.0f,  // top right
+        0.5f, -0.5f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f,  // bottom left
+        -0.5f, 0.5f, 0.0f   // top left
 };
+unsigned int indices[] = {
+        0, 1, 3,   // first triangle
+        1, 2, 3    // second triangle
+};
+
+elementBuffer initializeElementBuffer() {
+    unsigned int elementBufferObject;
+    glGenBuffers(1, &elementBufferObject);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    return elementBufferObject;
+}
 
 void render() {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void draw(vertexBuffer vertexBuffer, shaderProgram shaderProgram, vertexArray vertexArray) {
+void draw(
+        vertexBuffer vertexBuffer,
+        shaderProgram shaderProgram,
+        vertexArray vertexArray,
+        elementBuffer elementBuffer
+) {
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
@@ -98,7 +119,8 @@ void draw(vertexBuffer vertexBuffer, shaderProgram shaderProgram, vertexArray ve
 
     glBindVertexArray(vertexArray);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
 
 /**
@@ -129,14 +151,15 @@ void runEngine(
         GLFWwindow *window,
         vertexBuffer vertexBuffer,
         shaderProgram shaderProgram,
-        vertexArray vertexArray
+        vertexArray vertexArray,
+        elementBuffer elementBuffer
 ) {
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
 
         render();
 
-        draw(vertexBuffer, shaderProgram, vertexArray);
+        draw(vertexBuffer, shaderProgram, vertexArray, elementBuffer);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -243,8 +266,9 @@ int main() {
         vertexBuffer vertexBuffer = initializeVertexBuffer();
         shaderProgram shaderProgram = initializeShaderProgram();
         vertexArray vertexArray = initializeVertexArray(vertexBuffer);
+        elementBuffer elementBuffer = initializeElementBuffer();
 
-        runEngine(window, vertexBuffer, shaderProgram, vertexArray);
+        runEngine(window, vertexBuffer, shaderProgram, vertexArray, elementBuffer);
     }
     catch (const ShaderInitializationException &exception) {
         std::cout << exception.getMessage() << exception.getInfoLog() << std::endl;
