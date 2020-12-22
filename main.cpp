@@ -10,7 +10,7 @@ const unsigned int SCREEN_HEIGHT = 600;
 
 
 int main() {
-    std::vector<ElementBufferObject> models;
+    std::vector<Drawable*> models;
 
     Rectangle rectangleOne = Rectangle(
             glm::vec3(0.5f, 0.5f, 0.0f),  // top right
@@ -19,7 +19,7 @@ int main() {
             glm::vec3(0.0f, 0.5f, 0.0f)  // top left
     );
 
-    models.push_back(rectangleOne.toElementBufferObject());
+    models.push_back(&rectangleOne);
 
     Rectangle rectangleTwo = Rectangle(
             glm::vec3(0.0f, 0.0f, 0.0f),  // top right
@@ -28,7 +28,7 @@ int main() {
             glm::vec3(-0.5f, 0.0f, 0.0f)   // top left)
     );
 
-    models.push_back(rectangleTwo.toElementBufferObject());
+    models.push_back(&rectangleTwo);
 
     Triangle triangleOne = Triangle(
             glm::vec3(0.5f, -0.5f, 0.0f),
@@ -36,7 +36,7 @@ int main() {
             glm::vec3(0.5f, 0.0f, 0.0f)
     );
 
-    models.push_back(triangleOne.toElementBufferObject());
+    models.push_back(&triangleOne);
 
     Triangle triangleTwo = Triangle(
             glm::vec3(-0.5f, 0.5f, 0.0f),
@@ -44,7 +44,7 @@ int main() {
             glm::vec3(-0.5f, 0.0f, 0.0f)
     );
 
-    models.push_back(triangleTwo.toElementBufferObject());
+    models.push_back(&triangleTwo);
 
     try {
         mygl::OpenGl openGl(SCREEN_WIDTH, SCREEN_HEIGHT, models);

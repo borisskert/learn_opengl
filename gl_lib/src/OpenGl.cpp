@@ -7,7 +7,7 @@ using namespace mygl;
 OpenGl::OpenGl(
         unsigned int screenWidthInPixels,
         unsigned int screenHeightInPixels,
-        std::vector<ElementBufferObject> models
+        std::vector<Drawable *> models
 )
         : screenHeight(screenHeightInPixels),
           screenWidth(screenWidthInPixels),
@@ -61,57 +61,9 @@ void OpenGl::processInput(GLFWwindow *window) {
 }
 
 
-elementBuffer OpenGl::initializeElementBuffer(const ElementBufferObject &ebo) {
-    unsigned int elementBuffer;
-    glGenBuffers(1, &elementBuffer);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, ebo.indicesCount() * sizeof(unsigned int), ebo.getIndices(), GL_STATIC_DRAW);
-
-    return elementBuffer;
-}
-
-
 void OpenGl::render() {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-}
-
-
-void OpenGl::draw(
-        vertexArray vertexArray,
-        const ElementBufferObject &ebo
-) {
-    glBindVertexArray(vertexArray);
-    glDrawElements(GL_TRIANGLES, ebo.indicesCount(), GL_UNSIGNED_INT, nullptr);
-}
-
-
-vertexArray OpenGl::initializeVertexArray(vertexBuffer vertexBuffer, const ElementBufferObject &ebo) {
-    unsigned int vertexArrayObject;
-    glGenVertexArrays(1, &vertexArrayObject);
-
-    glBindVertexArray(vertexArrayObject);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, ebo.verticesCount() * sizeof(float), ebo.getVertices(), GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
-    glEnableVertexAttribArray(0);
-
-    return vertexArrayObject;
-}
-
-
-DrawableElement OpenGl::toDrawable(const ElementBufferObject &ebo) {
-    DrawableElement drawable;
-
-    drawable.ebo = ebo;
-    drawable.vb = initializeVertexBuffer();
-    drawable.va = initializeVertexArray(drawable.vb, ebo);
-    drawable.eb = initializeElementBuffer(ebo);
-
-    return drawable;
 }
 
 
@@ -120,10 +72,8 @@ void OpenGl::runEngine(
 ) {
     shaderProgram shaderProgram = initializeShaderProgram();
 
-    std::vector<DrawableElement> drawableElements;
-    for (const ElementBufferObject &ebo : models) {
-        DrawableElement drawable = toDrawable(ebo);
-        drawableElements.push_back(drawable);
+    for (Drawable *drawable : models) {
+        drawable->initialize();
     }
 
     while (!glfwWindowShouldClose(window)) {
@@ -135,8 +85,8 @@ void OpenGl::runEngine(
 
         glUseProgram(shaderProgram);
 
-        for (const DrawableElement &drawableElement : drawableElements) {
-            draw(drawableElement.va, drawableElement.ebo);
+        for (Drawable *drawable : models) {
+            drawable->draw();
         }
 
         glfwSwapBuffers(window);

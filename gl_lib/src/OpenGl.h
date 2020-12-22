@@ -3,24 +3,11 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <vector>
 #include "RuntimeException.h"
 #include "ShaderInitializationException.h"
-#include "VertexModels.h"
-
-typedef unsigned int vertexBuffer;
-typedef unsigned int vertexArray;
-typedef unsigned int vertexShader;
-typedef unsigned int fragmentShader;
-typedef unsigned int elementBuffer;
-typedef unsigned int shaderProgram;
-
-
-struct DrawableElement {
-    vertexBuffer vb;
-    vertexArray va;
-    elementBuffer eb;
-    ElementBufferObject ebo;
-};
+#include "Typedefs.h"
+#include "Drawable.h"
 
 
 namespace mygl {
@@ -29,13 +16,13 @@ namespace mygl {
     private:
         unsigned int screenWidth;
         unsigned int screenHeight;
-        std::vector<ElementBufferObject> models;
+        std::vector<Drawable *> models;
 
     public:
         explicit OpenGl(
                 unsigned int screenWidthInPixels,
                 unsigned int screenHeightInPixels,
-                std::vector<ElementBufferObject> models
+                std::vector<Drawable *> models
         );
 
         /**
@@ -70,21 +57,7 @@ namespace mygl {
          */
         void processInput(GLFWwindow *window);
 
-        elementBuffer initializeElementBuffer(const ElementBufferObject &);
-
         void render();
-
-        void draw(
-                vertexArray,
-                const ElementBufferObject &
-        );
-
-        /**
-         * Create and bind vertex array
-         * @param vertexBuffer
-         * @return
-         */
-        vertexArray initializeVertexArray(vertexBuffer, const ElementBufferObject &);
 
         /**
          * render loop
@@ -103,8 +76,6 @@ namespace mygl {
         shaderProgram initializeShaderProgram();
 
         void start();
-
-        DrawableElement toDrawable(const ElementBufferObject &);
 
         void updateGlobalColorOverTime(shaderProgram shaderProgram) const;
     };
