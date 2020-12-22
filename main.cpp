@@ -2,6 +2,7 @@
 #include "gl_lib/src/OpenGl.h"
 #include "gl_lib/src/Rectangle.h"
 #include "gl_lib/src/Triangle.h"
+#include "gl_lib/src/ColorfulTriangle.h"
 
 
 // settings
@@ -38,10 +39,13 @@ int main() {
 
     models.push_back(&triangleOne);
 
-    Triangle triangleTwo = Triangle(
+    ColorfulTriangle triangleTwo = ColorfulTriangle(
             glm::vec3(-0.5f, 0.5f, 0.0f),
             glm::vec3(0.0f, 0.5f, 0.0f),
-            glm::vec3(-0.5f, 0.0f, 0.0f)
+            glm::vec3(-0.5f, 0.0f, 0.0f),
+            glm::vec3(1.0f, 0.0f, 0.0f),
+            glm::vec3(0.0f, 1.0f, 0.0f),
+            glm::vec3(0.0f, 0.0f, 1.0f)
     );
 
     models.push_back(&triangleTwo);
