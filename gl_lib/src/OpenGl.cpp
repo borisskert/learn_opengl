@@ -6,11 +6,11 @@ using namespace mygl;
 OpenGl::OpenGl(
         unsigned int screenWidthInPixels,
         unsigned int screenHeightInPixels,
-        VertexModels models
+        std::vector<ElementBufferObject> models
 )
         : screenHeight(screenHeightInPixels),
           screenWidth(screenWidthInPixels),
-          vertexModels(models) {}
+          models(std::move(models)) {}
 
 void OpenGl::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -60,16 +60,14 @@ void OpenGl::processInput(GLFWwindow *window) {
 }
 
 
-elementBuffer OpenGl::initializeElementBuffer() {
-    unsigned int elementBufferObject;
-    glGenBuffers(1, &elementBufferObject);
+elementBuffer OpenGl::initializeElementBuffer(const ElementBufferObject &ebo) {
+    unsigned int elementBuffer;
+    glGenBuffers(1, &elementBuffer);
 
-    ElementBufferObject eob = vertexModels.toElementBufferObject();
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, ebo.indicesCount() * sizeof(unsigned int), ebo.getIndices(), GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, eob.indicesCount() * sizeof(unsigned int), eob.getIndices(), GL_STATIC_DRAW);
-
-    return elementBufferObject;
+    return elementBuffer;
 }
 
 
@@ -80,59 +78,63 @@ void OpenGl::render() {
 
 
 void OpenGl::draw(
-        vertexBuffer vertexBuffer,
-        shaderProgram shaderProgram,
         vertexArray vertexArray,
-        elementBuffer elementBuffer
+        const ElementBufferObject &ebo
 ) {
-    ElementBufferObject eob = vertexModels.toElementBufferObject();
-
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, eob.verticesCount() * sizeof(float), eob.getVertices(), GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) nullptr);
-    glEnableVertexAttribArray(0);
-
-    glUseProgram(shaderProgram);
-
     glBindVertexArray(vertexArray);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
-    glDrawElements(GL_TRIANGLES, eob.indicesCount(), GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, ebo.indicesCount(), GL_UNSIGNED_INT, nullptr);
 }
 
 
-vertexArray OpenGl::initializeVertexArray(unsigned int vertexBuffer) {
+vertexArray OpenGl::initializeVertexArray(vertexBuffer vertexBuffer, const ElementBufferObject &ebo) {
     unsigned int vertexArrayObject;
     glGenVertexArrays(1, &vertexArrayObject);
 
     glBindVertexArray(vertexArrayObject);
 
-    ElementBufferObject eob = vertexModels.toElementBufferObject();
-
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, eob.verticesCount() * sizeof(float), eob.getVertices(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, ebo.verticesCount() * sizeof(float), ebo.getVertices(), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) nullptr);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
     glEnableVertexAttribArray(0);
 
     return vertexArrayObject;
 }
 
 
+DrawableElement OpenGl::toDrawable(const ElementBufferObject &ebo) {
+    DrawableElement drawable;
+
+    drawable.ebo = ebo;
+    drawable.vb = initializeVertexBuffer();
+    drawable.va = initializeVertexArray(drawable.vb, ebo);
+    drawable.eb = initializeElementBuffer(ebo);
+
+    return drawable;
+}
+
+
 void OpenGl::runEngine(
-        GLFWwindow *window,
-        vertexBuffer vertexBuffer,
-        shaderProgram shaderProgram,
-        vertexArray vertexArray,
-        elementBuffer elementBuffer
+        GLFWwindow *window
 ) {
+    shaderProgram shaderProgram = initializeShaderProgram();
+
+    std::vector<DrawableElement> drawableElements;
+    for (const ElementBufferObject &ebo : models) {
+        DrawableElement drawable = toDrawable(ebo);
+        drawableElements.push_back(drawable);
+    }
+
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
 
         render();
 
-        draw(vertexBuffer, shaderProgram, vertexArray, elementBuffer);
+        glUseProgram(shaderProgram);
+
+        for (const DrawableElement &drawableElement : drawableElements) {
+            draw(drawableElement.va, drawableElement.ebo);
+        }
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -240,10 +242,5 @@ void OpenGl::start() {
 
     initializeViewport(window);
 
-    vertexBuffer vertexBuffer = initializeVertexBuffer();
-    shaderProgram shaderProgram = initializeShaderProgram();
-    vertexArray vertexArray = initializeVertexArray(vertexBuffer);
-    elementBuffer elementBuffer = initializeElementBuffer();
-
-    runEngine(window, vertexBuffer, shaderProgram, vertexArray, elementBuffer);
+    runEngine(window);
 }

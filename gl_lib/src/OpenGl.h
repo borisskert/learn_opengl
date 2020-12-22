@@ -14,19 +14,28 @@ typedef unsigned int fragmentShader;
 typedef unsigned int elementBuffer;
 typedef unsigned int shaderProgram;
 
+
+struct DrawableElement {
+    vertexBuffer vb;
+    vertexArray va;
+    elementBuffer eb;
+    ElementBufferObject ebo;
+};
+
+
 namespace mygl {
 
     class OpenGl {
     private:
         unsigned int screenWidth;
         unsigned int screenHeight;
-        VertexModels vertexModels;
+        std::vector<ElementBufferObject> models;
 
     public:
         explicit OpenGl(
                 unsigned int screenWidthInPixels,
                 unsigned int screenHeightInPixels,
-                VertexModels models
+                std::vector<ElementBufferObject> models
         );
 
         /**
@@ -61,15 +70,13 @@ namespace mygl {
          */
         void processInput(GLFWwindow *window);
 
-        elementBuffer initializeElementBuffer();
+        elementBuffer initializeElementBuffer(const ElementBufferObject &);
 
         void render();
 
         void draw(
-                vertexBuffer vertexBuffer,
-                shaderProgram shaderProgram,
-                vertexArray vertexArray,
-                elementBuffer elementBuffer
+                vertexArray,
+                const ElementBufferObject &
         );
 
         /**
@@ -77,18 +84,14 @@ namespace mygl {
          * @param vertexBuffer
          * @return
          */
-        vertexArray initializeVertexArray(unsigned int vertexBuffer);
+        vertexArray initializeVertexArray(vertexBuffer, const ElementBufferObject &);
 
         /**
          * render loop
          * @param window pointer to the window object
          */
         void runEngine(
-                GLFWwindow *window,
-                vertexBuffer vertexBuffer,
-                shaderProgram shaderProgram,
-                vertexArray vertexArray,
-                elementBuffer elementBuffer
+                GLFWwindow *window
         );
 
         vertexBuffer initializeVertexBuffer();
@@ -100,6 +103,8 @@ namespace mygl {
         shaderProgram initializeShaderProgram();
 
         void start();
+
+        DrawableElement toDrawable(const ElementBufferObject &);
     };
 }
 

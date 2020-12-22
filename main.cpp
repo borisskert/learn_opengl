@@ -10,7 +10,7 @@ const unsigned int SCREEN_HEIGHT = 600;
 
 
 int main() {
-    VertexModels models;
+    std::vector<ElementBufferObject> models;
 
     Rectangle rectangleOne = Rectangle(
             Point(0.5f, 0.5f, 0.0f),  // top right
@@ -19,7 +19,7 @@ int main() {
             Point(0.0f, 0.5f, 0.0f)  // top left
     );
 
-    models.add(&rectangleOne);
+    models.push_back(rectangleOne.toElementBufferObject());
 
     Rectangle rectangleTwo = Rectangle(
             Point(0.0f, 0.0f, 0.0f),  // top right
@@ -28,15 +28,23 @@ int main() {
             Point(-0.5f, 0.0f, 0.0f)   // top left)
     );
 
-    models.add(&rectangleTwo);
+    models.push_back(rectangleTwo.toElementBufferObject());
 
-    Triangle triangle = Triangle(
+    Triangle triangleOne = Triangle(
             Point(0.5f, -0.5f, 0.0f),
             Point(0.0f, -0.5f, 0.0f),
             Point(0.5f, 0.0f, 0.0f)
     );
 
-    models.add(&triangle);
+    models.push_back(triangleOne.toElementBufferObject());
+
+    Triangle triangleTwo = Triangle(
+            Point(-0.5f, 0.5f, 0.0f),
+            Point(0.0f, 0.5f, 0.0f),
+            Point(-0.5f, 0.0f, 0.0f)
+    );
+
+    models.push_back(triangleTwo.toElementBufferObject());
 
     try {
         mygl::OpenGl openGl(SCREEN_WIDTH, SCREEN_HEIGHT, models);
