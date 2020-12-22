@@ -7,38 +7,38 @@
 
 
 static Triangle buildTriangleOne() {
-    const Point &a = Point(0.5f, 0.5f, 0.0f);
-    const Point &b = Point(0.5f, 0.0f, 0.0f);
-    const Point &c = Point(0.0f, 0.0f, 0.0f);
+    const glm::vec3 &a = glm::vec3(0.5f, 0.5f, 0.0f);
+    const glm::vec3 &b = glm::vec3(0.5f, 0.0f, 0.0f);
+    const glm::vec3 &c = glm::vec3(0.0f, 0.0f, 0.0f);
 
     return {a, b, c};
 }
 
 
 static Triangle buildTriangleTwo() {
-    const Point &a = Point(-0.5f, -0.5f, 0.0f);
-    const Point &b = Point(-0.5f, 0.0f, 0.0f);
-    const Point &c = Point(0.0f, 0.0f, 0.0f);
+    const glm::vec3 &a = glm::vec3(-0.5f, -0.5f, 0.0f);
+    const glm::vec3 &b = glm::vec3(-0.5f, 0.0f, 0.0f);
+    const glm::vec3 &c = glm::vec3(0.0f, 0.0f, 0.0f);
 
     return {a, b, c};
 }
 
 
 static Rectangle buildRectangleOne() {
-    const Point &a = Point(0.5f, 0.5f, 0.0f);
-    const Point &b = Point(0.5f, 0.0f, 0.0f);
-    const Point &c = Point(0.0f, 0.0f, 0.0f);
-    const Point &d = Point(0.0f, 0.5f, 0.0f);
+    const glm::vec3 &a = glm::vec3(0.5f, 0.5f, 0.0f);
+    const glm::vec3 &b = glm::vec3(0.5f, 0.0f, 0.0f);
+    const glm::vec3 &c = glm::vec3(0.0f, 0.0f, 0.0f);
+    const glm::vec3 &d = glm::vec3(0.0f, 0.5f, 0.0f);
 
     return {a, b, c, d};
 }
 
 
 static Rectangle buildRectangleTwo() {
-    const Point &a = Point(-0.5f, -0.5f, 0.0f);
-    const Point &b = Point(-0.5f, 0.0f, 0.0f);
-    const Point &c = Point(0.0f, 0.0f, 0.0f);
-    const Point &d = Point(0.0f, -0.5f, 0.0f);
+    const glm::vec3 &a = glm::vec3(-0.5f, -0.5f, 0.0f);
+    const glm::vec3 &b = glm::vec3(-0.5f, 0.0f, 0.0f);
+    const glm::vec3 &c = glm::vec3(0.0f, 0.0f, 0.0f);
+    const glm::vec3 &d = glm::vec3(0.0f, -0.5f, 0.0f);
 
     return {a, b, c, d};
 }

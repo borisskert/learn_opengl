@@ -1,54 +1,38 @@
 #ifndef MYFIRSTOPENGL_RECTANGLE_H
 #define MYFIRSTOPENGL_RECTANGLE_H
 
-#include "Point.h"
 #include "VertexModel.h"
+#include <glm/glm.hpp>
 
 class Rectangle : public VertexModel {
 private:
-    const Point a;
-    const Point b;
-    const Point c;
-    const Point d;
+    const glm::vec3 a;
+    const glm::vec3 b;
+    const glm::vec3 c;
+    const glm::vec3 d;
 
 public:
-    Rectangle(Point a, Point b, Point c, Point d)
+    Rectangle(const glm::vec3 a, const glm::vec3 b, const glm::vec3 c, const glm::vec3 d)
             : a(a), b(b), c(c), d(d) {}
-
-    Point getA() const {
-        return a;
-    }
-
-    Point getB() const {
-        return b;
-    }
-
-    Point getC() const {
-        return c;
-    }
-
-    Point getD() const {
-        return d;
-    }
 
     ElementBufferObject toElementBufferObject() const override {
         ElementBufferObject ebo;
 
-        ebo.addVertex(a.getX());
-        ebo.addVertex(a.getY());
-        ebo.addVertex(a.getZ());
+        ebo.addVertex(a.x);
+        ebo.addVertex(a.y);
+        ebo.addVertex(a.z);
 
-        ebo.addVertex(b.getX());
-        ebo.addVertex(b.getY());
-        ebo.addVertex(b.getZ());
+        ebo.addVertex(b.x);
+        ebo.addVertex(b.y);
+        ebo.addVertex(b.z);
 
-        ebo.addVertex(c.getX());
-        ebo.addVertex(c.getY());
-        ebo.addVertex(c.getZ());
+        ebo.addVertex(c.x);
+        ebo.addVertex(c.y);
+        ebo.addVertex(c.z);
 
-        ebo.addVertex(d.getX());
-        ebo.addVertex(d.getY());
-        ebo.addVertex(d.getZ());
+        ebo.addVertex(d.x);
+        ebo.addVertex(d.y);
+        ebo.addVertex(d.z);
 
         ebo.addIndex(0);
         ebo.addIndex(1);
