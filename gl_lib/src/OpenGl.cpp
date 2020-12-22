@@ -1,3 +1,4 @@
+#include <cmath>
 #include "OpenGl.h"
 
 
@@ -130,6 +131,8 @@ void OpenGl::runEngine(
 
         render();
 
+        updateGlobalColorOverTime(shaderProgram);
+
         glUseProgram(shaderProgram);
 
         for (const DrawableElement &drawableElement : drawableElements) {
@@ -141,6 +144,15 @@ void OpenGl::runEngine(
     }
 
     glfwTerminate();
+}
+
+
+void OpenGl::updateGlobalColorOverTime(shaderProgram shaderProgram) const {
+    float timeValue = glfwGetTime();
+    float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+    int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+    glUseProgram(shaderProgram);
+    glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 }
 
 
@@ -160,7 +172,7 @@ vertexShader OpenGl::initializeVertexShader() {
                                      "layout (location = 0) in vec3 aPos;\n"
                                      "void main()\n"
                                      "{\n"
-                                     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                                     "   gl_Position = vec4(aPos, 1.0);\n"
                                      "}\0";
 
     glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
@@ -182,10 +194,11 @@ vertexShader OpenGl::initializeVertexShader() {
 fragmentShader OpenGl::initializeFragmentShader() {
     const char *fragmentShaderSource = "#version 330 core\n"
                                        "out vec4 FragColor;\n"
+                                       "uniform vec4 ourColor;\n"
                                        "\n"
                                        "void main()\n"
                                        "{\n"
-                                       "    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+                                       "    FragColor = ourColor;\n"
                                        "} ";
 
     unsigned int fragmentShader;

@@ -105,6 +105,8 @@ namespace mygl {
         void start();
 
         DrawableElement toDrawable(const ElementBufferObject &);
+
+        void updateGlobalColorOverTime(shaderProgram shaderProgram) const;
     };
 }
 
