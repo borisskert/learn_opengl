@@ -6,9 +6,7 @@ include_directories(${GTEST_INCLUDE_DIRS})
 set(SOURCES ${TEST_SOURCES})
 
 add_executable(gl_test ${TEST_SOURCES})
-#add_executable(gl_test src/main.cpp)
 
 add_test(NAME gl_test COMMAND gl_test)
 
 target_link_libraries(gl_test PUBLIC gl_lib PUBLIC gtest gmock)
-#target_link_libraries(gl_test ${GTEST_LIBRARIES})
