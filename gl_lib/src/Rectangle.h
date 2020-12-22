@@ -31,7 +31,7 @@ public:
         return d;
     }
 
-    ElementBufferObject toElementBufferObject() const {
+    ElementBufferObject toElementBufferObject() const override {
         ElementBufferObject ebo;
 
         ebo.addVertex(a.getX());

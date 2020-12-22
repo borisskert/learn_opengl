@@ -10,13 +10,13 @@ private:
     std::vector<VertexModel *> vertexModels;
 
 public:
-    VertexModels() {}
+    VertexModels() = default;
 
     void add(VertexModel *vertexModel) {
         this->vertexModels.push_back(vertexModel);
     }
 
-    ElementBufferObject toElementBufferObject() const {
+    ElementBufferObject toElementBufferObject() const override {
         ElementBufferObject ebo;
 
         for (VertexModel *model : vertexModels) {

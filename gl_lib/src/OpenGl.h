@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include "RuntimeException.h"
 #include "ShaderInitializationException.h"
+#include "VertexModels.h"
 
 typedef unsigned int vertexBuffer;
 typedef unsigned int vertexArray;
@@ -15,36 +16,17 @@ typedef unsigned int shaderProgram;
 
 namespace mygl {
 
-    const float vertices[] = {
-            0.5f, 0.5f, 0.0f,  // top right
-            0.5f, 0.0f, 0.0f,  // bottom right
-            0.0f, 0.0f, 0.0f,  // bottom left
-            0.0f, 0.5f, 0.0f,   // top left
-
-            0.0f, 0.0f, 0.0f,  // top right
-            0.0f, -0.5f, 0.0f,  // bottom right
-            -0.5f, -0.5f, 0.0f,  // bottom left
-            -0.5f, 0.0f, 0.0f   // top left
-    };
-
-    const unsigned int indices[] = {
-            0, 1, 3,   // first triangle
-            1, 2, 3,    // second triangle
-
-            4, 5, 7,   // first triangle
-            5, 6, 7    // second triangle
-    };
-
-
     class OpenGl {
     private:
         unsigned int screenWidth;
         unsigned int screenHeight;
+        VertexModels vertexModels;
 
     public:
         explicit OpenGl(
                 unsigned int screenWidthInPixels,
-                unsigned int screenHeightInPixels
+                unsigned int screenHeightInPixels,
+                VertexModels models
         );
 
         /**

@@ -17,7 +17,7 @@ public:
 
     void addIndex(unsigned int index) {
         if ((int) index > this->maxIndex) {
-            maxIndex = index;
+            maxIndex = (int) index;
         }
 
         this->indices.push_back(index);
@@ -62,13 +62,13 @@ public:
             result.vertices.push_back(vertex);
         }
 
-        for (float index : this->indices) {
+        for (unsigned int index : this->indices) {
             result.addIndex(index);
         }
 
         unsigned int indicesOffset = result.maxIndex + 1;
 
-        for (float index : other.indices) {
+        for (unsigned int index : other.indices) {
             result.addIndex(index + indicesOffset);
         }
 
