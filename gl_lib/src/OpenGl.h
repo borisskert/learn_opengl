@@ -11,7 +11,7 @@
 #include "Shader.h"
 
 
-namespace mygl {
+namespace gl_lib {
 
     class OpenGl {
     private:

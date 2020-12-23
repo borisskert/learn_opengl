@@ -5,74 +5,77 @@
 #include "Typedefs.h"
 
 
-static vertexBuffer createVertexBuffer() {
-    unsigned int vertexBufferObject;
-    glGenBuffers(1, &vertexBufferObject);
+namespace gl_lib {
 
-    return vertexBufferObject;
-}
+    static vertexBuffer createVertexBuffer() {
+        unsigned int vertexBufferObject;
+        glGenBuffers(1, &vertexBufferObject);
 
-
-static vertexArray createVertexArray() {
-    unsigned int vertexArrayObject;
-    glGenVertexArrays(1, &vertexArrayObject);
-
-    return vertexArrayObject;
-}
+        return vertexBufferObject;
+    }
 
 
-static elementBuffer createElementBuffer() {
-    unsigned int elementBufferObject;
-    glGenBuffers(1, &elementBufferObject);
-
-    return elementBufferObject;
-}
-
-
-class Drawable {
-private:
-    vertexBuffer vertexBufferObject;
-    vertexArray vertexArrayObject;
-    elementBuffer elementBufferObject;
-
-    vertexArray initializeVertexArray() {
-        vertexArrayObject = createVertexArray();
-        glBindVertexArray(vertexArrayObject);
-        glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-
-        configureVertexArray();
+    static vertexArray createVertexArray() {
+        unsigned int vertexArrayObject;
+        glGenVertexArrays(1, &vertexArrayObject);
 
         return vertexArrayObject;
     }
 
-    elementBuffer initializeElementBuffer() {
-        elementBuffer elementBufferObject = createElementBuffer();
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
 
-        configureElementBuffer();
+    static elementBuffer createElementBuffer() {
+        unsigned int elementBufferObject;
+        glGenBuffers(1, &elementBufferObject);
 
         return elementBufferObject;
     }
 
-protected:
-    virtual void configureVertexArray() = 0;
 
-    virtual void configureElementBuffer() = 0;
+    class Drawable {
+    private:
+        vertexBuffer vertexBufferObject;
+        vertexArray vertexArrayObject;
+        elementBuffer elementBufferObject;
 
-    virtual unsigned int getIndicesCount() = 0;
+        vertexArray initializeVertexArray() {
+            vertexArrayObject = createVertexArray();
+            glBindVertexArray(vertexArrayObject);
+            glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
 
-public:
-    void initialize() {
-        this->vertexBufferObject = createVertexBuffer();
-        this->vertexArrayObject = initializeVertexArray();
-        this->elementBufferObject = initializeElementBuffer();
-    }
+            configureVertexArray();
 
-    void draw() {
-        glBindVertexArray(vertexArrayObject);
-        glDrawElements(GL_TRIANGLES, getIndicesCount(), GL_UNSIGNED_INT, nullptr);
-    }
-};
+            return vertexArrayObject;
+        }
+
+        elementBuffer initializeElementBuffer() {
+            elementBuffer elementBufferObject = createElementBuffer();
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
+
+            configureElementBuffer();
+
+            return elementBufferObject;
+        }
+
+    protected:
+        virtual void configureVertexArray() = 0;
+
+        virtual void configureElementBuffer() = 0;
+
+        virtual unsigned int getIndicesCount() = 0;
+
+    public:
+        void initialize() {
+            this->vertexBufferObject = createVertexBuffer();
+            this->vertexArrayObject = initializeVertexArray();
+            this->elementBufferObject = initializeElementBuffer();
+        }
+
+        void draw() {
+            glBindVertexArray(vertexArrayObject);
+            glDrawElements(GL_TRIANGLES, getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+        }
+    };
+}
 
 
 #endif //MYFIRSTOPENGL_DRAWABLE_H

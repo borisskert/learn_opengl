@@ -2,12 +2,14 @@
 #define MYFIRSTOPENGL_TYPEDEFS_H
 
 
-typedef unsigned int vertexBuffer;
-typedef unsigned int vertexArray;
-typedef unsigned int vertexShader;
-typedef unsigned int fragmentShader;
-typedef unsigned int elementBuffer;
-typedef unsigned int shaderProgram;
+namespace gl_lib {
+    typedef unsigned int vertexBuffer;
+    typedef unsigned int vertexArray;
+    typedef unsigned int vertexShader;
+    typedef unsigned int fragmentShader;
+    typedef unsigned int elementBuffer;
+    typedef unsigned int shaderProgram;
+}
 
 
 #endif //MYFIRSTOPENGL_TYPEDEFS_H

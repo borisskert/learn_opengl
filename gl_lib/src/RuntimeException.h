@@ -4,20 +4,25 @@
 #include <string>
 #include <utility>
 
-class RuntimeException : public std::exception {
-private:
-    std::string message;
 
-public:
-    RuntimeException() : std::exception() {}
+namespace gl_lib {
 
-    explicit RuntimeException(std::string message)
-            : std::exception(),
-              message(std::move(message)) {}
+    class RuntimeException : public std::exception {
+    private:
+        std::string message;
 
-    std::string getMessage() const {
-        return this->message;
-    }
-};
+    public:
+        RuntimeException() : std::exception() {}
+
+        explicit RuntimeException(std::string message)
+                : std::exception(),
+                  message(std::move(message)) {}
+
+        std::string getMessage() const {
+            return this->message;
+        }
+    };
+}
+
 
 #endif //MYFIRSTOPENGL_RUNTIMEEXCEPTION_H

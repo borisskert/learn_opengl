@@ -1,8 +1,7 @@
-#include <cmath>
 #include "OpenGl.h"
 
 
-using namespace mygl;
+using namespace gl_lib;
 
 OpenGl::OpenGl(
         unsigned int screenWidthInPixels,

@@ -11,9 +11,9 @@ const unsigned int SCREEN_HEIGHT = 600;
 
 
 int main() {
-    std::vector<Drawable*> models;
+    std::vector<gl_lib::Drawable *> models;
 
-    Rectangle rectangleOne = Rectangle(
+    gl_lib::Rectangle rectangleOne = gl_lib::Rectangle(
             glm::vec3(0.5f, 0.5f, 0.0f),  // top right
             glm::vec3(0.5f, 0.0f, 0.0f),  // bottom right
             glm::vec3(0.0f, 0.0f, 0.0f),  // bottom left
@@ -22,7 +22,7 @@ int main() {
 
     models.push_back(&rectangleOne);
 
-    Rectangle rectangleTwo = Rectangle(
+    gl_lib::Rectangle rectangleTwo = gl_lib::Rectangle(
             glm::vec3(0.0f, 0.0f, 0.0f),  // top right
             glm::vec3(0.0f, -0.5f, 0.0f),  // bottom right),
             glm::vec3(-0.5f, -0.5f, 0.0f),  // bottom left),
@@ -31,7 +31,7 @@ int main() {
 
     models.push_back(&rectangleTwo);
 
-    Triangle triangleOne = Triangle(
+    gl_lib::Triangle triangleOne = gl_lib::Triangle(
             glm::vec3(0.5f, -0.5f, 0.0f),
             glm::vec3(0.0f, -0.5f, 0.0f),
             glm::vec3(0.5f, 0.0f, 0.0f)
@@ -39,7 +39,7 @@ int main() {
 
     models.push_back(&triangleOne);
 
-    ColorfulTriangle triangleTwo = ColorfulTriangle(
+    gl_lib::ColorfulTriangle triangleTwo = gl_lib::ColorfulTriangle(
             glm::vec3(-0.5f, 0.5f, 0.0f),
             glm::vec3(0.0f, 0.5f, 0.0f),
             glm::vec3(-0.5f, 0.0f, 0.0f),
@@ -51,14 +51,14 @@ int main() {
     models.push_back(&triangleTwo);
 
     try {
-        mygl::OpenGl openGl(SCREEN_WIDTH, SCREEN_HEIGHT, models);
+        gl_lib::OpenGl openGl(SCREEN_WIDTH, SCREEN_HEIGHT, models);
         openGl.start();
     }
-    catch (const ShaderInitializationException &exception) {
+    catch (const gl_lib::ShaderInitializationException &exception) {
         std::cout << exception.getMessage() << exception.getInfoLog() << std::endl;
         return -1;
     }
-    catch (const RuntimeException &exception) {
+    catch (const gl_lib::RuntimeException &exception) {
         std::cout << "Error occurred: " << exception.getMessage() << std::endl;
         return -1;
     }
