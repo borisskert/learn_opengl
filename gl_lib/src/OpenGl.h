@@ -8,6 +8,7 @@
 #include "ShaderInitializationException.h"
 #include "Typedefs.h"
 #include "Drawable.h"
+#include "Shader.h"
 
 
 namespace mygl {
@@ -67,15 +68,7 @@ namespace mygl {
                 GLFWwindow *window
         );
 
-        vertexShader initializeVertexShader();
-
-        fragmentShader initializeFragmentShader();
-
-        shaderProgram initializeShaderProgram();
-
         void start();
-
-        void updateGlobalColorOverTime(shaderProgram shaderProgram) const;
     };
 }
 
