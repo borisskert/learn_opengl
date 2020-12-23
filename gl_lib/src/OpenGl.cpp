@@ -13,6 +13,7 @@ OpenGl::OpenGl(
           screenWidth(screenWidthInPixels),
           models(std::move(models)) {}
 
+
 void OpenGl::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
 }
@@ -103,14 +104,6 @@ void OpenGl::updateGlobalColorOverTime(shaderProgram shaderProgram) const {
     int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
     glUseProgram(shaderProgram);
     glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
-}
-
-
-vertexBuffer OpenGl::initializeVertexBuffer() {
-    unsigned int vertexBufferObject;
-    glGenBuffers(1, &vertexBufferObject);
-
-    return vertexBufferObject;
 }
 
 

@@ -67,8 +67,6 @@ namespace mygl {
                 GLFWwindow *window
         );
 
-        vertexBuffer initializeVertexBuffer();
-
         vertexShader initializeVertexShader();
 
         fragmentShader initializeFragmentShader();
