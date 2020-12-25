@@ -1,12 +1,12 @@
-[submodule "gl_lib/lib/glfw"]
-	path = gl_lib/lib/glfw
+[submodule "extern/glfw"]
+	path = extern/glfw
 	url = https://github.com/glfw/glfw.git
-[submodule "gl_lib/lib/glad"]
-	path = gl_lib/lib/glad
+[submodule "extern/glad"]
+	path = extern/glad
 	url = https://github.com/Dav1dde/glad.git
-[submodule "gl_test/lib/googletest"]
-	path = gl_test/lib/googletest
+[submodule "extern/googletest"]
+	path = extern/googletest
 	url = https://github.com/google/googletest.git
-[submodule "gl_lib/lib/glm"]
-	path = gl_lib/lib/glm
+[submodule "extern/glm"]
+	path = extern/glm
 	url = https://github.com/g-truc/glm.git
