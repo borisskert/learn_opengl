@@ -1,4 +1,4 @@
-#include "OpenGl.h"
+#include <gl_lib/OpenGl.h>
 
 
 using namespace gl_lib;
@@ -43,9 +43,7 @@ GLFWwindow *OpenGl::createGlfwWindow() {
 
 
 void OpenGl::initializeGlad() {
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-        throw RuntimeException("Failed to initialize GLAD");
-    }
+    initializeGladEnvironment();
 }
 
 

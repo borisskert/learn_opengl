@@ -1,8 +1,8 @@
 #ifndef MYFIRSTOPENGL_OPENGL_H
 #define MYFIRSTOPENGL_OPENGL_H
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+
+#include <gl_lib/gl_lib.h>
 #include <vector>
 #include "RuntimeException.h"
 #include "ShaderInitializationException.h"

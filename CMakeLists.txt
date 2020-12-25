@@ -3,10 +3,14 @@ project(myfirstopengl)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_subdirectory(gl_lib)
-add_subdirectory(gl_test)
+add_subdirectory(extern/glfw)
+add_subdirectory(extern/glad)
+add_subdirectory(extern/glm)
 
-file(GLOB_RECURSE "SOURCES" "main.cpp")
+add_subdirectory(src)
+add_subdirectory(apps)
 
-add_executable(${PROJECT_NAME} ${SOURCES})
-target_link_libraries(${PROJECT_NAME} PUBLIC gl_lib)
+if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME) OR BUILD_TESTING)
+    add_subdirectory(extern/googletest)
+    add_subdirectory(tests)
+endif()

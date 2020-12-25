@@ -2,8 +2,8 @@
 #define MYFIRSTOPENGL_TESTMODELS_H
 
 
-#include "../../gl_lib/src/Triangle.h"
-#include "../../gl_lib/src/Rectangle.h"
+#include "../include/gl_lib/Triangle.h"
+#include "../include/gl_lib/Rectangle.h"
 
 
 static Triangle buildTriangleOne() {

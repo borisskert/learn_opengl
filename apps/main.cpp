@@ -1,8 +1,8 @@
 #include <iostream>
-#include "gl_lib/src/OpenGl.h"
-#include "gl_lib/src/Rectangle.h"
-#include "gl_lib/src/Triangle.h"
-#include "gl_lib/src/ColorfulTriangle.h"
+#include "../include/gl_lib/OpenGl.h"
+#include "../include/gl_lib/Rectangle.h"
+#include "../include/gl_lib/Triangle.h"
+#include "../include/gl_lib/ColorfulTriangle.h"
 
 
 // settings
