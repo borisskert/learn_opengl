@@ -1,5 +1,5 @@
-#ifndef MYFIRSTOPENGL_GL_LIB_H
-#define MYFIRSTOPENGL_GL_LIB_H
+#ifndef LEARN_OPENGL_GL_LIB_H
+#define LEARN_OPENGL_GL_LIB_H
 
 #include <gl_lib/Typedefs.h>
 #include <glad/glad.h>
@@ -31,4 +31,4 @@ namespace gl_lib {
     void initializeGladEnvironment();
 }
 
-#endif //MYFIRSTOPENGL_GL_LIB_H
+#endif //LEARN_OPENGL_GL_LIB_H

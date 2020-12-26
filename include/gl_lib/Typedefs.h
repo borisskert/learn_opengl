@@ -1,5 +1,5 @@
-#ifndef MYFIRSTOPENGL_TYPEDEFS_H
-#define MYFIRSTOPENGL_TYPEDEFS_H
+#ifndef LEARN_OPENGL_TYPEDEFS_H
+#define LEARN_OPENGL_TYPEDEFS_H
 
 
 namespace gl_lib {
@@ -12,4 +12,4 @@ namespace gl_lib {
 }
 
 
-#endif //MYFIRSTOPENGL_TYPEDEFS_H
+#endif //LEARN_OPENGL_TYPEDEFS_H

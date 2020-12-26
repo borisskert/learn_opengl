@@ -1,5 +1,5 @@
-#ifndef MYFIRSTOPENGL_RECTANGLE_H
-#define MYFIRSTOPENGL_RECTANGLE_H
+#ifndef LEARN_OPENGL_RECTANGLE_H
+#define LEARN_OPENGL_RECTANGLE_H
 
 #include <glm/glm.hpp>
 #include "Drawable.h"
@@ -27,4 +27,4 @@ namespace gl_lib {
 }
 
 
-#endif //MYFIRSTOPENGL_RECTANGLE_H
+#endif //LEARN_OPENGL_RECTANGLE_H

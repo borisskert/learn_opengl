@@ -1,5 +1,5 @@
-#ifndef MYFIRSTOPENGL_DRAWABLE_H
-#define MYFIRSTOPENGL_DRAWABLE_H
+#ifndef LEARN_OPENGL_DRAWABLE_H
+#define LEARN_OPENGL_DRAWABLE_H
 
 #include <gl_lib/Typedefs.h>
 
@@ -29,4 +29,4 @@ namespace gl_lib {
 }
 
 
-#endif //MYFIRSTOPENGL_DRAWABLE_H
+#endif //LEARN_OPENGL_DRAWABLE_H

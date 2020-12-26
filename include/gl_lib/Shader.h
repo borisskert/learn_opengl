@@ -1,5 +1,5 @@
-#ifndef MYFIRSTOPENGL_SHADER_H
-#define MYFIRSTOPENGL_SHADER_H
+#ifndef LEARN_OPENGL_SHADER_H
+#define LEARN_OPENGL_SHADER_H
 
 #include "Typedefs.h"
 #include <string>
@@ -25,4 +25,4 @@ namespace gl_lib {
 }
 
 
-#endif //MYFIRSTOPENGL_SHADER_H
+#endif //LEARN_OPENGL_SHADER_H

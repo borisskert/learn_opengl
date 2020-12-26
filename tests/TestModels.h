@@ -1,5 +1,5 @@
-#ifndef MYFIRSTOPENGL_TESTMODELS_H
-#define MYFIRSTOPENGL_TESTMODELS_H
+#ifndef LEARN_OPENGL_TESTMODELS_H
+#define LEARN_OPENGL_TESTMODELS_H
 
 
 #include "../include/gl_lib/Triangle.h"
@@ -44,4 +44,4 @@ static Rectangle buildRectangleTwo() {
 }
 
 
-#endif //MYFIRSTOPENGL_TESTMODELS_H
+#endif //LEARN_OPENGL_TESTMODELS_H

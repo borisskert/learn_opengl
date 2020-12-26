@@ -1,5 +1,5 @@
-#ifndef MYFIRSTOPENGL_OPENGL_H
-#define MYFIRSTOPENGL_OPENGL_H
+#ifndef LEARN_OPENGL_OPENGL_H
+#define LEARN_OPENGL_OPENGL_H
 
 
 #include <gl_lib/gl_lib.h>
@@ -72,4 +72,4 @@ namespace gl_lib {
     };
 }
 
-#endif //MYFIRSTOPENGL_OPENGL_H
+#endif //LEARN_OPENGL_OPENGL_H
