@@ -1,0 +1,10 @@
+.idea/
+out/
+cmake-build-debug/
+CMakeFiles/
+.DS_Store
+CMakeCache.txt
+
+.gitignore
+Dockerfile
+README.md
