@@ -1,4 +1,6 @@
 #include <gl_lib/OpenGl.h>
+#include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 
 
 using namespace gl_lib;
@@ -85,6 +87,13 @@ void OpenGl::runEngine(
         processInput(window);
 
         render();
+
+        glm::mat4 trans = glm::mat4(1.0f);
+        double time = glfwGetTime();
+        trans = glm::translate(trans, glm::vec3(glm::cos(time), glm::sin(time), 0.0f));
+        trans = glm::rotate(trans, (float) time, glm::vec3(0.0f, 0.0f, 1.0f));
+
+        shaderProgram.setMat4("transform", trans);
 
         for (Drawable *drawable : models) {
             drawable->draw();

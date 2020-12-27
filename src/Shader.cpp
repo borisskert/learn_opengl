@@ -1,5 +1,6 @@
 #include <gl_lib/Shader.h>
 #include <gl_lib/gl_lib.h>
+#include <glm/gtc/type_ptr.hpp>
 #include <string>
 
 
@@ -29,5 +30,10 @@ namespace gl_lib {
 
     void Shader::setFloat(const std::string &name, float value) const {
         glUniform1f(glGetUniformLocation(this->programId, name.c_str()), value);
+    }
+
+    void Shader::setMat4(const std::string &name, glm::mat4 value) const {
+        unsigned int uniformLocation = glGetUniformLocation(this->programId, name.c_str());
+        glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(value));
     }
 };
