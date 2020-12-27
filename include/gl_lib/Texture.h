@@ -1,32 +1,25 @@
-#ifndef OPENGL_GAME_OF_LIFE_TEXTURE_H
-#define OPENGL_GAME_OF_LIFE_TEXTURE_H
+#ifndef LEARN_OPENGL_TEXTURE_H
+#define LEARN_OPENGL_TEXTURE_H
 
+#include <gl_lib/gl_lib.h>
 
-#include "gl_lib.h"
 
 namespace gl_lib {
-
-    struct Image {
-        unsigned char *data;
-        int width;
-        int height;
-    };
 
     class Texture {
     private:
         textureId id;
-        const char *texturePath;
-
-        void initializeTexture(Image image) const;
+        const char* path;
 
     public:
-        explicit Texture(const char *texturePath);
+        Texture(const char* path);
 
         void initialize();
 
-        textureId getId() const;
+        void bind();
     };
+
 }
 
 
-#endif //OPENGL_GAME_OF_LIFE_TEXTURE_H
+#endif //LEARN_OPENGL_TEXTURE_H

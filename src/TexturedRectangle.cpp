@@ -5,7 +5,7 @@ namespace gl_lib {
     TexturedRectangle::TexturedRectangle(
             const glm::vec3 a, const glm::vec3 b, const glm::vec3 c, const glm::vec3 d,
             const glm::vec3 colorA, const glm::vec3 colorB, const glm::vec3 colorC, const glm::vec3 colorD,
-            Texture texture
+            TextureUnit texture
     ) : a(a), b(b), c(c), d(d),
         colorA(colorA), colorB(colorB), colorC(colorC), colorD(colorD),
         texture(texture) {}
@@ -65,7 +65,7 @@ namespace gl_lib {
 
 
     void TexturedRectangle::draw() {
-        glBindTexture(GL_TEXTURE_2D, texture.getId());
+        this->texture.bindTextures();
         this->buffer.bindVertexArray();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }

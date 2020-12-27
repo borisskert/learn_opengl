@@ -44,7 +44,7 @@ namespace gl_lib {
 
     TexturedTriangle::TexturedTriangle(
             glm::vec3 positionA, glm::vec3 positionB, glm::vec3 positionC,
-            glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC, Texture texture
+            glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC, TextureUnit texture
     )
             : positionA(positionA), positionB(positionB), positionC(positionC),
               colorA(colorA), colorB(colorB), colorC(colorC), texture(texture) {}
@@ -64,7 +64,7 @@ namespace gl_lib {
 
 
     void TexturedTriangle::draw() {
-        glBindTexture(GL_TEXTURE_2D, texture.getId());
+        this->texture.bindTextures();
         this->buffer.bindVertexArray();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <gl_lib/OpenGl.h>
-#include <gl_lib/Texture.h>
+#include <gl_lib/TextureUnit.h>
 #include <gl_lib/TexturedRectangle.h>
 
 
@@ -13,6 +13,12 @@ int main() {
     std::vector<gl_lib::Drawable *> models;
 
     gl_lib::Texture containerTexture("assets/textures/container.jpg");
+    gl_lib::Texture awesomefaceTexture("assets/textures/awesomeface.png");
+
+
+    gl_lib::TextureUnit textureUnit;
+    textureUnit.addTexture(&containerTexture);
+    textureUnit.addTexture(&awesomefaceTexture);
 
     gl_lib::TexturedRectangle texturedRectangle(
             glm::vec3(0.5f, 0.5f, 0.0f),
@@ -23,7 +29,7 @@ int main() {
             glm::vec3(0.0f, 1.0f, 0.0f),
             glm::vec3(0.0f, 0.0f, 1.0f),
             glm::vec3(1.0f, 1.0f, 0.0f),
-            containerTexture
+            textureUnit
     );
 
     models.push_back(&texturedRectangle);

@@ -1,4 +1,5 @@
 configure_file("${PROJECT_SOURCE_DIR}/assets/textures/container.jpg" "assets/textures/container.jpg" COPYONLY)
+configure_file("${PROJECT_SOURCE_DIR}/assets/textures/awesomeface.png" "assets/textures/awesomeface.png" COPYONLY)
 
 configure_file("${PROJECT_SOURCE_DIR}/shader/vertex.shader" "shader/vertex.shader" COPYONLY)
 configure_file("${PROJECT_SOURCE_DIR}/shader/fragment.shader" "shader/fragment.shader" COPYONLY)

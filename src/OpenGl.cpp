@@ -77,12 +77,14 @@ void OpenGl::runEngine(
         drawable->initialize();
     }
 
+    shaderProgram.use();
+    shaderProgram.setInt("texture1", 0);
+    shaderProgram.setInt("texture2", 1);
+
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
 
         render();
-
-        shaderProgram.use();
 
         for (Drawable *drawable : models) {
             drawable->draw();

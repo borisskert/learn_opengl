@@ -1,9 +1,9 @@
-#ifndef OPENGL_GAME_OF_LIFE_TEXTUREDTRIANGLE_H
-#define OPENGL_GAME_OF_LIFE_TEXTUREDTRIANGLE_H
+#ifndef LEARN_OPENGL_TEXTUREDTRIANGLE_H
+#define LEARN_OPENGL_TEXTUREDTRIANGLE_H
 
 #include "Drawable.h"
 #include <gl_lib/gl_lib.h>
-#include "Texture.h"
+#include "TextureUnit.h"
 #include "glm/glm.hpp"
 #include "OpenGlBuffer.h"
 
@@ -21,7 +21,7 @@ namespace gl_lib {
         const glm::vec3 colorB;
         const glm::vec3 colorC;
 
-        Texture texture;
+        TextureUnit texture;
 
     protected:
         void configureVertexArray();
@@ -33,7 +33,7 @@ namespace gl_lib {
     public:
         TexturedTriangle(
                 glm::vec3 positionA, glm::vec3 positionB, glm::vec3 positionC,
-                glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC, Texture texture
+                glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC, TextureUnit texture
         );
 
         void initialize() override;
@@ -43,4 +43,4 @@ namespace gl_lib {
 }
 
 
-#endif //OPENGL_GAME_OF_LIFE_TEXTUREDTRIANGLE_H
+#endif //LEARN_OPENGL_TEXTUREDTRIANGLE_H
