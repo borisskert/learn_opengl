@@ -30,6 +30,24 @@ namespace gl_lib {
         return 3;
     }
 
+
     Triangle::Triangle(glm::vec3 a, glm::vec3 b, glm::vec3 c)
             : a(a), b(b), c(c) {}
+
+
+    void Triangle::initialize() {
+        buffer.initialize();
+
+        this->buffer.bindVertexArray();
+        this->configureVertexArray();
+
+        this->buffer.bindElementBuffer();
+        this->configureElementBuffer();
+    }
+
+
+    void Triangle::draw() {
+        buffer.bindVertexArray();
+        glDrawElements(GL_TRIANGLES, this->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+    }
 }

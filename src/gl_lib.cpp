@@ -31,6 +31,14 @@ namespace gl_lib {
     }
 
 
+    textureId createTexture() {
+        unsigned int texture;
+        glGenTextures(1, &texture);
+
+        return texture;
+    }
+
+
     void bindElementBuffer(elementBuffer elementBufferObject) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
     }

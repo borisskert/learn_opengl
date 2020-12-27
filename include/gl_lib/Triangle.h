@@ -3,25 +3,32 @@
 
 #include "glm/glm.hpp"
 #include "Drawable.h"
+#include "OpenGlBuffer.h"
 
 
 namespace gl_lib {
 
     class Triangle : public Drawable {
     private:
+        OpenGlBuffer buffer;
+
         const glm::vec3 a;
         const glm::vec3 b;
         const glm::vec3 c;
 
     protected:
-        void configureVertexArray() override;
+        void configureVertexArray();
 
-        void configureElementBuffer() override;
+        void configureElementBuffer();
 
-        unsigned int getIndicesCount() override;
+        unsigned int getIndicesCount();
 
     public:
         Triangle(glm::vec3 a, glm::vec3 b, glm::vec3 c);
+
+        void initialize() override;
+
+        void draw() override;
     };
 }
 

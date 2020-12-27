@@ -32,10 +32,29 @@ namespace gl_lib {
                      sizeof(indices), indices, GL_STATIC_DRAW);
     }
 
+
     unsigned int Rectangle::getIndicesCount() {
         return 6;
     }
 
+
     Rectangle::Rectangle(const glm::vec3 a, const glm::vec3 b, const glm::vec3 c, const glm::vec3 d)
             : a(a), b(b), c(c), d(d) {}
+
+
+    void Rectangle::initialize() {
+        buffer.initialize();
+
+        this->buffer.bindVertexArray();
+        this->configureVertexArray();
+
+        this->buffer.bindElementBuffer();
+        this->configureElementBuffer();
+    }
+
+
+    void Rectangle::draw() {
+        buffer.bindVertexArray();
+        glDrawElements(GL_TRIANGLES, this->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+    }
 }

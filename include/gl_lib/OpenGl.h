@@ -6,7 +6,6 @@
 #include <vector>
 #include "RuntimeException.h"
 #include "ShaderInitializationException.h"
-#include "Typedefs.h"
 #include "Drawable.h"
 #include "Shader.h"
 

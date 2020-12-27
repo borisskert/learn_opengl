@@ -1,13 +1,21 @@
 #ifndef LEARN_OPENGL_GL_LIB_H
 #define LEARN_OPENGL_GL_LIB_H
 
-#include <gl_lib/Typedefs.h>
+#include <gl_lib/gl_lib.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <string>
 
 
 namespace gl_lib {
+    typedef unsigned int vertexBuffer;
+    typedef unsigned int vertexArray;
+    typedef unsigned int vertexShader;
+    typedef unsigned int fragmentShader;
+    typedef unsigned int elementBuffer;
+    typedef unsigned int shaderProgram;
+    typedef unsigned int textureId;
+
     vertexBuffer createVertexBuffer();
 
     vertexArray createVertexArray();
@@ -26,9 +34,11 @@ namespace gl_lib {
 
     std::string readFileContent(const char *filePath);
 
-    void drawElements(vertexArray vertexArrayObject, unsigned int  indicesCount);
+    void drawElements(vertexArray vertexArrayObject, unsigned int indicesCount);
 
     void initializeGladEnvironment();
+
+    textureId createTexture();
 }
 
 #endif //LEARN_OPENGL_GL_LIB_H

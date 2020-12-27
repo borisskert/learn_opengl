@@ -1,7 +1,7 @@
 #ifndef LEARN_OPENGL_SHADER_H
 #define LEARN_OPENGL_SHADER_H
 
-#include "Typedefs.h"
+#include "gl_lib.h"
 #include <string>
 
 

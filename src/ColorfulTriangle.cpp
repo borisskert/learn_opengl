@@ -40,4 +40,21 @@ namespace gl_lib {
             glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC)
             : positionA(positionA), positionB(positionB), positionC(positionC),
               colorA(colorA), colorB(colorB), colorC(colorC) {}
+
+
+    void ColorfulTriangle::initialize() {
+        buffer.initialize();
+
+        this->buffer.bindVertexArray();
+        this->configureVertexArray();
+
+        this->buffer.bindElementBuffer();
+        this->configureElementBuffer();
+    }
+
+
+    void ColorfulTriangle::draw() {
+        buffer.bindVertexArray();
+        glDrawElements(GL_TRIANGLES, this->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+    }
 }

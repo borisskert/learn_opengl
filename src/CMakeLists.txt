@@ -1,6 +1,4 @@
-#include("${PROJECT_SOURCE_DIR}/cmake/find_glfw.cmake")
-#include("${PROJECT_SOURCE_DIR}/cmake/find_glad.cmake")
-#include("${PROJECT_SOURCE_DIR}/cmake/find_glm.cmake")
+include("${PROJECT_SOURCE_DIR}/cmake/find_stb.cmake")
 
 file(GLOB HEADERS CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/include/gl_lib/*.h")
 file(GLOB_RECURSE SOURCES *.cpp)

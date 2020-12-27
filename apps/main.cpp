@@ -1,8 +1,7 @@
 #include <iostream>
-#include "../include/gl_lib/OpenGl.h"
-#include "../include/gl_lib/Rectangle.h"
-#include "../include/gl_lib/Triangle.h"
-#include "../include/gl_lib/ColorfulTriangle.h"
+#include <gl_lib/OpenGl.h>
+#include <gl_lib/Texture.h>
+#include <gl_lib/TexturedRectangle.h>
 
 
 // settings
@@ -13,42 +12,21 @@ const unsigned int SCREEN_HEIGHT = 600;
 int main() {
     std::vector<gl_lib::Drawable *> models;
 
-    gl_lib::Rectangle rectangleOne = gl_lib::Rectangle(
-            glm::vec3(0.5f, 0.5f, 0.0f),  // top right
-            glm::vec3(0.5f, 0.0f, 0.0f),  // bottom right
-            glm::vec3(0.0f, 0.0f, 0.0f),  // bottom left
-            glm::vec3(0.0f, 0.5f, 0.0f)  // top left
-    );
+    gl_lib::Texture containerTexture("assets/textures/container.jpg");
 
-    models.push_back(&rectangleOne);
-
-    gl_lib::Rectangle rectangleTwo = gl_lib::Rectangle(
-            glm::vec3(0.0f, 0.0f, 0.0f),  // top right
-            glm::vec3(0.0f, -0.5f, 0.0f),  // bottom right),
-            glm::vec3(-0.5f, -0.5f, 0.0f),  // bottom left),
-            glm::vec3(-0.5f, 0.0f, 0.0f)   // top left)
-    );
-
-    models.push_back(&rectangleTwo);
-
-    gl_lib::Triangle triangleOne = gl_lib::Triangle(
+    gl_lib::TexturedRectangle texturedRectangle(
+            glm::vec3(0.5f, 0.5f, 0.0f),
             glm::vec3(0.5f, -0.5f, 0.0f),
-            glm::vec3(0.0f, -0.5f, 0.0f),
-            glm::vec3(0.5f, 0.0f, 0.0f)
-    );
-
-    models.push_back(&triangleOne);
-
-    gl_lib::ColorfulTriangle triangleTwo = gl_lib::ColorfulTriangle(
+            glm::vec3(-0.5f, -0.5f, 0.0f),
             glm::vec3(-0.5f, 0.5f, 0.0f),
-            glm::vec3(0.0f, 0.5f, 0.0f),
-            glm::vec3(-0.5f, 0.0f, 0.0f),
             glm::vec3(1.0f, 0.0f, 0.0f),
             glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 0.0f, 1.0f)
+            glm::vec3(0.0f, 0.0f, 1.0f),
+            glm::vec3(1.0f, 1.0f, 0.0f),
+            containerTexture
     );
 
-    models.push_back(&triangleTwo);
+    models.push_back(&texturedRectangle);
 
     try {
         gl_lib::OpenGl openGl(SCREEN_WIDTH, SCREEN_HEIGHT, models);

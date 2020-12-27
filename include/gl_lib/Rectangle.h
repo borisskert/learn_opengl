@@ -3,26 +3,33 @@
 
 #include <glm/glm.hpp>
 #include "Drawable.h"
+#include "OpenGlBuffer.h"
 
 
 namespace gl_lib {
 
     class Rectangle : public Drawable {
     private:
+        OpenGlBuffer buffer;
+
         const glm::vec3 a;
         const glm::vec3 b;
         const glm::vec3 c;
         const glm::vec3 d;
 
     protected:
-        void configureVertexArray() override;
+        void configureVertexArray();
 
-        void configureElementBuffer() override;
+        void configureElementBuffer();
 
-        unsigned int getIndicesCount() override;
+        unsigned int getIndicesCount();
 
     public:
         Rectangle(const glm::vec3 a, const glm::vec3 b, const glm::vec3 c, const glm::vec3 d);
+
+        void initialize() override;
+
+        void draw() override;
     };
 }
 
