@@ -69,8 +69,8 @@ void OpenGl::runEngine(
         GLFWwindow *window
 ) {
     Shader shaderProgram(
-            "shader/vertex.shader",
-            "shader/fragment.shader"
+            "assets/shader/vertex.shader",
+            "assets/shader/fragment.shader"
     );
 
     for (Drawable *drawable : models) {
