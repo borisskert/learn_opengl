@@ -11,13 +11,13 @@ namespace gl_lib {
     TextureUnit::TextureUnit() = default;
 
 
-    void TextureUnit::addTexture(Texture* texture) {
+    void TextureUnit::addTexture(Texture *texture) {
         this->textures.push_back(texture);
     }
 
 
     void TextureUnit::initialize() {
-        for (Texture* texture : textures) {
+        for (Texture *texture : textures) {
             texture->initialize();
         }
     }
@@ -25,7 +25,7 @@ namespace gl_lib {
 
     void TextureUnit::bindTextures() {
         for (int index = 0; index < this->textures.size(); index++) {
-            Texture* texture = this->textures[index];
+            Texture *texture = this->textures[index];
 
             glActiveTexture(GL_TEXTURE0 + index);
             texture->bind();

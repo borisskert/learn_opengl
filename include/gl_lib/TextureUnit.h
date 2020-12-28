@@ -12,12 +12,12 @@ namespace gl_lib {
 
     class TextureUnit {
     private:
-        std::vector<Texture*> textures;
+        std::vector<Texture *> textures;
 
     public:
         explicit TextureUnit();
 
-        void addTexture(Texture*);
+        void addTexture(Texture *);
 
         void initialize();
 

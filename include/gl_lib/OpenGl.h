@@ -9,28 +9,25 @@
 #include "Drawable.h"
 #include "Shader.h"
 #include "OpenGlBuffer.h"
+#include "TextureUnit.h"
+#include "ContextContainer.h"
 
 
 namespace gl_lib {
-
-    struct ModelContext {
-        Drawable* drawable;
-        Shader* shader;
-        OpenGlBuffer* buffer;
-    };
 
     class OpenGl {
     private:
         unsigned int screenWidth;
         unsigned int screenHeight;
         std::vector<Drawable *> models;
+        TextureUnit textureUnit;
+
+        ContextContainer createContext(const std::vector<Drawable *> &drawables);
 
     public:
-        explicit OpenGl(
-                unsigned int screenWidthInPixels,
-                unsigned int screenHeightInPixels,
-                std::vector<Drawable *> models
-        );
+        explicit OpenGl(unsigned int screenWidthInPixels, unsigned int screenHeightInPixels,
+                        std::vector<Drawable *> models,
+                        TextureUnit unit);
 
         /**
          * glfw: whenever the window size changed (by OS or user resize) this callback function executes

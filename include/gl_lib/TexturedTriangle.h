@@ -36,11 +36,11 @@ namespace gl_lib {
                 glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC, TextureUnit texture
         );
 
-        void initialize(Shader *) override;
+        void initialize(Context *) override;
 
-        void update(Shader *) override;
+        void update(Context *) override;
 
-        void draw() override;
+        void draw(Context *) override;
     };
 }
 

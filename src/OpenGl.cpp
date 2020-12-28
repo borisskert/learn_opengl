@@ -1,18 +1,20 @@
 #include <gl_lib/OpenGl.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <gl_lib/ContextContainer.h>
 
 
 using namespace gl_lib;
 
 OpenGl::OpenGl(
-        unsigned int screenWidthInPixels,
-        unsigned int screenHeightInPixels,
-        std::vector<Drawable *> models
+        unsigned int screenWidthInPixels, unsigned int screenHeightInPixels,
+        std::vector<Drawable *> models,
+        TextureUnit textureUnit
 )
         : screenHeight(screenHeightInPixels),
           screenWidth(screenWidthInPixels),
-          models(std::move(models)) {}
+          models(std::move(models)),
+          textureUnit(textureUnit) {}
 
 
 void OpenGl::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
@@ -67,22 +69,23 @@ void OpenGl::clear() {
 }
 
 
-std::vector<ModelContext> createContexts(const std::vector<Drawable*>& drawables) {
-    std::vector<ModelContext> contexts;
+ContextContainer OpenGl::createContext(const std::vector<Drawable *> &drawables) {
+    ContextContainer context;
 
     for (Drawable *drawable : drawables) {
-        ModelContext model{};
-        model.drawable = drawable;
+        Context model{};
+
         model.shader = new Shader(
                 "assets/shader/vertex.shader",
                 "assets/shader/fragment.shader"
         );
         model.buffer = new OpenGlBuffer();
+        model.textures = &textureUnit;
 
-        contexts.push_back(model);
+        context.store(drawable, model);
     }
 
-    return contexts;
+    return context;
 }
 
 
@@ -91,19 +94,21 @@ void OpenGl::runEngine(
 ) {
     glEnable(GL_DEPTH_TEST);
 
-    std::vector<ModelContext> contexts = createContexts(models);
+    ContextContainer contexts = createContext(models);
 
-    for (ModelContext context : contexts) {
+    for (Drawable *drawable : contexts.getDrawables()) {
+        Context context = contexts.getFor(drawable);
+
         context.shader->use();
         glm::mat4 view = glm::mat4(1.0f);
         view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
         context.shader->setMat4("view", view);
 
         glm::mat4 projection;
-        projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(45.0f), (float) screenWidth / (float) screenHeight, 0.1f, 100.0f);
         context.shader->setMat4("projection", projection);
 
-        context.drawable->initialize(context.shader);
+        drawable->initialize(&context);
     }
 
     while (!glfwWindowShouldClose(window)) {
@@ -111,11 +116,13 @@ void OpenGl::runEngine(
 
         clear();
 
-        for (ModelContext model : contexts) {
-            model.shader->use();
+        for (Drawable *drawable : contexts.getDrawables()) {
+            Context context = contexts.getFor(drawable);
 
-            model.drawable->update(model.shader);
-            model.drawable->draw();
+            context.shader->use();
+
+            drawable->update(&context);
+            drawable->draw(&context);
         }
 
         glfwSwapBuffers(window);

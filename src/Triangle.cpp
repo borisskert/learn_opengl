@@ -35,7 +35,7 @@ namespace gl_lib {
             : a(a), b(b), c(c) {}
 
 
-    void Triangle::initialize(Shader*) {
+    void Triangle::initialize(Context *) {
         buffer.initialize();
 
         this->buffer.bindVertexArray();
@@ -46,12 +46,12 @@ namespace gl_lib {
     }
 
 
-    void Triangle::update(Shader*) {
+    void Triangle::update(Context *) {
 
     }
 
 
-    void Triangle::draw() {
+    void Triangle::draw(Context *) {
         buffer.bindVertexArray();
         glDrawElements(GL_TRIANGLES, this->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
     }

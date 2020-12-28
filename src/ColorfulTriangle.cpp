@@ -42,7 +42,7 @@ namespace gl_lib {
               colorA(colorA), colorB(colorB), colorC(colorC) {}
 
 
-    void ColorfulTriangle::initialize(Shader*) {
+    void ColorfulTriangle::initialize(Context *) {
         buffer.initialize();
 
         this->buffer.bindVertexArray();
@@ -53,12 +53,12 @@ namespace gl_lib {
     }
 
 
-    void ColorfulTriangle::update(Shader*) {
+    void ColorfulTriangle::update(Context *) {
 
     }
 
 
-    void ColorfulTriangle::draw() {
+    void ColorfulTriangle::draw(Context *) {
         buffer.bindVertexArray();
         glDrawElements(GL_TRIANGLES, this->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
     }

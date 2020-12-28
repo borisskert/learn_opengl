@@ -42,7 +42,7 @@ namespace gl_lib {
             : a(a), b(b), c(c), d(d) {}
 
 
-    void Rectangle::initialize(Shader*) {
+    void Rectangle::initialize(Context *) {
         buffer.initialize();
 
         this->buffer.bindVertexArray();
@@ -53,12 +53,12 @@ namespace gl_lib {
     }
 
 
-    void Rectangle::update(Shader*) {
+    void Rectangle::update(Context *) {
 
     }
 
 
-    void Rectangle::draw() {
+    void Rectangle::draw(Context *) {
         buffer.bindVertexArray();
         glDrawElements(GL_TRIANGLES, this->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
     }

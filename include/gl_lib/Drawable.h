@@ -3,16 +3,18 @@
 
 
 #include "Shader.h"
+#include "Context.h"
+
 
 namespace gl_lib {
 
     class Drawable {
     public:
-        virtual void initialize(Shader*) = 0;
+        virtual void initialize(Context *) = 0;
 
-        virtual void update(Shader*) = 0;
+        virtual void update(Context *) = 0;
 
-        virtual void draw() = 0;
+        virtual void draw(Context *) = 0;
     };
 }
 

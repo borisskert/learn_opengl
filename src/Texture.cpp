@@ -5,7 +5,7 @@
 
 namespace gl_lib {
 
-    Texture::Texture(const char* path): path(path) {}
+    Texture::Texture(const char *path) : path(path) {}
 
 
     void Texture::initialize() {
@@ -22,7 +22,8 @@ namespace gl_lib {
 
         int internalFormat = image.channels > 3 ? GL_RGBA : GL_RGB;
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, internalFormat, GL_UNSIGNED_BYTE, image.data);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, internalFormat, GL_UNSIGNED_BYTE,
+                     image.data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
 

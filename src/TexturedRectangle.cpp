@@ -51,7 +51,7 @@ namespace gl_lib {
     }
 
 
-    void TexturedRectangle::initialize(Shader*) {
+    void TexturedRectangle::initialize(Context *) {
         buffer.initialize();
 
         this->buffer.bindVertexArray();
@@ -64,12 +64,12 @@ namespace gl_lib {
     }
 
 
-    void TexturedRectangle::update(Shader*) {
+    void TexturedRectangle::update(Context *) {
 
     }
 
 
-    void TexturedRectangle::draw() {
+    void TexturedRectangle::draw(Context *) {
         this->texture.bindTextures();
         this->buffer.bindVertexArray();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);

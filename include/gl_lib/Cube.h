@@ -35,35 +35,27 @@ namespace gl_lib {
         glm::vec3 position;
         float angle;
 
-        TextureUnit texture;
-
-
         void configureVertexArray();
 
     public:
+        Cube();
+
+
         Cube(
-                TextureUnit texture
+                glm::vec3 color
         );
 
 
         Cube(
-                glm::vec3 color,
-                TextureUnit texture
+                glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d,
+                glm::vec3 e, glm::vec3 f, glm::vec3 g, glm::vec3 h
         );
 
 
         Cube(
                 glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d,
                 glm::vec3 e, glm::vec3 f, glm::vec3 g, glm::vec3 h,
-                TextureUnit texture
-        );
-
-
-        Cube(
-                glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d,
-                glm::vec3 e, glm::vec3 f, glm::vec3 g, glm::vec3 h,
-                glm::vec3 color,
-                TextureUnit texture
+                glm::vec3 color
         );
 
 
@@ -73,15 +65,14 @@ namespace gl_lib {
                 glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC, glm::vec3 colorD,
                 glm::vec3 colorE, glm::vec3 colorF, glm::vec3 colorG, glm::vec3 colorH,
                 glm::vec3 position,
-                float angle,
-                TextureUnit texture
+                float angle
         );
 
-        void initialize(Shader*) override;
+        void initialize(Context *) override;
 
-        void update(Shader*) override;
+        void update(Context *) override;
 
-        void draw() override;
+        void draw(Context *) override;
     };
 }
 

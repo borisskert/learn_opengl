@@ -36,11 +36,11 @@ namespace gl_lib {
                 TextureUnit texture
         );
 
-        void initialize(Shader *) override;
+        void initialize(Context *) override;
 
-        void update(Shader *) override;
+        void update(Context *) override;
 
-        void draw() override;
+        void draw(Context *) override;
     };
 }
 

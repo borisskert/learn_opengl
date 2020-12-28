@@ -26,10 +26,11 @@ namespace gl_lib {
     public:
         Triangle(glm::vec3 a, glm::vec3 b, glm::vec3 c);
 
-        void initialize(Shader*) override;
-        void update(Shader*) override;
+        void initialize(Context *) override;
 
-        void draw() override;
+        void update(Context *) override;
+
+        void draw(Context *) override;
     };
 }
 

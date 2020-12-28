@@ -50,7 +50,7 @@ namespace gl_lib {
               colorA(colorA), colorB(colorB), colorC(colorC), texture(texture) {}
 
 
-    void TexturedTriangle::initialize(Shader*) {
+    void TexturedTriangle::initialize(Context *) {
         buffer.initialize();
 
         this->buffer.bindVertexArray();
@@ -63,12 +63,12 @@ namespace gl_lib {
     }
 
 
-    void TexturedTriangle::update(Shader*) {
+    void TexturedTriangle::update(Context *) {
 
     }
 
 
-    void TexturedTriangle::draw() {
+    void TexturedTriangle::draw(Context *) {
         this->texture.bindTextures();
         this->buffer.bindVertexArray();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);

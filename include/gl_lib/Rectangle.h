@@ -27,11 +27,11 @@ namespace gl_lib {
     public:
         Rectangle(const glm::vec3 a, const glm::vec3 b, const glm::vec3 c, const glm::vec3 d);
 
-        void initialize(Shader *) override;
+        void initialize(Context *) override;
 
-        void update(Shader *) override;
+        void update(Context *) override;
 
-        void draw() override;
+        void draw(Context *) override;
     };
 }
 
