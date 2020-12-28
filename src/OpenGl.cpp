@@ -67,7 +67,7 @@ void OpenGl::clear() {
 }
 
 
-std::vector<ModelContext> createContexts(std::vector<Drawable*> drawables) {
+std::vector<ModelContext> createContexts(const std::vector<Drawable*>& drawables) {
     std::vector<ModelContext> contexts;
 
     for (Drawable *drawable : drawables) {

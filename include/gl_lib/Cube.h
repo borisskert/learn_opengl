@@ -32,6 +32,9 @@ namespace gl_lib {
         const glm::vec3 colorG;
         const glm::vec3 colorH;
 
+        glm::vec3 position;
+        float angle;
+
         TextureUnit texture;
 
 
@@ -69,6 +72,8 @@ namespace gl_lib {
                 glm::vec3 e, glm::vec3 f, glm::vec3 g, glm::vec3 h,
                 glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC, glm::vec3 colorD,
                 glm::vec3 colorE, glm::vec3 colorF, glm::vec3 colorG, glm::vec3 colorH,
+                glm::vec3 position,
+                float angle,
                 TextureUnit texture
         );
 

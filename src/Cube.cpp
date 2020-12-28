@@ -52,12 +52,16 @@ namespace gl_lib {
             glm::vec3 e, glm::vec3 f, glm::vec3 g, glm::vec3 h,
             glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC, glm::vec3 colorD,
             glm::vec3 colorE, glm::vec3 colorF, glm::vec3 colorG, glm::vec3 colorH,
+            glm::vec3 position,
+            float angle,
             TextureUnit texture
     )
             : a(a), b(b), c(c), d(d),
               e(e), f(f), g(g), h(h),
               colorA(colorA), colorB(colorB), colorC(colorC), colorD(colorD),
               colorE(colorE), colorF(colorF), colorG(colorG), colorH(colorH),
+              position(position),
+              angle(angle),
               texture(texture) {}
 
 
@@ -130,14 +134,14 @@ namespace gl_lib {
 
         shader->setInt("texture1", 0);
         shader->setInt("texture2", 1);
-
-        glm::mat4 model = glm::mat4(1.0f);
-        shader->setMat4("model", model);
     }
 
 
     void Cube::update(Shader* shader) {
         glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, position);
+        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+
         model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
         shader->setMat4("model", model);
 
