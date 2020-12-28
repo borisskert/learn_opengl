@@ -12,6 +12,7 @@
 #include "TextureUnit.h"
 #include "ContextContainer.h"
 #include "Camera.h"
+#include "Watch.h"
 
 
 namespace gl_lib {
@@ -23,6 +24,7 @@ namespace gl_lib {
         std::vector<Drawable *> models;
         TextureUnit textureUnit;
         Camera camera = Camera::create();
+        Watch watch;
 
         ContextContainer createContext(const std::vector<Drawable *> &drawables);
 

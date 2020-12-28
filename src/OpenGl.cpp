@@ -62,7 +62,7 @@ void OpenGl::processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     else {
-        const float cameraSpeed = 0.05f;
+        const float cameraSpeed = 10.0 * watch.getDelta();
 
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
             camera.forward(cameraSpeed);
@@ -123,6 +123,8 @@ void OpenGl::runEngine(
     }
 
     while (!glfwWindowShouldClose(window)) {
+        watch.startFrame();
+
         processInput(window);
 
         clear();
