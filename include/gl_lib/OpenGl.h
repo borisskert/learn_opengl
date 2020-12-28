@@ -11,6 +11,7 @@
 #include "OpenGlBuffer.h"
 #include "TextureUnit.h"
 #include "ContextContainer.h"
+#include "Camera.h"
 
 
 namespace gl_lib {
@@ -21,6 +22,7 @@ namespace gl_lib {
         unsigned int screenHeight;
         std::vector<Drawable *> models;
         TextureUnit textureUnit;
+        Camera camera = Camera::create();
 
         ContextContainer createContext(const std::vector<Drawable *> &drawables);
 

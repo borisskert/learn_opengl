@@ -2,6 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <gl_lib/ContextContainer.h>
+#include <gl_lib/Camera.h>
 
 
 using namespace gl_lib;
@@ -60,6 +61,18 @@ void OpenGl::initializeViewport(GLFWwindow *window) {
 void OpenGl::processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    else {
+        const float cameraSpeed = 0.05f;
+
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            camera.forward(cameraSpeed);
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            camera.backward(cameraSpeed);
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            camera.strafeLeft(cameraSpeed);
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            camera.strafeRight(cameraSpeed);
+    }
 }
 
 
@@ -100,9 +113,7 @@ void OpenGl::runEngine(
         Context context = contexts.getFor(drawable);
 
         context.shader->use();
-        glm::mat4 view = glm::mat4(1.0f);
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-        context.shader->setMat4("view", view);
+        context.shader->setMat4("view", camera.getView());
 
         glm::mat4 projection;
         projection = glm::perspective(glm::radians(45.0f), (float) screenWidth / (float) screenHeight, 0.1f, 100.0f);
@@ -120,6 +131,7 @@ void OpenGl::runEngine(
             Context context = contexts.getFor(drawable);
 
             context.shader->use();
+            context.shader->setMat4("view", camera.getView());
 
             drawable->update(&context);
             drawable->draw(&context);
