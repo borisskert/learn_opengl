@@ -30,7 +30,9 @@ namespace gl_lib {
                 glm::vec3 positionA, glm::vec3 positionB, glm::vec3 positionC,
                 glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC);
 
-        void initialize() override;
+        void initialize(Shader *) override;
+
+        void update(Shader *) override;
 
         void draw() override;
     };

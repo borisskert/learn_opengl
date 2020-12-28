@@ -42,7 +42,7 @@ namespace gl_lib {
               colorA(colorA), colorB(colorB), colorC(colorC) {}
 
 
-    void ColorfulTriangle::initialize() {
+    void ColorfulTriangle::initialize(Shader*) {
         buffer.initialize();
 
         this->buffer.bindVertexArray();
@@ -50,6 +50,11 @@ namespace gl_lib {
 
         this->buffer.bindElementBuffer();
         this->configureElementBuffer();
+    }
+
+
+    void ColorfulTriangle::update(Shader*) {
+
     }
 
 

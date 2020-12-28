@@ -2,6 +2,7 @@
 #include <gl_lib/OpenGl.h>
 #include <gl_lib/TextureUnit.h>
 #include <gl_lib/TexturedRectangle.h>
+#include <gl_lib/Cube.h>
 
 
 // settings
@@ -20,19 +21,27 @@ int main() {
     textureUnit.addTexture(&containerTexture);
     textureUnit.addTexture(&awesomefaceTexture);
 
-    gl_lib::TexturedRectangle texturedRectangle(
-            glm::vec3(0.5f, 0.5f, 0.0f),
-            glm::vec3(0.5f, -0.5f, 0.0f),
-            glm::vec3(-0.5f, -0.5f, 0.0f),
-            glm::vec3(-0.5f, 0.5f, 0.0f),
+    gl_lib::Cube cube(
+            glm::vec3(-0.5f, -0.5f, 0.5f),
+            glm::vec3(0.5f, -0.5f, 0.5f),
+            glm::vec3(0.5f, 0.5f, 0.5f),
+            glm::vec3(-0.5f, 0.5f, 0.5f),
+            glm::vec3(-0.5f, -0.5f, -0.5f),
+            glm::vec3(0.5f, -0.5f, -0.5f),
+            glm::vec3(0.5f, 0.5f, -0.5f),
+            glm::vec3(-0.5f, 0.5f, -0.5f),
+            glm::vec3(0.0f, 0.0f, 1.0f),
             glm::vec3(1.0f, 0.0f, 0.0f),
             glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 0.0f, 1.0f),
+            glm::vec3(0.0f, 1.0f, 1.0f),
             glm::vec3(1.0f, 1.0f, 0.0f),
+            glm::vec3(1.0f, 0.0f, 1.0f),
+            glm::vec3(1.0f, 1.0f, 1.0f),
+            glm::vec3(0.5f, 1.0f, 0.5f),
             textureUnit
     );
 
-    models.push_back(&texturedRectangle);
+    models.push_back(&cube);
 
     try {
         gl_lib::OpenGl openGl(SCREEN_WIDTH, SCREEN_HEIGHT, models);

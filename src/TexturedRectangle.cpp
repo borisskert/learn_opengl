@@ -51,7 +51,7 @@ namespace gl_lib {
     }
 
 
-    void TexturedRectangle::initialize() {
+    void TexturedRectangle::initialize(Shader*) {
         buffer.initialize();
 
         this->buffer.bindVertexArray();
@@ -61,6 +61,11 @@ namespace gl_lib {
         this->configureElementBuffer();
 
         this->texture.initialize();
+    }
+
+
+    void TexturedRectangle::update(Shader*) {
+
     }
 
 

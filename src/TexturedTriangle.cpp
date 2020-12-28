@@ -50,7 +50,7 @@ namespace gl_lib {
               colorA(colorA), colorB(colorB), colorC(colorC), texture(texture) {}
 
 
-    void TexturedTriangle::initialize() {
+    void TexturedTriangle::initialize(Shader*) {
         buffer.initialize();
 
         this->buffer.bindVertexArray();
@@ -60,6 +60,11 @@ namespace gl_lib {
         this->configureElementBuffer();
 
         this->texture.initialize();
+    }
+
+
+    void TexturedTriangle::update(Shader*) {
+
     }
 
 

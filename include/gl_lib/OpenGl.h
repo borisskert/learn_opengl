@@ -8,9 +8,16 @@
 #include "ShaderInitializationException.h"
 #include "Drawable.h"
 #include "Shader.h"
+#include "OpenGlBuffer.h"
 
 
 namespace gl_lib {
+
+    struct ModelContext {
+        Drawable* drawable;
+        Shader* shader;
+        OpenGlBuffer* buffer;
+    };
 
     class OpenGl {
     private:
@@ -57,7 +64,7 @@ namespace gl_lib {
          */
         void processInput(GLFWwindow *window);
 
-        void render();
+        void clear();
 
         /**
          * render loop

@@ -35,7 +35,7 @@ namespace gl_lib {
             : a(a), b(b), c(c) {}
 
 
-    void Triangle::initialize() {
+    void Triangle::initialize(Shader*) {
         buffer.initialize();
 
         this->buffer.bindVertexArray();
@@ -43,6 +43,11 @@ namespace gl_lib {
 
         this->buffer.bindElementBuffer();
         this->configureElementBuffer();
+    }
+
+
+    void Triangle::update(Shader*) {
+
     }
 
 

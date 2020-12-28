@@ -61,42 +61,61 @@ void OpenGl::processInput(GLFWwindow *window) {
 }
 
 
-void OpenGl::render() {
+void OpenGl::clear() {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+
+std::vector<ModelContext> createContexts(std::vector<Drawable*> drawables) {
+    std::vector<ModelContext> contexts;
+
+    for (Drawable *drawable : drawables) {
+        ModelContext model{};
+        model.drawable = drawable;
+        model.shader = new Shader(
+                "assets/shader/vertex.shader",
+                "assets/shader/fragment.shader"
+        );
+        model.buffer = new OpenGlBuffer();
+
+        contexts.push_back(model);
+    }
+
+    return contexts;
 }
 
 
 void OpenGl::runEngine(
         GLFWwindow *window
 ) {
-    Shader shaderProgram(
-            "assets/shader/vertex.shader",
-            "assets/shader/fragment.shader"
-    );
+    glEnable(GL_DEPTH_TEST);
 
-    for (Drawable *drawable : models) {
-        drawable->initialize();
+    std::vector<ModelContext> contexts = createContexts(models);
+
+    for (ModelContext context : contexts) {
+        context.shader->use();
+        glm::mat4 view = glm::mat4(1.0f);
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        context.shader->setMat4("view", view);
+
+        glm::mat4 projection;
+        projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+        context.shader->setMat4("projection", projection);
+
+        context.drawable->initialize(context.shader);
     }
-
-    shaderProgram.use();
-    shaderProgram.setInt("texture1", 0);
-    shaderProgram.setInt("texture2", 1);
 
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
 
-        render();
+        clear();
 
-        glm::mat4 trans = glm::mat4(1.0f);
-        double time = glfwGetTime();
-        trans = glm::translate(trans, glm::vec3(glm::cos(time), glm::sin(time), 0.0f));
-        trans = glm::rotate(trans, (float) time, glm::vec3(0.0f, 0.0f, 1.0f));
+        for (ModelContext model : contexts) {
+            model.shader->use();
 
-        shaderProgram.setMat4("transform", trans);
-
-        for (Drawable *drawable : models) {
-            drawable->draw();
+            model.drawable->update(model.shader);
+            model.drawable->draw();
         }
 
         glfwSwapBuffers(window);
