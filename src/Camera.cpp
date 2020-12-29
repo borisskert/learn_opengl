@@ -6,7 +6,7 @@ namespace gl_lib {
 
     Camera::Camera(glm::vec3 position, glm::vec3 up)
             : position(position),
-              up(up) {
+              up(up), worldUp(up) {
         update();
     }
 
@@ -23,7 +23,7 @@ namespace gl_lib {
 
     void Camera::update() {
         this->front = calculateFront(this->yaw, this->pitch);
-        this->right = glm::normalize(glm::cross(this->front, this->up));
+        this->right = glm::normalize(glm::cross(this->front, this->worldUp));
         this->up = glm::normalize(glm::cross(right, front));
     }
 

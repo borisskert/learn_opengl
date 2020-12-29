@@ -12,6 +12,7 @@ namespace gl_lib {
         glm::vec3 front;
         glm::vec3 up;
         glm::vec3 right;
+        const glm::vec3 worldUp;
 
         float yaw = -90.0f;
         float pitch = 0.0f;
