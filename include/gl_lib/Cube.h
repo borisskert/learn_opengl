@@ -12,8 +12,6 @@ namespace gl_lib {
 
     class Cube : public Drawable {
     private:
-        OpenGlBuffer buffer;
-
         glm::vec3 a;
         glm::vec3 b;
         glm::vec3 c;

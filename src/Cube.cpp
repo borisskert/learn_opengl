@@ -116,9 +116,9 @@ namespace gl_lib {
 
 
     void Cube::initialize(Context *context) {
-        buffer.initialize();
+        context->buffer->initialize();
 
-        this->buffer.bindVertexArray();
+        context->buffer->bindVertexArray();
         this->configureVertexArray();
 
         context->textures->initialize();
@@ -150,7 +150,7 @@ namespace gl_lib {
 
     void Cube::draw(Context *context) {
         context->textures->bindTextures();
-        buffer.bindVertexArray();
+        context->buffer->bindVertexArray();
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 }
