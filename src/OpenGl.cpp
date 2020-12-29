@@ -122,7 +122,7 @@ void OpenGl::runEngine(
         context.shader->setMat4("view", camera.getView());
 
         glm::mat4 projection;
-        projection = glm::perspective(glm::radians(45.0f), (float) screenWidth / (float) screenHeight, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(fieldOfView), (float) screenWidth / (float) screenHeight, 0.1f, 100.0f);
         context.shader->setMat4("projection", projection);
 
         drawable->initialize(&context);
@@ -140,6 +140,9 @@ void OpenGl::runEngine(
 
             context.shader->use();
             context.shader->setMat4("view", camera.getView());
+
+            glm::mat4 projection = glm::perspective(glm::radians(fieldOfView), (float) screenWidth / (float) screenHeight, 0.1f, 100.0f);
+            context.shader->setMat4("projection", projection);
 
             drawable->update(&context);
             drawable->draw(&context);
@@ -166,10 +169,21 @@ void OpenGl::start() {
 }
 
 
-void OpenGl::onMouseInput(GLFWwindow* window, double x, double y) {
+void OpenGl::onMouseMove(GLFWwindow* window, double x, double y) {
     mousePosition->update(glm::vec2(x, y));
 
     const float sensitivity = 0.1f;
     glm::vec2 offset = mousePosition->getOffset();
     camera.rotate(offset * sensitivity);
+}
+
+
+void OpenGl::onMouseScroll(GLFWwindow *window, double x, double y) {
+    fieldOfView -= (float)y;
+    if (fieldOfView < 1.0f)
+        fieldOfView = 1.0f;
+    if (fieldOfView > 45.0f)
+        fieldOfView = 45.0f;
+
+    std::cout << fieldOfView << std::endl;
 }

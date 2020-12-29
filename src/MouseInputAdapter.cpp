@@ -10,10 +10,16 @@ namespace gl_lib {
 
     void MouseInputAdapter::registerCallback(gl_lib::MouseInputHandler *handler) {
         staticInstance = handler;
-        glfwSetCursorPosCallback(window, callbackFunction);
+
+        glfwSetCursorPosCallback(window, mouseMovementCallbackFunction);
+        glfwSetScrollCallback(window, mouseScrollCallbackFunction);
     }
 
-    void MouseInputAdapter::callbackFunction(GLFWwindow *window, double x, double y) {
-        staticInstance->onMouseInput(window, x, y);
+    void MouseInputAdapter::mouseMovementCallbackFunction(GLFWwindow *window, double x, double y) {
+        staticInstance->onMouseMove(window, x, y);
+    }
+
+    void MouseInputAdapter::mouseScrollCallbackFunction(GLFWwindow *window, double x, double y) {
+        staticInstance->onMouseScroll(window, x, y);
     }
 }

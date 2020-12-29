@@ -11,16 +11,18 @@ namespace gl_lib {
 
     class MouseInputAdapter {
     private:
-        GLFWwindow* window;
+        GLFWwindow *window;
         static gl_lib::MouseInputHandler *staticInstance;
 
-        static void callbackFunction(GLFWwindow *, double, double);
+        static void mouseMovementCallbackFunction(GLFWwindow *, double, double);
+
+        static void mouseScrollCallbackFunction(GLFWwindow *, double, double);
 
     public:
 
         explicit MouseInputAdapter(GLFWwindow *);
 
-        void registerCallback(gl_lib::MouseInputHandler*);
+        void registerCallback(gl_lib::MouseInputHandler *);
     };
 }
 

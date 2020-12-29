@@ -7,9 +7,9 @@ namespace gl_lib {
 
     class MousePosition {
     private:
-        glm::vec2 last;
-        glm::vec2 offset;
-        bool hasBeenUpdated = false;
+        glm::vec2 lastCursorPosition;
+        glm::vec2 cursorPositionOffset;
+        bool hasCursorBeenUpdated = false;
 
     public:
         MousePosition(int screenWidth, int screenHeight);

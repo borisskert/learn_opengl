@@ -31,6 +31,8 @@ namespace gl_lib {
         MouseInputAdapter* mouseInputAdapter;
         MousePosition* mousePosition;
 
+        float fieldOfView = 45.0f;
+
         ContextContainer createContext(const std::vector<Drawable *> &drawables);
     public:
         explicit OpenGl(unsigned int screenWidthInPixels, unsigned int screenHeightInPixels,
@@ -81,7 +83,9 @@ namespace gl_lib {
 
         void start();
 
-        void onMouseInput(GLFWwindow* window, double x, double y) override;
+        void onMouseMove(GLFWwindow* window, double x, double y) override;
+
+        void onMouseScroll(GLFWwindow* window, double x, double y) override;
     };
 }
 

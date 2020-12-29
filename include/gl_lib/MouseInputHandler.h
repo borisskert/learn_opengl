@@ -6,10 +6,11 @@ namespace gl_lib {
 
     class MouseInputHandler {
     public:
-        virtual void onMouseInput(GLFWwindow* window, double x, double y) = 0;
+        virtual void onMouseMove(GLFWwindow *window, double x, double y) {};
+
+        virtual void onMouseScroll(GLFWwindow *window, double x, double y) {};
     };
 }
-
 
 
 #endif //LEARN_OPENGL_MOUSEINPUTHANDLER_H
