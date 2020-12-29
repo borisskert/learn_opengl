@@ -60,6 +60,15 @@ namespace gl_lib {
         Cube(
                 glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d,
                 glm::vec3 e, glm::vec3 f, glm::vec3 g, glm::vec3 h,
+                glm::vec3 color,
+                glm::vec3 position,
+                float angle
+        );
+
+
+        Cube(
+                glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d,
+                glm::vec3 e, glm::vec3 f, glm::vec3 g, glm::vec3 h,
                 glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC, glm::vec3 colorD,
                 glm::vec3 colorE, glm::vec3 colorF, glm::vec3 colorG, glm::vec3 colorH,
                 glm::vec3 position,

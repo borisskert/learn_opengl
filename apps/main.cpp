@@ -1,8 +1,8 @@
 #include <iostream>
 #include <gl_lib/OpenGl.h>
 #include <gl_lib/TextureUnit.h>
-#include <gl_lib/TexturedRectangle.h>
 #include <gl_lib/Cube.h>
+#include <gl_lib/LightSource.h>
 
 
 // settings
@@ -237,22 +237,21 @@ int main() {
             glm::vec3(0.5f, -0.5f, -0.5f),
             glm::vec3(0.5f, 0.5f, -0.5f),
             glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 0.0f),
-            glm::vec3(1.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f),
-            glm::vec3(0.5f, 1.0f, 0.5f),
+            glm::vec3(1.0f),
             glm::vec3(-1.3f, 1.0f, -1.5f),
             160.0f
     );
 
-    models.push_back(&cube9);
+    models.push_back(&cube10);
+
+    LightSource light(
+            glm::vec3(1.2f, 1.0f, 2.0f),
+            glm::vec3(0.9f, 0.5f, 0.9f),
+            glm::vec3(0.05f)
+    );
 
     try {
-        gl_lib::OpenGl openGl(SCREEN_WIDTH, SCREEN_HEIGHT, models, textureUnit);
+        gl_lib::OpenGl openGl(SCREEN_WIDTH, SCREEN_HEIGHT, models, textureUnit, light);
         openGl.start();
     }
     catch (const gl_lib::ShaderInitializationException &exception) {

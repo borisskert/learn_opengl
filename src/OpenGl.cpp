@@ -2,20 +2,18 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <gl_lib/ContextContainer.h>
-#include <gl_lib/Camera.h>
+#include <gl_lib/LightSource.h>
 
 
 using namespace gl_lib;
 
-OpenGl::OpenGl(
-        unsigned int screenWidthInPixels, unsigned int screenHeightInPixels,
-        std::vector<Drawable *> models,
-        TextureUnit textureUnit
-)
+OpenGl::OpenGl(unsigned int screenWidthInPixels, unsigned int screenHeightInPixels, std::vector<Drawable *> models,
+               TextureUnit unit, gl_lib::LightSource lightSource)
         : screenHeight(screenHeightInPixels),
           screenWidth(screenWidthInPixels),
           models(std::move(models)),
-          textureUnit(textureUnit) {}
+          textureUnit(unit),
+          lightSource(lightSource) {}
 
 
 void OpenGl::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
@@ -98,7 +96,21 @@ ContextContainer OpenGl::createContext(const std::vector<Drawable *> &drawables)
         context.store(drawable, model);
     }
 
+    Context model = createLightContext();
+    context.store(&lightSource, model);
+
     return context;
+}
+
+Context OpenGl::createLightContext() const {
+    Context model{};
+
+    model.shader = new Shader(
+            "assets/shader/lightVertex.shader",
+            "assets/shader/lightFragment.shader"
+    );
+    model.buffer = new OpenGlBuffer();
+    return model;
 }
 
 
@@ -145,6 +157,8 @@ void OpenGl::runEngine(
             context.shader->setMat4("projection", projection);
 
             drawable->update(&context);
+
+            lightSource.renderLight(&context);
             drawable->draw(&context);
         }
 

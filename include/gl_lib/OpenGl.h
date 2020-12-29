@@ -15,6 +15,7 @@
 #include "Watch.h"
 #include "MouseInputAdapter.h"
 #include "MousePosition.h"
+#include "LightSource.h"
 
 
 namespace gl_lib {
@@ -33,11 +34,13 @@ namespace gl_lib {
 
         float fieldOfView = 45.0f;
 
+        LightSource lightSource;
+
         ContextContainer createContext(const std::vector<Drawable *> &drawables);
     public:
         explicit OpenGl(unsigned int screenWidthInPixels, unsigned int screenHeightInPixels,
                         std::vector<Drawable *> models,
-                        TextureUnit unit);
+                        TextureUnit unit, gl_lib::LightSource source);
 
         /**
          * glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -86,6 +89,8 @@ namespace gl_lib {
         void onMouseMove(GLFWwindow* window, double x, double y) override;
 
         void onMouseScroll(GLFWwindow* window, double x, double y) override;
+
+        Context createLightContext() const;
     };
 }
 
