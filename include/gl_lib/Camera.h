@@ -9,15 +9,17 @@ namespace gl_lib {
     class Camera {
     private:
         glm::vec3 position;
-        glm::vec3 target;
-        glm::vec3 direction;
+        glm::vec3 front;
         glm::vec3 up;
         glm::vec3 right;
 
-    public:
-        Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up);
+        float yaw = -90.0f;
+        float pitch = 0.0f;
 
-        void updatePosition(glm::vec3 newPosition);
+        void update();
+
+    public:
+        Camera(glm::vec3 position, glm::vec3 up);
 
         glm::mat4 getView();
 
@@ -25,6 +27,8 @@ namespace gl_lib {
         void backward(float speed);
         void strafeLeft(float speed);
         void strafeRight(float speed);
+
+        void rotate(glm::vec2 offset);
 
         static Camera create();
     };

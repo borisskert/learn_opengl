@@ -13,11 +13,13 @@
 #include "ContextContainer.h"
 #include "Camera.h"
 #include "Watch.h"
+#include "MouseInputAdapter.h"
+#include "MousePosition.h"
 
 
 namespace gl_lib {
 
-    class OpenGl {
+    class OpenGl : public MouseInputHandler {
     private:
         unsigned int screenWidth;
         unsigned int screenHeight;
@@ -26,8 +28,10 @@ namespace gl_lib {
         Camera camera = Camera::create();
         Watch watch;
 
-        ContextContainer createContext(const std::vector<Drawable *> &drawables);
+        MouseInputAdapter* mouseInputAdapter;
+        MousePosition* mousePosition;
 
+        ContextContainer createContext(const std::vector<Drawable *> &drawables);
     public:
         explicit OpenGl(unsigned int screenWidthInPixels, unsigned int screenHeightInPixels,
                         std::vector<Drawable *> models,
@@ -76,6 +80,8 @@ namespace gl_lib {
         );
 
         void start();
+
+        void onMouseInput(GLFWwindow* window, double x, double y) override;
     };
 }
 

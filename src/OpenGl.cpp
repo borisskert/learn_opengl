@@ -106,6 +106,12 @@ void OpenGl::runEngine(
         GLFWwindow *window
 ) {
     glEnable(GL_DEPTH_TEST);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    mousePosition = new MousePosition(screenWidth, screenHeight);
+    mouseInputAdapter = new MouseInputAdapter(window);
+    mouseInputAdapter->registerCallback(this);
+
 
     ContextContainer contexts = createContext(models);
 
@@ -157,4 +163,13 @@ void OpenGl::start() {
     initializeViewport(window);
 
     runEngine(window);
+}
+
+
+void OpenGl::onMouseInput(GLFWwindow* window, double x, double y) {
+    mousePosition->update(glm::vec2(x, y));
+
+    const float sensitivity = 0.1f;
+    glm::vec2 offset = mousePosition->getOffset();
+    camera.rotate(offset * sensitivity);
 }
