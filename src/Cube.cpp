@@ -1,5 +1,7 @@
 #include "gl_lib/Cube.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <gl_lib/Triangle.h>
+#include <gl_lib/Rectangle.h>
 
 
 namespace gl_lib {
@@ -31,59 +33,88 @@ namespace gl_lib {
 
 
     void Cube::configureVertexArray() {
-        float vertices[] = {
-                a.x, a.y, a.z, colorA.x, colorA.y, colorA.z, 0.0f, 0.0f,
-                b.x, b.y, b.z, colorB.x, colorB.y, colorB.z, 1.0f, 0.0f,
-                c.x, c.y, c.z, colorC.x, colorC.y, colorC.z, 1.0f, 1.0f,
-                c.x, c.y, c.z, colorC.x, colorC.y, colorC.z, 1.0f, 1.0f,
-                d.x, d.y, d.z, colorD.x, colorD.y, colorD.z, 0.0f, 1.0f,
-                a.x, a.y, a.z, colorA.x, colorA.y, colorA.z, 0.0f, 0.0f,
+        Rectangle abcd = Rectangle::builder()
+                ->positionA(a)
+                ->positionB(b)
+                ->positionC(c)
+                ->positionD(d)
+                ->colorA(colorA)
+                ->colorB(colorB)
+                ->colorC(colorC)
+                ->colorD(colorD)
+                ->build();
 
-                e.x, e.y, e.z, colorE.x, colorE.y, colorE.z, 0.0f, 0.0f,
-                f.x, f.y, f.z, colorF.x, colorF.y, colorF.z, 1.0f, 0.0f,
-                g.x, g.y, g.z, colorG.x, colorG.y, colorG.z, 1.0f, 1.0f,
-                g.x, g.y, g.z, colorG.x, colorG.y, colorG.z, 1.0f, 1.0f,
-                h.x, h.y, h.z, colorH.x, colorH.y, colorH.z, 0.0f, 1.0f,
-                e.x, e.y, e.z, colorE.x, colorE.y, colorE.z, 0.0f, 0.0f,
+        Rectangle efgh = Rectangle::builder()
+                ->positionA(e)
+                ->positionB(f)
+                ->positionC(g)
+                ->positionD(h)
+                ->colorA(colorE)
+                ->colorB(colorF)
+                ->colorC(colorG)
+                ->colorD(colorH)
+                ->build();
 
-                h.x, h.y, h.z, colorH.x, colorH.y, colorH.z, 1.0f, 0.0f,
-                d.x, d.y, d.z, colorD.x, colorD.y, colorD.z, 1.0f, 1.0f,
-                a.x, a.y, a.z, colorA.x, colorA.y, colorA.z, 0.0f, 1.0f,
-                a.x, a.y, a.z, colorA.x, colorA.y, colorA.z, 0.0f, 1.0f,
-                e.x, e.y, e.z, colorE.x, colorE.y, colorE.z, 0.0f, 0.0f,
-                h.x, h.y, h.z, colorH.x, colorH.y, colorH.z, 1.0f, 0.0f,
+        Rectangle hdae = Rectangle::builder()
+                ->positionA(h)
+                ->positionB(d)
+                ->positionC(a)
+                ->positionD(e)
+                ->colorA(colorH)
+                ->colorB(colorD)
+                ->colorC(colorA)
+                ->colorD(colorE)
+                ->build();
 
-                g.x, g.y, g.z, colorG.x, colorG.y, colorG.z, 1.0f, 0.0f,
-                c.x, c.y, c.z, colorC.x, colorC.y, colorC.z, 1.0f, 1.0f,
-                b.x, b.y, b.z, colorB.x, colorB.y, colorB.z, 0.0f, 1.0f,
-                b.x, b.y, b.z, colorB.x, colorB.y, colorB.z, 0.0f, 1.0f,
-                f.x, f.y, f.z, colorF.x, colorF.y, colorF.z, 0.0f, 0.0f,
-                g.x, g.y, g.z, colorG.x, colorG.y, colorG.z, 1.0f, 0.0f,
+        Rectangle gcbf = Rectangle::builder()
+                ->positionA(g)
+                ->positionB(c)
+                ->positionC(b)
+                ->positionD(f)
+                ->colorA(colorG)
+                ->colorB(colorC)
+                ->colorC(colorB)
+                ->colorD(colorF)
+                ->build();
 
-                a.x, a.y, a.z, colorA.x, colorA.y, colorA.z, 0.0f, 1.0f,
-                b.x, b.y, b.z, colorB.x, colorB.y, colorB.z, 1.0f, 1.0f,
-                f.x, f.y, f.z, colorF.x, colorF.y, colorF.z, 1.0f, 0.0f,
-                f.x, f.y, f.z, colorF.x, colorF.y, colorF.z, 1.0f, 0.0f,
-                e.x, e.y, e.z, colorE.x, colorE.y, colorE.z, 0.0f, 0.0f,
-                a.x, a.y, a.z, colorA.x, colorA.y, colorA.z, 0.0f, 1.0f,
+        Rectangle abfe = Rectangle::builder()
+                ->positionA(a)
+                ->positionB(b)
+                ->positionC(f)
+                ->positionD(e)
+                ->colorA(colorA)
+                ->colorB(colorB)
+                ->colorC(colorF)
+                ->colorD(colorE)
+                ->build();
 
-                d.x, d.y, d.z, colorD.x, colorD.y, colorD.z, 0.0f, 1.0f,
-                c.x, c.y, c.z, colorC.x, colorC.y, colorC.z, 1.0f, 1.0f,
-                g.x, g.y, g.z, colorG.x, colorG.y, colorG.z, 1.0f, 0.0f,
-                g.x, g.y, g.z, colorG.x, colorG.y, colorG.z, 1.0f, 0.0f,
-                h.x, h.y, h.z, colorH.x, colorH.y, colorH.z, 0.0f, 0.0f,
-                d.x, d.y, d.z, colorD.x, colorD.y, colorD.z, 0.0f, 1.0f
-        };
+        Rectangle dcgh = Rectangle::builder()
+                ->positionA(d)
+                ->positionB(c)
+                ->positionC(g)
+                ->positionD(h)
+                ->colorA(colorD)
+                ->colorB(colorC)
+                ->colorC(colorG)
+                ->colorD(colorH)
+                ->build();
 
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        Vertices vertices = abcd.toVertices()
+                + efgh.toVertices()
+                + hdae.toVertices()
+                + gcbf.toVertices()
+                + abfe.toVertices()
+                + dcgh.toVertices();
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) 0);
+        glBufferData(GL_ARRAY_BUFFER, vertices.getSize() * sizeof(float), vertices.toArray(), GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *) 0);
         glEnableVertexAttribArray(0);
 
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (3 * sizeof(float)));
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *) (3 * sizeof(float)));
         glEnableVertexAttribArray(1);
 
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *) (6 * sizeof(float)));
         glEnableVertexAttribArray(2);
     }
 
