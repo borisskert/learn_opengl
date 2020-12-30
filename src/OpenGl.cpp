@@ -60,7 +60,7 @@ void OpenGl::processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     else {
-        const float cameraSpeed = 10.0 * watch.getDelta();
+        const float cameraSpeed = 2.0f * watch.getDelta();
 
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
             camera.forward(cameraSpeed);
@@ -155,6 +155,13 @@ void OpenGl::runEngine(
         clear();
 
         lightSource.setPosition(glm::vec3(5.0f * cos(watch.getCurrent() / 2), 5.0f * sin(watch.getCurrent() / 2), 0.0f));
+
+        glm::vec3 lightColor;
+        lightColor.x = sin(glfwGetTime() * 2.0f);
+        lightColor.y = sin(glfwGetTime() * 0.7f);
+        lightColor.z = sin(glfwGetTime() * 1.3f);
+
+        lightSource.setColor(lightColor);
 
         for (Drawable *drawable : contexts.getDrawables()) {
             Context context = contexts.getFor(drawable);

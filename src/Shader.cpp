@@ -37,6 +37,11 @@ namespace gl_lib {
         glUniform3fv(uniformLocation, 1, &value[0]);
     }
 
+    void Shader::setVec3(const std::string &name, const float & x, const float & y, const float & z) const {
+        unsigned int uniformLocation = glGetUniformLocation(this->programId, name.c_str());
+        glUniform3f(uniformLocation, x, y, z);
+    }
+
     void Shader::setMat4(const std::string &name, const glm::mat4 &value) const {
         unsigned int uniformLocation = glGetUniformLocation(this->programId, name.c_str());
         glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(value));

@@ -63,6 +63,12 @@ namespace gl_lib {
     void ModelAdapter::draw(Context *context) {
         context->textures->bindTextures();
         context->buffer->bindVertexArray();
+
+        context->shader->setVec3("material.ambient", glm::vec3(1.0f));
+        context->shader->setVec3("material.diffuse", glm::vec3(1.0f));
+        context->shader->setVec3("material.specular", glm::vec3(0.5f));
+        context->shader->setFloat("material.shininess", 32.0f);
+
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 
