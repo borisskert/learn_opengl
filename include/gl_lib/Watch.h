@@ -15,6 +15,8 @@ namespace gl_lib {
         void startFrame();
 
         double getDelta();
+
+        double getCurrent();
     };
 }
 

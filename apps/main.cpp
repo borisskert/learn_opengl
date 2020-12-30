@@ -107,7 +107,7 @@ int main() {
     std::vector<gl_lib::Drawable *> models = buildCubes();
 
     LightSource light(
-            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(5.0f, 0.0f, 0.0f),
             glm::vec3(1.0f, 0.9569, 0.5176),
             1.0f,
             glm::vec3(0.1f)

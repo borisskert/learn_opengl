@@ -114,4 +114,8 @@ namespace gl_lib {
     float LightSource::getStrength() const {
         return strength;
     }
+
+    void LightSource::setPosition(glm::vec3 value) {
+        this->position = value;
+    }
 }

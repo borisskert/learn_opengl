@@ -150,6 +150,8 @@ void OpenGl::runEngine(
 
         clear();
 
+        lightSource.setPosition(glm::vec3(5.0f * cos(watch.getCurrent() / 2), 5.0f * sin(watch.getCurrent() / 2), 0.0f));
+
         for (Drawable *drawable : contexts.getDrawables()) {
             Context context = contexts.getFor(drawable);
 

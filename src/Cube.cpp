@@ -5,7 +5,7 @@
 
 
 namespace gl_lib {
-    Cube::Cube() {}
+    Cube::Cube() = default;
 
 
     Cube::Cube(Cube const &other) {
@@ -143,13 +143,14 @@ namespace gl_lib {
         model = glm::translate(model, position);
         model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 
-        model = glm::rotate(model, (float) glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        double time = glfwGetTime();
+
+        model = glm::rotate(model, (float) time / 20 * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
         shader->setMat4("model", model);
 
         glm::mat4 trans = glm::mat4(1.0f);
-        double time = glfwGetTime();
-        trans = glm::translate(trans, glm::vec3(glm::cos(time), glm::sin(time), 0.0f));
-        trans = glm::rotate(trans, (float) time, glm::vec3(0.0f, 0.0f, 1.0f));
+        trans = glm::translate(trans, glm::vec3(glm::cos(time / 100), glm::sin(time / 100), 0.0f));
+        trans = glm::rotate(trans, (float) time / 50, glm::vec3(0.0f, 0.0f, 1.0f));
 
         shader->setMat4("transform", trans);
     }

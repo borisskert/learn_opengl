@@ -18,4 +18,9 @@ namespace gl_lib {
     double Watch::getDelta() {
         return currentFrame - lastFrame;
     }
+
+
+    double Watch::getCurrent() {
+        return currentFrame;
+    }
 }

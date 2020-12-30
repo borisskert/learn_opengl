@@ -31,6 +31,8 @@ namespace gl_lib {
         glm::vec3 getColor() const;
 
         float getStrength() const;
+
+        void setPosition(glm::vec3);
     };
 }
 
