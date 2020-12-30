@@ -3,14 +3,11 @@
 
 
 #include <glm/vec3.hpp>
-#include "Drawable.h"
-#include "OpenGlBuffer.h"
-#include "TextureUnit.h"
-#include "Shader.h"
+#include "Model.h"
 
 namespace gl_lib {
 
-    class Cube : public Drawable {
+    class Cube : public Model {
     private:
         glm::vec3 a = glm::vec3(-0.5f, -0.5f, 0.5f);
         glm::vec3 b = glm::vec3(0.5f, -0.5f, 0.5f);
@@ -21,30 +18,39 @@ namespace gl_lib {
         glm::vec3 g = glm::vec3(0.5f, 0.5f, -0.5f);
         glm::vec3 h = glm::vec3(-0.5f, 0.5f, -0.5f);
 
-        glm::vec3 colorA = glm::vec3(0.0f);
-        glm::vec3 colorB = glm::vec3(0.0f);
-        glm::vec3 colorC = glm::vec3(0.0f);
-        glm::vec3 colorD = glm::vec3(0.0f);
-        glm::vec3 colorE = glm::vec3(0.0f);
-        glm::vec3 colorF = glm::vec3(0.0f);
-        glm::vec3 colorG = glm::vec3(0.0f);
-        glm::vec3 colorH = glm::vec3(0.0f);
-
-        glm::vec3 position = glm::vec3(0.0f);
-        float angle = 0.0f;
-
-        void configureVertexArray();
+        glm::vec3 colorABD = glm::vec3(0.0f);
+        glm::vec3 colorADE = glm::vec3(0.0f);
+        glm::vec3 colorABE = glm::vec3(0.0f);
+        glm::vec3 colorBAC = glm::vec3(0.0f);
+        glm::vec3 colorBAF = glm::vec3(0.0f);
+        glm::vec3 colorBCF = glm::vec3(0.0f);
+        glm::vec3 colorCDB = glm::vec3(0.0f);
+        glm::vec3 colorCBG = glm::vec3(0.0f);
+        glm::vec3 colorCGD = glm::vec3(0.0f);
+        glm::vec3 colorDCA = glm::vec3(0.0f);
+        glm::vec3 colorDAH = glm::vec3(0.0f);
+        glm::vec3 colorDHC = glm::vec3(0.0f);
+        glm::vec3 colorEFA = glm::vec3(0.0f);
+        glm::vec3 colorEAH = glm::vec3(0.0f);
+        glm::vec3 colorEHF = glm::vec3(0.0f);
+        glm::vec3 colorFBG = glm::vec3(0.0f);
+        glm::vec3 colorFGE = glm::vec3(0.0f);
+        glm::vec3 colorFBE = glm::vec3(0.0f);
+        glm::vec3 colorGFC = glm::vec3(0.0f);
+        glm::vec3 colorGFH = glm::vec3(0.0f);
+        glm::vec3 colorGCH = glm::vec3(0.0f);
+        glm::vec3 colorHDG = glm::vec3(0.0f);
+        glm::vec3 colorHGE = glm::vec3(0.0f);
+        glm::vec3 colorHED = glm::vec3(0.0f);
 
     public:
         Cube();
 
-        Cube(Cube const &);
+        Cube(const Cube &);
 
-        void initialize(Context *) override;
 
-        void update(Context *) override;
+        Vertices toVertices() override;
 
-        void draw(Context *) override;
 
         class Builder;
 
@@ -75,8 +81,6 @@ namespace gl_lib {
 
         Builder *positionH(glm::vec3);
 
-        Builder *position(glm::vec3);
-
         Builder *color(glm::vec3);
 
         Builder *colorA(glm::vec3);
@@ -95,7 +99,17 @@ namespace gl_lib {
 
         Builder *colorH(glm::vec3);
 
-        Builder *angle(float);
+        Builder *colorABCD(glm::vec3);
+
+        Builder *colorEADH(glm::vec3);
+
+        Builder *colorFEHG(glm::vec3);
+
+        Builder *colorBFGC(glm::vec3);
+
+        Builder *colorBAEF(glm::vec3);
+
+        Builder *colorCGHD(glm::vec3);
 
         Cube build();
     };

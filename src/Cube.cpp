@@ -1,14 +1,13 @@
-#include "gl_lib/Cube.h"
-#include <glm/gtc/matrix_transform.hpp>
-#include <gl_lib/Triangle.h>
 #include <gl_lib/Rectangle.h>
+#include "gl_lib/Cube.h"
 
 
 namespace gl_lib {
+
     Cube::Cube() = default;
 
 
-    Cube::Cube(Cube const &other) {
+    Cube::Cube(const Cube &other) {
         this->a = other.a;
         this->b = other.b;
         this->c = other.c;
@@ -17,31 +16,44 @@ namespace gl_lib {
         this->f = other.f;
         this->g = other.g;
         this->h = other.h;
-
-        this->position = other.position;
-        this->angle = other.angle;
-
-        this->colorA = other.colorA;
-        this->colorB = other.colorB;
-        this->colorC = other.colorC;
-        this->colorD = other.colorD;
-        this->colorE = other.colorE;
-        this->colorF = other.colorF;
-        this->colorG = other.colorG;
-        this->colorH = other.colorH;
+        
+        this->colorABD = other.colorABD;
+        this->colorADE = other.colorADE;
+        this->colorABE = other.colorABE;
+        this->colorBAC = other.colorBAC;
+        this->colorBAF = other.colorBAF;
+        this->colorBCF = other.colorBCF;
+        this->colorCDB = other.colorCDB;
+        this->colorCBG = other.colorCBG;
+        this->colorCGD = other.colorCGD;
+        this->colorDCA = other.colorDCA;
+        this->colorDAH = other.colorDAH;
+        this->colorDHC = other.colorDHC;
+        this->colorEFA = other.colorEFA;
+        this->colorEAH = other.colorEAH;
+        this->colorEHF = other.colorEHF;
+        this->colorFBG = other.colorFBG;
+        this->colorFGE = other.colorFGE;
+        this->colorFBE = other.colorFBE;
+        this->colorGFC = other.colorGFC;
+        this->colorGFH = other.colorGFH;
+        this->colorGCH = other.colorGCH;
+        this->colorHDG = other.colorHDG;
+        this->colorHGE = other.colorHGE;
+        this->colorHED = other.colorHED;
     }
 
 
-    void Cube::configureVertexArray() {
+    Vertices Cube::toVertices() {
         Rectangle adcb = Rectangle::builder()
                 ->positionA(a)
                 ->positionB(d)
                 ->positionC(c)
                 ->positionD(b)
-                ->colorA(colorA)
-                ->colorB(colorB)
-                ->colorC(colorC)
-                ->colorD(colorD)
+                ->colorA(colorABD)
+                ->colorB(colorBAC)
+                ->colorC(colorCDB)
+                ->colorD(colorDCA)
                 ->build();
 
         Rectangle fghe = Rectangle::builder()
@@ -49,10 +61,10 @@ namespace gl_lib {
                 ->positionB(g)
                 ->positionC(h)
                 ->positionD(e)
-                ->colorA(colorF)
-                ->colorB(colorG)
-                ->colorC(colorH)
-                ->colorD(colorE)
+                ->colorA(colorFGE)
+                ->colorB(colorGFH)
+                ->colorC(colorHGE)
+                ->colorD(colorEHF)
                 ->build();
 
         Rectangle ehda = Rectangle::builder()
@@ -60,10 +72,10 @@ namespace gl_lib {
                 ->positionB(h)
                 ->positionC(d)
                 ->positionD(a)
-                ->colorA(colorE)
-                ->colorB(colorH)
-                ->colorC(colorD)
-                ->colorD(colorA)
+                ->colorA(colorEAH)
+                ->colorB(colorHED)
+                ->colorC(colorDAH)
+                ->colorD(colorADE)
                 ->build();
 
         Rectangle bcgf = Rectangle::builder()
@@ -71,10 +83,10 @@ namespace gl_lib {
                 ->positionB(c)
                 ->positionC(g)
                 ->positionD(f)
-                ->colorA(colorB)
-                ->colorB(colorC)
-                ->colorC(colorG)
-                ->colorD(colorF)
+                ->colorA(colorBCF)
+                ->colorB(colorCBG)
+                ->colorC(colorGFC)
+                ->colorD(colorFBG)
                 ->build();
 
         Rectangle eabf = Rectangle::builder()
@@ -82,10 +94,10 @@ namespace gl_lib {
                 ->positionB(a)
                 ->positionC(b)
                 ->positionD(f)
-                ->colorA(colorE)
-                ->colorB(colorA)
-                ->colorC(colorB)
-                ->colorD(colorF)
+                ->colorA(colorEFA)
+                ->colorB(colorABE)
+                ->colorC(colorBAF)
+                ->colorD(colorFBE)
                 ->build();
 
         Rectangle dhgc = Rectangle::builder()
@@ -93,75 +105,19 @@ namespace gl_lib {
                 ->positionB(h)
                 ->positionC(g)
                 ->positionD(c)
-                ->colorA(colorD)
-                ->colorB(colorH)
-                ->colorC(colorG)
-                ->colorD(colorC)
+                ->colorA(colorDHC)
+                ->colorB(colorHDG)
+                ->colorC(colorGCH)
+                ->colorD(colorCGD)
                 ->build();
 
-        Vertices vertices = adcb.toVertices()
-                            + fghe.toVertices()
-                            + ehda.toVertices()
-                            + bcgf.toVertices()
-                            + eabf.toVertices()
-                            + dhgc.toVertices();
-
-        glBufferData(GL_ARRAY_BUFFER, vertices.getSize() * sizeof(float), vertices.toArray(), GL_STATIC_DRAW);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *) 0);
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *) (3 * sizeof(float)));
-        glEnableVertexAttribArray(1);
-
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *) (6 * sizeof(float)));
-        glEnableVertexAttribArray(2);
-
-        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *) (8 * sizeof(float)));
-        glEnableVertexAttribArray(3);
+        return adcb.toVertices()
+               + fghe.toVertices()
+               + ehda.toVertices()
+               + bcgf.toVertices()
+               + eabf.toVertices()
+               + dhgc.toVertices();
     }
-
-
-    void Cube::initialize(Context *context) {
-        context->buffer->initialize();
-
-        context->buffer->bindVertexArray();
-        this->configureVertexArray();
-
-        context->textures->initialize();
-
-        Shader *shader = context->shader;
-        shader->setInt("texture1", 0);
-        shader->setInt("texture2", 1);
-    }
-
-
-    void Cube::update(Context *context) {
-        Shader *shader = context->shader;
-
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, position);
-        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-
-        double time = glfwGetTime();
-
-        model = glm::rotate(model, (float) time / 20 * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        shader->setMat4("model", model);
-
-        glm::mat4 trans = glm::mat4(1.0f);
-        trans = glm::translate(trans, glm::vec3(glm::cos(time / 100), glm::sin(time / 100), 0.0f));
-        trans = glm::rotate(trans, (float) time / 50, glm::vec3(0.0f, 0.0f, 1.0f));
-
-        shader->setMat4("transform", trans);
-    }
-
-
-    void Cube::draw(Context *context) {
-        context->textures->bindTextures();
-        context->buffer->bindVertexArray();
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-    }
-
 
     Cube::Builder *Cube::builder() {
         return new Builder();
@@ -211,71 +167,155 @@ namespace gl_lib {
         return this;
     }
 
-    Cube::Builder *Cube::Builder::position(glm::vec3 value) {
-        cube.position = value;
-        return this;
-    }
-
     Cube::Builder *Cube::Builder::color(glm::vec3 value) {
-        cube.colorA = value;
-        cube.colorB = value;
-        cube.colorC = value;
-        cube.colorD = value;
-        cube.colorE = value;
-        cube.colorF = value;
-        cube.colorG = value;
-        cube.colorH = value;
+        cube.colorABD = value;
+        cube.colorADE = value;
+        cube.colorABE = value;
+        cube.colorBAC = value;
+        cube.colorBAF = value;
+        cube.colorBCF = value;
+        cube.colorCDB = value;
+        cube.colorCBG = value;
+        cube.colorCGD = value;
+        cube.colorDCA = value;
+        cube.colorDAH = value;
+        cube.colorDHC = value;
+        cube.colorEFA = value;
+        cube.colorEAH = value;
+        cube.colorEHF = value;
+        cube.colorFBG = value;
+        cube.colorFGE = value;
+        cube.colorFBE = value;
+        cube.colorGFC = value;
+        cube.colorGFH = value;
+        cube.colorGCH = value;
+        cube.colorHDG = value;
+        cube.colorHGE = value;
+        cube.colorHED = value;
 
         return this;
     }
 
     Cube::Builder *Cube::Builder::colorA(glm::vec3 value) {
-        cube.colorA = value;
+        cube.colorABD = value;
+        cube.colorADE = value;
+        cube.colorABE = value;
+
         return this;
     }
 
     Cube::Builder *Cube::Builder::colorB(glm::vec3 value) {
-        cube.colorB = value;
+        cube.colorBAC = value;
+        cube.colorBAF = value;
+        cube.colorBCF = value;
+
         return this;
     }
 
     Cube::Builder *Cube::Builder::colorC(glm::vec3 value) {
-        cube.colorC = value;
+        cube.colorCDB = value;
+        cube.colorCBG = value;
+        cube.colorCGD = value;
+
         return this;
     }
 
     Cube::Builder *Cube::Builder::colorD(glm::vec3 value) {
-        cube.colorD = value;
+        cube.colorDCA = value;
+        cube.colorDAH = value;
+        cube.colorDHC = value;
+
         return this;
     }
 
     Cube::Builder *Cube::Builder::colorE(glm::vec3 value) {
-        cube.colorE = value;
+        cube.colorEFA = value;
+        cube.colorEAH = value;
+        cube.colorEHF = value;
+
         return this;
     }
 
     Cube::Builder *Cube::Builder::colorF(glm::vec3 value) {
-        cube.colorF = value;
+        cube.colorFBG = value;
+        cube.colorFGE = value;
+        cube.colorFBE = value;
+
         return this;
     }
 
     Cube::Builder *Cube::Builder::colorG(glm::vec3 value) {
-        cube.colorG = value;
+        cube.colorGFC = value;
+        cube.colorGFH = value;
+        cube.colorGCH = value;
+
         return this;
     }
 
     Cube::Builder *Cube::Builder::colorH(glm::vec3 value) {
-        cube.colorH = value;
-        return this;
-    }
+        cube.colorHDG = value;
+        cube.colorHGE = value;
+        cube.colorHED = value;
 
-    Cube::Builder *Cube::Builder::angle(float value) {
-        cube.angle = value;
         return this;
     }
 
 
     Cube Cube::Builder::build() {
         return cube;
+    }
+
+    Cube::Builder *Cube::Builder::colorABCD(glm::vec3 value) {
+        cube.colorABD = value;
+        cube.colorBAC = value;
+        cube.colorCDB = value;
+        cube.colorDCA = value;
+
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorEADH(glm::vec3 value) {
+        cube.colorEAH = value;
+        cube.colorADE = value;
+        cube.colorDAH = value;
+        cube.colorHED = value;
+
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorFEHG(glm::vec3 value) {
+        cube.colorFGE = value;
+        cube.colorEHF = value;
+        cube.colorHGE = value;
+        cube.colorGFH = value;
+
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorBFGC(glm::vec3 value) {
+        cube.colorBCF = value;
+        cube.colorFBG = value;
+        cube.colorGFC = value;
+        cube.colorCBG = value;
+
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorBAEF(glm::vec3 value) {
+        cube.colorBAF = value;
+        cube.colorABE = value;
+        cube.colorEFA = value;
+        cube.colorFBE = value;
+
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorCGHD(glm::vec3 value) {
+        cube.colorCGD = value;
+        cube.colorGCH = value;
+        cube.colorHDG = value;
+        cube.colorDHC = value;
+
+        return this;
     }
 }
