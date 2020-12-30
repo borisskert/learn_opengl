@@ -15,11 +15,11 @@ namespace gl_lib {
             glm::vec3 color,
             float strength,
             glm::vec3 scale
-            )
+    )
             : position(position),
-            color(color),
-            strength(strength),
-            scale(scale) {}
+              color(color),
+              strength(strength),
+              scale(scale) {}
 
 
     void LightSource::configureVertexArray() const {
@@ -102,7 +102,16 @@ namespace gl_lib {
     };
 
     void LightSource::renderLight(Context *context) {
-        context->shader->setVec3("ambientLightColor", color);
-        context->shader->setFloat("ambientLightStrength", strength);
+        context->shader->setVec3("lightPos", position);
+        context->shader->setVec3("lightColor", color);
+        context->shader->setFloat("lightStrength", strength);
+    }
+
+    glm::vec3 LightSource::getColor() const {
+        return color;
+    }
+
+    float LightSource::getStrength() const {
+        return strength;
     }
 }

@@ -27,9 +27,12 @@ namespace gl_lib {
         void renderLight(Context *);
 
         void configureVertexArray() const;
+
+        glm::vec3 getColor() const;
+
+        float getStrength() const;
     };
 }
-
 
 
 #endif //LEARN_OPENGL_LIGHTSOURCE_H

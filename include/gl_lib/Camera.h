@@ -24,6 +24,8 @@ namespace gl_lib {
 
         glm::mat4 getView();
 
+        glm::vec3 getPosition();
+
         void forward(float speed);
         void backward(float speed);
         void strafeLeft(float speed);

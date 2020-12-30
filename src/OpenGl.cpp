@@ -75,7 +75,9 @@ void OpenGl::processInput(GLFWwindow *window) {
 
 
 void OpenGl::clear() {
-    glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
+    glm::vec3 backgroundColor = lightSource.getStrength() * 0.05f * lightSource.getColor();
+
+    glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -132,6 +134,7 @@ void OpenGl::runEngine(
 
         context.shader->use();
         context.shader->setMat4("view", camera.getView());
+        context.shader->setVec3("viewPos", camera.getPosition());
 
         glm::mat4 projection;
         projection = glm::perspective(glm::radians(fieldOfView), (float) screenWidth / (float) screenHeight, 0.1f, 100.0f);
@@ -152,6 +155,7 @@ void OpenGl::runEngine(
 
             context.shader->use();
             context.shader->setMat4("view", camera.getView());
+            context.shader->setVec3("viewPos", camera.getPosition());
 
             glm::mat4 projection = glm::perspective(glm::radians(fieldOfView), (float) screenWidth / (float) screenHeight, 0.1f, 100.0f);
             context.shader->setMat4("projection", projection);

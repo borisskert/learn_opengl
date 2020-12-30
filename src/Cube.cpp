@@ -33,78 +33,78 @@ namespace gl_lib {
 
 
     void Cube::configureVertexArray() {
-        Rectangle abcd = Rectangle::builder()
+        Rectangle adcb = Rectangle::builder()
                 ->positionA(a)
-                ->positionB(b)
+                ->positionB(d)
                 ->positionC(c)
-                ->positionD(d)
+                ->positionD(b)
                 ->colorA(colorA)
                 ->colorB(colorB)
                 ->colorC(colorC)
                 ->colorD(colorD)
                 ->build();
 
-        Rectangle efgh = Rectangle::builder()
-                ->positionA(e)
-                ->positionB(f)
-                ->positionC(g)
-                ->positionD(h)
-                ->colorA(colorE)
-                ->colorB(colorF)
-                ->colorC(colorG)
-                ->colorD(colorH)
-                ->build();
-
-        Rectangle hdae = Rectangle::builder()
-                ->positionA(h)
-                ->positionB(d)
-                ->positionC(a)
+        Rectangle fghe = Rectangle::builder()
+                ->positionA(f)
+                ->positionB(g)
+                ->positionC(h)
                 ->positionD(e)
-                ->colorA(colorH)
-                ->colorB(colorD)
-                ->colorC(colorA)
+                ->colorA(colorF)
+                ->colorB(colorG)
+                ->colorC(colorH)
                 ->colorD(colorE)
                 ->build();
 
-        Rectangle gcbf = Rectangle::builder()
-                ->positionA(g)
+        Rectangle ehda = Rectangle::builder()
+                ->positionA(e)
+                ->positionB(h)
+                ->positionC(d)
+                ->positionD(a)
+                ->colorA(colorE)
+                ->colorB(colorH)
+                ->colorC(colorD)
+                ->colorD(colorA)
+                ->build();
+
+        Rectangle bcgf = Rectangle::builder()
+                ->positionA(b)
                 ->positionB(c)
+                ->positionC(g)
+                ->positionD(f)
+                ->colorA(colorB)
+                ->colorB(colorC)
+                ->colorC(colorG)
+                ->colorD(colorF)
+                ->build();
+
+        Rectangle eabf = Rectangle::builder()
+                ->positionA(e)
+                ->positionB(a)
                 ->positionC(b)
                 ->positionD(f)
-                ->colorA(colorG)
-                ->colorB(colorC)
+                ->colorA(colorE)
+                ->colorB(colorA)
                 ->colorC(colorB)
                 ->colorD(colorF)
                 ->build();
 
-        Rectangle abfe = Rectangle::builder()
-                ->positionA(a)
-                ->positionB(b)
-                ->positionC(f)
-                ->positionD(e)
-                ->colorA(colorA)
-                ->colorB(colorB)
-                ->colorC(colorF)
-                ->colorD(colorE)
-                ->build();
-
-        Rectangle dcgh = Rectangle::builder()
+        Rectangle dhgc = Rectangle::builder()
                 ->positionA(d)
-                ->positionB(c)
+                ->positionB(h)
                 ->positionC(g)
-                ->positionD(h)
+                ->positionD(c)
                 ->colorA(colorD)
-                ->colorB(colorC)
+                ->colorB(colorH)
                 ->colorC(colorG)
-                ->colorD(colorH)
+                ->colorD(colorC)
                 ->build();
 
-        Vertices vertices = abcd.toVertices()
-                + efgh.toVertices()
-                + hdae.toVertices()
-                + gcbf.toVertices()
-                + abfe.toVertices()
-                + dcgh.toVertices();
+        Vertices vertices = adcb.toVertices()
+                            + fghe.toVertices()
+                            + ehda.toVertices()
+                            + bcgf.toVertices()
+                            + eabf.toVertices()
+                            + dhgc.toVertices();
 
         glBufferData(GL_ARRAY_BUFFER, vertices.getSize() * sizeof(float), vertices.toArray(), GL_STATIC_DRAW);
 
@@ -116,6 +116,9 @@ namespace gl_lib {
 
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *) (6 * sizeof(float)));
         glEnableVertexAttribArray(2);
+
+        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *) (8 * sizeof(float)));
+        glEnableVertexAttribArray(3);
     }
 
 
@@ -159,7 +162,7 @@ namespace gl_lib {
     }
 
 
-    Cube::Builder* Cube::builder() {
+    Cube::Builder *Cube::builder() {
         return new Builder();
     }
 
