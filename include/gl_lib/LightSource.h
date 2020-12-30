@@ -10,12 +10,13 @@ namespace gl_lib {
     private:
         glm::vec3 position;
         glm::vec3 color;
+        float strength;
         glm::vec3 scale;
 
     public:
         LightSource();
 
-        LightSource(glm::vec3 position, glm::vec3 color, glm::vec3 scale);
+        LightSource(glm::vec3 position, glm::vec3 color, float strength, glm::vec3 scale);
 
         void initialize(Context *) override;
 

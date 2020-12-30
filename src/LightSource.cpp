@@ -6,11 +6,20 @@ namespace gl_lib {
     LightSource::LightSource()
             : position(glm::vec3(0.0f, 0.0f, 0.0f)),
               color(glm::vec3(1.0f)),
+              strength(1.0f),
               scale(glm::vec3(1.0f)) {}
 
 
-    LightSource::LightSource(glm::vec3 position, glm::vec3 color, glm::vec3 scale)
-            : position(position), color(color), scale(scale) {}
+    LightSource::LightSource(
+            glm::vec3 position,
+            glm::vec3 color,
+            float strength,
+            glm::vec3 scale
+            )
+            : position(position),
+            color(color),
+            strength(strength),
+            scale(scale) {}
 
 
     void LightSource::configureVertexArray() const {
@@ -86,6 +95,7 @@ namespace gl_lib {
         context->shader->setMat4("model", model);
 
         context->shader->setVec3("lightColor", color);
+        context->shader->setFloat("lightStrength", strength);
 
         context->buffer->bindVertexArray();
         glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -93,5 +103,6 @@ namespace gl_lib {
 
     void LightSource::renderLight(Context *context) {
         context->shader->setVec3("lightColor", color);
+        context->shader->setFloat("lightStrength", strength);
     }
 }

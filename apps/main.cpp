@@ -245,9 +245,10 @@ int main() {
     models.push_back(&cube10);
 
     LightSource light(
-            glm::vec3(1.2f, 1.0f, 2.0f),
-            glm::vec3(0.9f, 0.5f, 0.9f),
-            glm::vec3(0.05f)
+            glm::vec3(1.2f, 1.0f, -30.0f),
+            glm::vec3(1.0f, 0.9569, 0.5176),
+            0.85f,
+            glm::vec3(0.55f)
     );
 
     try {
