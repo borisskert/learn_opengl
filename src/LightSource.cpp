@@ -102,7 +102,7 @@ namespace gl_lib {
     };
 
     void LightSource::renderLight(Context *context) {
-        context->shader->setVec3("lightColor", color);
-        context->shader->setFloat("lightStrength", strength);
+        context->shader->setVec3("ambientLightColor", color);
+        context->shader->setFloat("ambientLightStrength", strength);
     }
 }
