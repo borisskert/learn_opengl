@@ -49,6 +49,14 @@ namespace gl_lib {
         position += glm::normalize(glm::cross(front, up)) * speed;
     }
 
+    void Camera::goUp(float speed) {
+        position += glm::normalize(worldUp) * speed;
+    }
+
+    void Camera::goDown(float speed) {
+        position += glm::normalize(-worldUp) * speed;
+    }
+
 
     void Camera::rotate(glm::vec2 offset) {
         yaw += offset.x;

@@ -27,9 +27,16 @@ namespace gl_lib {
         glm::vec3 getPosition();
 
         void forward(float speed);
+
         void backward(float speed);
+
         void strafeLeft(float speed);
+
         void strafeRight(float speed);
+
+        void goUp(float speed);
+
+        void goDown(float speed);
 
         void rotate(glm::vec2 offset);
 

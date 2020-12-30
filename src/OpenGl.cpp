@@ -70,6 +70,10 @@ void OpenGl::processInput(GLFWwindow *window) {
             camera.strafeLeft(cameraSpeed);
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
             camera.strafeRight(cameraSpeed);
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+            camera.goUp(cameraSpeed);
+        if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+            camera.goDown(cameraSpeed);
     }
 }
 
