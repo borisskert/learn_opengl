@@ -3,73 +3,31 @@
 
 
 namespace gl_lib {
-    Cube::Cube(
-            glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d,
-            glm::vec3 e, glm::vec3 f, glm::vec3 g, glm::vec3 h
-    )
-            : a(a), b(b), c(c), d(d),
-              e(e), f(f), g(g), h(h),
-              colorA(glm::vec3()), colorB(glm::vec3()), colorC(glm::vec3()), colorD(glm::vec3()),
-              colorE(glm::vec3()), colorF(glm::vec3()), colorG(glm::vec3()), colorH(glm::vec3()) {}
-
-    Cube::Cube()
-            : a(glm::vec3(-0.5f, -0.5f, -0.5f)), b(glm::vec3(0.5f, -0.5f, -0.5f)), c(glm::vec3(0.5f, 0.5f, -0.5f)),
-              d(glm::vec3(-0.5f, 0.5f, -0.5f)),
-              e(glm::vec3(-0.5f, -0.5f, 0.5f)), f(glm::vec3(0.5f, -0.5f, 0.5f)), g(glm::vec3(0.5f, 0.5f, 0.5f)),
-              h(glm::vec3(-0.5f, 0.5f, 0.5f)),
-              colorA(glm::vec3(1.0f)), colorB(glm::vec3(1.0f)), colorC(glm::vec3(1.0f)), colorD(glm::vec3(1.0f)),
-              colorE(glm::vec3(1.0f)), colorF(glm::vec3(1.0f)), colorG(glm::vec3(1.0f)), colorH(glm::vec3(1.0f)) {}
+    Cube::Cube() {}
 
 
-    Cube::Cube(glm::vec3 color)
-            : a(glm::vec3(-0.5f, -0.5f, -0.5f)), b(glm::vec3(0.5f, -0.5f, -0.5f)), c(glm::vec3(0.5f, 0.5f, -0.5f)),
-              d(glm::vec3(-0.5f, 0.5f, -0.5f)),
-              e(glm::vec3(-0.5f, -0.5f, 0.5f)), f(glm::vec3(0.5f, -0.5f, 0.5f)), g(glm::vec3(0.5f, 0.5f, 0.5f)),
-              h(glm::vec3(-0.5f, 0.5f, 0.5f)),
-              colorA(color), colorB(color), colorC(color), colorD(color),
-              colorE(color), colorF(color), colorG(color), colorH(color) {}
+    Cube::Cube(Cube const &other) {
+        this->a = other.a;
+        this->b = other.b;
+        this->c = other.c;
+        this->d = other.d;
+        this->e = other.e;
+        this->f = other.f;
+        this->g = other.g;
+        this->h = other.h;
 
+        this->position = other.position;
+        this->angle = other.angle;
 
-    Cube::Cube(
-            glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d,
-            glm::vec3 e, glm::vec3 f, glm::vec3 g, glm::vec3 h,
-            glm::vec3 color
-    )
-            : a(a), b(b), c(c), d(d),
-              e(e), f(f), g(g), h(h),
-              colorA(color), colorB(color), colorC(color), colorD(color),
-              colorE(color), colorF(color), colorG(color), colorH(color) {}
-
-
-    Cube::Cube(
-            glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d,
-            glm::vec3 e, glm::vec3 f, glm::vec3 g, glm::vec3 h,
-            glm::vec3 color,
-            glm::vec3 position,
-            float angle
-    )
-            : a(a), b(b), c(c), d(d),
-              e(e), f(f), g(g), h(h),
-              colorA(color), colorB(color), colorC(color), colorD(color),
-              colorE(color), colorF(color), colorG(color), colorH(color),
-              position(position),
-              angle(angle) {}
-
-
-    Cube::Cube(
-            glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d,
-            glm::vec3 e, glm::vec3 f, glm::vec3 g, glm::vec3 h,
-            glm::vec3 colorA, glm::vec3 colorB, glm::vec3 colorC, glm::vec3 colorD,
-            glm::vec3 colorE, glm::vec3 colorF, glm::vec3 colorG, glm::vec3 colorH,
-            glm::vec3 position,
-            float angle
-    )
-            : a(a), b(b), c(c), d(d),
-              e(e), f(f), g(g), h(h),
-              colorA(colorA), colorB(colorB), colorC(colorC), colorD(colorD),
-              colorE(colorE), colorF(colorF), colorG(colorG), colorH(colorH),
-              position(position),
-              angle(angle) {}
+        this->colorA = other.colorA;
+        this->colorB = other.colorB;
+        this->colorC = other.colorC;
+        this->colorD = other.colorD;
+        this->colorE = other.colorE;
+        this->colorF = other.colorF;
+        this->colorG = other.colorG;
+        this->colorH = other.colorH;
+    }
 
 
     void Cube::configureVertexArray() {
@@ -167,5 +125,122 @@ namespace gl_lib {
         context->textures->bindTextures();
         context->buffer->bindVertexArray();
         glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
+
+
+    Cube::Builder* Cube::builder() {
+        return new Builder();
+    }
+
+
+    Cube::Builder::Builder() = default;
+
+
+    Cube::Builder *Cube::Builder::positionA(glm::vec3 value) {
+        cube.a = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::positionB(glm::vec3 value) {
+        cube.b = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::positionC(glm::vec3 value) {
+        cube.c = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::positionD(glm::vec3 value) {
+        cube.d = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::positionE(glm::vec3 value) {
+        cube.e = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::positionF(glm::vec3 value) {
+        cube.f = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::positionG(glm::vec3 value) {
+        cube.g = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::positionH(glm::vec3 value) {
+        cube.h = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::position(glm::vec3 value) {
+        cube.position = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::color(glm::vec3 value) {
+        cube.colorA = value;
+        cube.colorB = value;
+        cube.colorC = value;
+        cube.colorD = value;
+        cube.colorE = value;
+        cube.colorF = value;
+        cube.colorG = value;
+        cube.colorH = value;
+
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorA(glm::vec3 value) {
+        cube.colorA = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorB(glm::vec3 value) {
+        cube.colorB = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorC(glm::vec3 value) {
+        cube.colorC = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorD(glm::vec3 value) {
+        cube.colorD = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorE(glm::vec3 value) {
+        cube.colorE = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorF(glm::vec3 value) {
+        cube.colorF = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorG(glm::vec3 value) {
+        cube.colorG = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::colorH(glm::vec3 value) {
+        cube.colorH = value;
+        return this;
+    }
+
+    Cube::Builder *Cube::Builder::angle(float value) {
+        cube.angle = value;
+        return this;
+    }
+
+
+    Cube Cube::Builder::build() {
+        return cube;
     }
 }

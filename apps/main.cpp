@@ -10,9 +10,92 @@ const unsigned int SCREEN_WIDTH = 800;
 const unsigned int SCREEN_HEIGHT = 600;
 
 
-int main() {
+std::vector<gl_lib::Drawable *> buildCubes() {
     std::vector<gl_lib::Drawable *> models;
+    Cube::Builder *builder = Cube::builder();
 
+    Cube cube = builder
+            ->colorA(glm::vec3(0.0f, 0.0f, 1.0f))
+            ->colorB(glm::vec3(1.0f, 0.0f, 0.0f))
+            ->colorC(glm::vec3(0.0f, 1.0f, 0.0f))
+            ->colorD(glm::vec3(0.0f, 1.0f, 1.0f))
+            ->colorE(glm::vec3(1.0f, 1.0f, 0.0f))
+            ->colorF(glm::vec3(1.0f, 0.0f, 1.0f))
+            ->colorG(glm::vec3(1.0f, 1.0f, 1.0f))
+            ->colorH(glm::vec3(0.5f, 1.0f, 0.5f))
+            ->position(glm::vec3(0.0f, 0.0f, 0.0f))
+            ->build();
+
+    models.push_back(new Cube(cube));
+
+    cube = builder
+            ->position(glm::vec3(2.0f, 5.0f, -15.0f))
+            ->angle(20.0f)
+            ->build();
+
+    models.push_back(new Cube(cube));
+
+    cube = builder
+            ->position(glm::vec3(-1.5f, -2.2f, -2.5f))
+            ->angle(40.0f)
+            ->build();
+
+    models.push_back(new Cube(cube));
+
+    cube = builder
+            ->position(glm::vec3(-3.8f, -2.0f, -12.3f))
+            ->angle(60.0f)
+            ->build();
+
+    models.push_back(new Cube(cube));
+
+    cube = builder
+            ->position(glm::vec3(2.4f, -0.4f, -3.5f))
+            ->angle(70.0f)
+            ->build();
+
+    models.push_back(new Cube(cube));
+
+    cube = builder
+            ->position(glm::vec3(-1.7f, 3.0f, -7.5f))
+            ->angle(80.0f)
+            ->build();
+
+    models.push_back(new Cube(cube));
+
+    cube = builder
+            ->position(glm::vec3(1.3f, -2.0f, -2.5f))
+            ->angle(100.0f)
+            ->build();
+
+    models.push_back(new Cube(cube));
+
+    cube = builder
+            ->position(glm::vec3(1.5f, 2.0f, -2.5f))
+            ->angle(120.0f)
+            ->build();
+
+    models.push_back(new Cube(cube));
+
+    cube = builder
+            ->position(glm::vec3(1.5f, 0.2f, -1.5f))
+            ->angle(140.0f)
+            ->build();
+
+    models.push_back(new Cube(cube));
+
+    cube = builder
+            ->color(glm::vec3(1.0f))
+            ->position(glm::vec3(-1.3f, 1.0f, -1.5f))
+            ->angle(160.0f)
+            ->build();
+
+    models.push_back(new Cube(cube));
+
+    return models;
+}
+
+int main() {
     gl_lib::Texture containerTexture("assets/textures/container.jpg");
     gl_lib::Texture awesomefaceTexture("assets/textures/awesomeface.png");
 
@@ -21,228 +104,7 @@ int main() {
     textureUnit.addTexture(&containerTexture);
     textureUnit.addTexture(&awesomefaceTexture);
 
-    gl_lib::Cube cube(
-            glm::vec3(-0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, 0.5f, -0.5f),
-            glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 0.0f),
-            glm::vec3(1.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f),
-            glm::vec3(0.5f, 1.0f, 0.5f),
-            glm::vec3(0.0f, 0.0f, 0.0f),
-            0.0f
-    );
-
-    models.push_back(&cube);
-
-    gl_lib::Cube cube2(
-            glm::vec3(-0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, 0.5f, -0.5f),
-            glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 0.0f),
-            glm::vec3(1.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f),
-            glm::vec3(0.5f, 1.0f, 0.5f),
-            glm::vec3(2.0f, 5.0f, -15.0f),
-            20.0f
-    );
-
-    models.push_back(&cube2);
-
-    gl_lib::Cube cube3(
-            glm::vec3(-0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, 0.5f, -0.5f),
-            glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 0.0f),
-            glm::vec3(1.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f),
-            glm::vec3(0.5f, 1.0f, 0.5f),
-            glm::vec3(-1.5f, -2.2f, -2.5f),
-            40.0f
-    );
-
-    models.push_back(&cube3);
-
-    gl_lib::Cube cube4(
-            glm::vec3(-0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, 0.5f, -0.5f),
-            glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 0.0f),
-            glm::vec3(1.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f),
-            glm::vec3(0.5f, 1.0f, 0.5f),
-            glm::vec3(-3.8f, -2.0f, -12.3f),
-            60.0f
-    );
-
-    models.push_back(&cube4);
-
-    gl_lib::Cube cube5(
-            glm::vec3(-0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, 0.5f, -0.5f),
-            glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 0.0f),
-            glm::vec3(1.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f),
-            glm::vec3(0.5f, 1.0f, 0.5f),
-            glm::vec3(2.4f, -0.4f, -3.5f),
-            70.0f
-    );
-
-    models.push_back(&cube5);
-
-    gl_lib::Cube cube6(
-            glm::vec3(-0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, 0.5f, -0.5f),
-            glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 0.0f),
-            glm::vec3(1.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f),
-            glm::vec3(0.5f, 1.0f, 0.5f),
-            glm::vec3(-1.7f, 3.0f, -7.5f),
-            80.0f
-    );
-
-    models.push_back(&cube6);
-
-    gl_lib::Cube cube7(
-            glm::vec3(-0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, 0.5f, -0.5f),
-            glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 0.0f),
-            glm::vec3(1.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f),
-            glm::vec3(0.5f, 1.0f, 0.5f),
-            glm::vec3(1.3f, -2.0f, -2.5f),
-            100.0f
-    );
-
-    models.push_back(&cube7);
-
-    gl_lib::Cube cube8(
-            glm::vec3(-0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, 0.5f, -0.5f),
-            glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 0.0f),
-            glm::vec3(1.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f),
-            glm::vec3(0.5f, 1.0f, 0.5f),
-            glm::vec3(1.5f, 2.0f, -2.5f),
-            120.0f
-    );
-
-    models.push_back(&cube8);
-
-    gl_lib::Cube cube9(
-            glm::vec3(-0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, 0.5f, -0.5f),
-            glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(0.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 0.0f),
-            glm::vec3(1.0f, 0.0f, 1.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f),
-            glm::vec3(0.5f, 1.0f, 0.5f),
-            glm::vec3(1.5f, 0.2f, -1.5f),
-            140.0f
-    );
-
-    models.push_back(&cube9);
-
-    gl_lib::Cube cube10(
-            glm::vec3(-0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, -0.5f, 0.5f),
-            glm::vec3(0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, 0.5f, 0.5f),
-            glm::vec3(-0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, -0.5f, -0.5f),
-            glm::vec3(0.5f, 0.5f, -0.5f),
-            glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(1.0f),
-            glm::vec3(-1.3f, 1.0f, -1.5f),
-            160.0f
-    );
-
-    models.push_back(&cube10);
+    std::vector<gl_lib::Drawable *> models = buildCubes();
 
     LightSource light(
             glm::vec3(1.2f, 1.0f, -30.0f),
