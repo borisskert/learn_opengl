@@ -5,7 +5,6 @@
 #include <glm/vec3.hpp>
 #include "Drawable.h"
 #include "OpenGlBuffer.h"
-#include "TextureUnit.h"
 #include "Shader.h"
 #include "Model.h"
 
@@ -22,6 +21,8 @@ namespace gl_lib {
         ModelAdapter();
 
     public:
+        void prepare(Context *) override;
+
         void initialize(Context *) override;
 
         void update(Context *) override;

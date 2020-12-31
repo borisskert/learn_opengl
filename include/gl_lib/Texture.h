@@ -9,10 +9,10 @@ namespace gl_lib {
     class Texture {
     private:
         textureId id;
-        const char *path;
+        const std::string path;
 
     public:
-        Texture(const char *path);
+        explicit Texture(std::string path);
 
         void initialize();
 

@@ -18,6 +18,8 @@ namespace gl_lib {
 
         LightSource(glm::vec3 position, glm::vec3 color, float strength, glm::vec3 scale);
 
+        void prepare(Context *) override;
+
         void initialize(Context *) override;
 
         void update(Context *) override;

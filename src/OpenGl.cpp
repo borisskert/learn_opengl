@@ -7,12 +7,13 @@
 
 using namespace gl_lib;
 
-OpenGl::OpenGl(unsigned int screenWidthInPixels, unsigned int screenHeightInPixels, std::vector<Drawable *> models,
-               TextureUnit unit, gl_lib::LightSource lightSource)
+OpenGl::OpenGl(
+        unsigned int screenWidthInPixels, unsigned int screenHeightInPixels, std::vector<Drawable *> models,
+        gl_lib::LightSource lightSource
+)
         : screenHeight(screenHeightInPixels),
           screenWidth(screenWidthInPixels),
           models(std::move(models)),
-          textureUnit(unit),
           lightSource(lightSource) {}
 
 
@@ -87,34 +88,27 @@ void OpenGl::clear() {
 
 
 ContextContainer OpenGl::createContext(const std::vector<Drawable *> &drawables) {
-    ContextContainer context;
+    ContextContainer contextContainer;
 
     for (Drawable *drawable : drawables) {
-        Context model{};
+        Context context{};
 
-        model.shader = new Shader(
-                "assets/shader/vertex.shader",
-                "assets/shader/fragment.shader"
-        );
-        model.buffer = new OpenGlBuffer();
-        model.textures = &textureUnit;
+        context.shader = new Shader();
+        context.buffer = new OpenGlBuffer();
 
-        context.store(drawable, model);
+        contextContainer.store(drawable, context);
     }
 
     Context model = createLightContext();
-    context.store(&lightSource, model);
+    contextContainer.store(&lightSource, model);
 
-    return context;
+    return contextContainer;
 }
 
 Context OpenGl::createLightContext() const {
     Context model{};
 
-    model.shader = new Shader(
-            "assets/shader/lightVertex.shader",
-            "assets/shader/lightFragment.shader"
-    );
+    model.shader = new Shader();
     model.buffer = new OpenGlBuffer();
     return model;
 }
@@ -135,13 +129,19 @@ void OpenGl::runEngine(
 
     for (Drawable *drawable : contexts.getDrawables()) {
         Context context = contexts.getFor(drawable);
+        drawable->prepare(&context);
+    }
+
+    for (Drawable *drawable : contexts.getDrawables()) {
+        Context context = contexts.getFor(drawable);
 
         context.shader->use();
         context.shader->setMat4("view", camera.getView());
         context.shader->setVec3("viewPos", camera.getPosition());
 
         glm::mat4 projection;
-        projection = glm::perspective(glm::radians(fieldOfView), (float) screenWidth / (float) screenHeight, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(fieldOfView), (float) screenWidth / (float) screenHeight, 0.1f,
+                                      100.0f);
         context.shader->setMat4("projection", projection);
 
         drawable->initialize(&context);
@@ -154,7 +154,8 @@ void OpenGl::runEngine(
 
         clear();
 
-        lightSource.setPosition(glm::vec3(5.0f * cos(watch.getCurrent() / 2), 5.0f * sin(watch.getCurrent() / 2), 0.0f));
+        lightSource.setPosition(
+                glm::vec3(5.0f * cos(watch.getCurrent() / 2), 5.0f * sin(watch.getCurrent() / 2), 0.0f));
 
         glm::vec3 lightColor;
         lightColor.x = sin(glfwGetTime() * 2.0f);
@@ -170,7 +171,8 @@ void OpenGl::runEngine(
             context.shader->setMat4("view", camera.getView());
             context.shader->setVec3("viewPos", camera.getPosition());
 
-            glm::mat4 projection = glm::perspective(glm::radians(fieldOfView), (float) screenWidth / (float) screenHeight, 0.1f, 100.0f);
+            glm::mat4 projection = glm::perspective(glm::radians(fieldOfView),
+                                                    (float) screenWidth / (float) screenHeight, 0.1f, 100.0f);
             context.shader->setMat4("projection", projection);
 
             drawable->update(&context);
@@ -200,17 +202,19 @@ void OpenGl::start() {
 }
 
 
-void OpenGl::onMouseMove(GLFWwindow* window, double x, double y) {
+void OpenGl::onMouseMove(GLFWwindow *window, double x, double y) {
     mousePosition->update(glm::vec2(x, y));
 
     const float sensitivity = 0.1f;
     glm::vec2 offset = mousePosition->getOffset();
+
     camera.rotate(offset * sensitivity);
 }
 
 
 void OpenGl::onMouseScroll(GLFWwindow *window, double x, double y) {
-    fieldOfView -= (float)y;
+    fieldOfView -= (float) y;
+
     if (fieldOfView < 1.0f)
         fieldOfView = 1.0f;
     if (fieldOfView > 45.0f)

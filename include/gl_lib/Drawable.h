@@ -10,6 +10,8 @@ namespace gl_lib {
 
     class Drawable {
     public:
+        virtual void prepare(Context *) = 0;
+
         virtual void initialize(Context *) = 0;
 
         virtual void update(Context *) = 0;

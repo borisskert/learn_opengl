@@ -74,16 +74,16 @@ namespace gl_lib {
     }
 
 
-    shaderProgram initializeShaderProgram(vertexShader vertexShader, fragmentShader fragmentShader) {
+    shaderProgram createShaderProgram() {
         shaderProgram shaderProgram;
         shaderProgram = glCreateProgram();
 
-        glAttachShader(shaderProgram, vertexShader);
-        glAttachShader(shaderProgram, fragmentShader);
-        glLinkProgram(shaderProgram);
+        return shaderProgram;
+    }
 
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
+
+    void initializeShaderProgram(shaderProgram shaderProgram) {
+        glLinkProgram(shaderProgram);
 
         int success;
         glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
@@ -93,8 +93,6 @@ namespace gl_lib {
             glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
             throw ShaderInitializationException("ERROR::SHADER::PROGRAM::LINKING_FAILED", infoLog);
         }
-
-        return shaderProgram;
     }
 
 

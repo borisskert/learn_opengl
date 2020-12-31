@@ -30,7 +30,9 @@ namespace gl_lib {
 
     unsigned int compileShader(const char *shaderSource, unsigned int shaderType);
 
-    shaderProgram initializeShaderProgram(vertexShader vertexShader, fragmentShader fragmentShader);
+    shaderProgram createShaderProgram();
+
+    void initializeShaderProgram(shaderProgram shaderProgram);
 
     std::string readFileContent(const char *filePath);
 

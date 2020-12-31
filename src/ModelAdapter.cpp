@@ -26,17 +26,19 @@ namespace gl_lib {
     }
 
 
+    void ModelAdapter::prepare(Context *context) {
+        context->shader->attachVertexShader("assets/shader/vertex.shader");
+        context->shader->attachFragmentShader("assets/shader/fragment.shader");
+    }
+
+
     void ModelAdapter::initialize(Context *context) {
         context->buffer->initialize();
 
         context->buffer->bindVertexArray();
         this->configureVertexArray();
 
-        context->textures->initialize();
-
-        Shader *shader = context->shader;
-        shader->setInt("texture1", 0);
-        shader->setInt("texture2", 1);
+        context->shader->initialize();
     }
 
 
@@ -61,7 +63,6 @@ namespace gl_lib {
 
 
     void ModelAdapter::draw(Context *context) {
-        context->textures->bindTextures();
         context->buffer->bindVertexArray();
 
         context->shader->setVec3("material.ambient", glm::vec3(1.0f));

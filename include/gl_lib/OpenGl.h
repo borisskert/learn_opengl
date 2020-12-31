@@ -9,7 +9,6 @@
 #include "Drawable.h"
 #include "Shader.h"
 #include "OpenGlBuffer.h"
-#include "TextureUnit.h"
 #include "ContextContainer.h"
 #include "Camera.h"
 #include "Watch.h"
@@ -25,22 +24,23 @@ namespace gl_lib {
         unsigned int screenWidth;
         unsigned int screenHeight;
         std::vector<Drawable *> models;
-        TextureUnit textureUnit;
         Camera camera = Camera::create();
         Watch watch;
 
-        MouseInputAdapter* mouseInputAdapter;
-        MousePosition* mousePosition;
+        MouseInputAdapter *mouseInputAdapter;
+        MousePosition *mousePosition;
 
         float fieldOfView = 45.0f;
 
         LightSource lightSource;
 
         ContextContainer createContext(const std::vector<Drawable *> &drawables);
+
     public:
         explicit OpenGl(unsigned int screenWidthInPixels, unsigned int screenHeightInPixels,
                         std::vector<Drawable *> models,
-                        TextureUnit unit, gl_lib::LightSource source);
+                        gl_lib::LightSource source
+        );
 
         /**
          * glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -86,9 +86,9 @@ namespace gl_lib {
 
         void start();
 
-        void onMouseMove(GLFWwindow* window, double x, double y) override;
+        void onMouseMove(GLFWwindow *window, double x, double y) override;
 
-        void onMouseScroll(GLFWwindow* window, double x, double y) override;
+        void onMouseScroll(GLFWwindow *window, double x, double y) override;
 
         Context createLightContext() const;
     };

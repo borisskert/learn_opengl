@@ -4,6 +4,7 @@
 #include "gl_lib.h"
 #include <glm/glm.hpp>
 #include <string>
+#include <vector>
 
 
 namespace gl_lib {
@@ -11,11 +12,18 @@ namespace gl_lib {
     class Shader {
     private:
         shaderProgram programId;
+        std::vector<unsigned int> attachedShaders;
 
     public:
-        Shader(const char *vertexPath, const char *fragmentPath);
+        Shader();
+
+        void initialize();
 
         void use() const;
+
+        void attachVertexShader(const char *path);
+
+        void attachFragmentShader(const char *path);
 
         void setBool(const std::string &name, const bool &value) const;
 

@@ -52,7 +52,7 @@ void main()
     vec4 texture1Color = texture(texture1, TexCoord);
     vec4 texture2Color = texture(texture2, TexCoord);
 
-    vec4 mixedTextureColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
+    vec4 mixedTextureColor = mix(texture1Color, texture2Color, 0.2);
 
     vec3 lightResult = diffuse + ambient + specular;
     vec4 objectColor = mixedTextureColor * vec4(ourColor, 1.0f);

@@ -1,5 +1,9 @@
 #include <gl_lib/Image.h>
 #include <gl_lib/RuntimeException.h>
+#include <iostream>
+
+#define STB_IMAGE_IMPLEMENTATION
+
 #include "stb_image.h"
 
 namespace gl_lib {

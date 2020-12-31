@@ -1,15 +1,16 @@
 #include <gl_lib/Image.h>
+#include <utility>
 #include "gl_lib/Texture.h"
 #include "stb_image.h"
 
 
 namespace gl_lib {
 
-    Texture::Texture(const char *path) : path(path) {}
+    Texture::Texture(std::string path) : path(std::move(path)) {}
 
 
     void Texture::initialize() {
-        Image image = loadImage(this->path);
+        Image image = loadImage(this->path.c_str());
 
         this->id = createTexture();
 
@@ -22,8 +23,12 @@ namespace gl_lib {
 
         int internalFormat = image.channels > 3 ? GL_RGBA : GL_RGB;
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, internalFormat, GL_UNSIGNED_BYTE,
-                     image.data);
+        glTexImage2D(
+                GL_TEXTURE_2D, 0, internalFormat,
+                image.width, image.height,
+                0, internalFormat, GL_UNSIGNED_BYTE,
+                image.data
+        );
         glGenerateMipmap(GL_TEXTURE_2D);
 
 

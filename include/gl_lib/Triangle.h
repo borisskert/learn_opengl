@@ -1,8 +1,10 @@
 #ifndef LEARN_OPENGL_TRIANGLE_H
 #define LEARN_OPENGL_TRIANGLE_H
 
+#include <vector>
 #include "glm/glm.hpp"
 #include "Model.h"
+#include "Texture.h"
 
 
 namespace gl_lib {
@@ -63,6 +65,8 @@ namespace gl_lib {
         Triangle::Builder *colorC(glm::vec3);
 
         Triangle::Builder *color(glm::vec3);
+
+        Triangle::Builder *addTexture(Texture* texture);
 
         Triangle build();
     };

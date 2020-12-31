@@ -2,23 +2,45 @@
 #include <gl_lib/gl_lib.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
+#include <gl_lib/ShaderInitializationException.h>
 
 
 namespace gl_lib {
 
-    Shader::Shader(const char *vertexPath, const char *fragmentPath) {
-        std::string vertexCode = readFileContent(vertexPath);
-        std::string fragmentCode = readFileContent(fragmentPath);
+    Shader::Shader() {
+        this->programId = createShaderProgram();
+    }
 
+
+    void Shader::attachVertexShader(const char *path) {
+        std::string vertexCode = readFileContent(path);
         vertexShader vertexShader = compileVertexShader(vertexCode.c_str());
+
+        glAttachShader(programId, vertexShader);
+    }
+
+
+    void Shader::attachFragmentShader(const char *path) {
+        std::string fragmentCode = readFileContent(path);
         fragmentShader fragmentShader = compileFragmentShader(fragmentCode.c_str());
 
-        this->programId = initializeShaderProgram(vertexShader, fragmentShader);
+        glAttachShader(programId, fragmentShader);
     }
+
+
+    void Shader::initialize() {
+        initializeShaderProgram(programId);
+
+        for (unsigned int attachedShader : attachedShaders) {
+            glDeleteShader(attachedShader);
+        }
+    }
+
 
     void Shader::use() const {
         glUseProgram(programId);
     }
+
 
     void Shader::setBool(const std::string &name, const bool &value) const {
         glUniform1i(glGetUniformLocation(this->programId, name.c_str()), (int) value);
@@ -37,7 +59,7 @@ namespace gl_lib {
         glUniform3fv(uniformLocation, 1, &value[0]);
     }
 
-    void Shader::setVec3(const std::string &name, const float & x, const float & y, const float & z) const {
+    void Shader::setVec3(const std::string &name, const float &x, const float &y, const float &z) const {
         unsigned int uniformLocation = glGetUniformLocation(this->programId, name.c_str());
         glUniform3f(uniformLocation, x, y, z);
     }

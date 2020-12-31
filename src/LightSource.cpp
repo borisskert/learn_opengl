@@ -74,7 +74,14 @@ namespace gl_lib {
     };
 
 
+    void LightSource::prepare(Context *context) {
+        context->shader->attachVertexShader("assets/shader/lightVertex.shader");
+        context->shader->attachFragmentShader("assets/shader/lightFragment.shader");
+    }
+
+
     void LightSource::initialize(Context *context) {
+        context->shader->initialize();
         context->buffer->initialize();
 
         context->buffer->bindVertexArray();
