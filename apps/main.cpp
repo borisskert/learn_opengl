@@ -76,6 +76,39 @@ Drawable *createDiffuseTexturedCube(
 }
 
 
+Drawable *createMonoColoredCube(glm::vec3 color, glm::vec3 position, float angle) {
+    Cube cube = Cube::builder()->color(color)->build();
+
+    ModelAdapter adapter = ModelAdapter::builder()
+            ->model(new Cube(cube))
+            ->position(position)
+            ->angle(angle)
+            ->build();
+
+    return new ModelAdapter(adapter);
+}
+
+
+Drawable *createColoredCube(glm::vec3 position, float angle) {
+    Cube cube = Cube::builder()
+            ->colorABCD(glm::vec3(1.0f, 0.0f, 0.0f))
+            ->colorBAEF(glm::vec3(0.0f, 1.0f, 0.0f))
+            ->colorBFGC(glm::vec3(0.0f, 0.0f, 1.0f))
+            ->colorCGHD(glm::vec3(0.0f, 1.0f, 1.0f))
+            ->colorEADH(glm::vec3(1.0f, 1.0f, 0.0f))
+            ->colorFEHG(glm::vec3(1.0f, 0.0f, 1.0f))
+            ->build();
+
+    ModelAdapter adapter = ModelAdapter::builder()
+            ->model(new Cube(cube))
+            ->position(position)
+            ->angle(angle)
+            ->build();
+
+    return new ModelAdapter(adapter);
+}
+
+
 std::vector<gl_lib::Drawable *> buildCubes() {
     std::vector<gl_lib::Drawable *> models;
 
@@ -101,50 +134,9 @@ std::vector<gl_lib::Drawable *> buildCubes() {
 
     models.push_back(createTexturedCube(glm::vec3(1.5f, 2.0f, -2.5f), 120.0f, containerTexture, wallTexture));
 
-    gl_lib::Cube::Builder *cubeBuilder = Cube::builder()
-            ->colorA(glm::vec3(0.0f, 0.0f, 1.0f))
-            ->colorB(glm::vec3(1.0f, 0.0f, 0.0f))
-            ->colorC(glm::vec3(0.0f, 1.0f, 0.0f))
-            ->colorD(glm::vec3(0.0f, 1.0f, 1.0f))
-            ->colorE(glm::vec3(1.0f, 1.0f, 0.0f))
-            ->colorF(glm::vec3(1.0f, 0.0f, 1.0f))
-            ->colorG(glm::vec3(1.0f, 1.0f, 1.0f))
-            ->colorH(glm::vec3(0.5f, 1.0f, 0.5f));
+    models.push_back(createColoredCube(glm::vec3(2.5f, 0.2f, -1.5f), 140.0f));
 
-    Cube cube = cubeBuilder->build();
-
-    ModelAdapter::Builder *builder = ModelAdapter::builder();
-
-    ModelAdapter adapter = builder
-            ->model(new Cube(cube))
-            ->position(glm::vec3(0.0f, 0.0f, 0.0f))
-            ->build();
-
-    cube = cubeBuilder->colorABCD(glm::vec3(1.0f, 0.0f, 0.0f))
-            ->colorBAEF(glm::vec3(0.0f, 1.0f, 0.0f))
-            ->colorBFGC(glm::vec3(0.0f, 0.0f, 1.0f))
-            ->colorCGHD(glm::vec3(0.0f, 1.0f, 1.0f))
-            ->colorEADH(glm::vec3(1.0f, 1.0f, 0.0f))
-            ->colorFEHG(glm::vec3(1.0f, 0.0f, 1.0f))
-            ->build();
-
-    adapter = builder
-            ->model(new Cube(cube))
-            ->position(glm::vec3(2.5f, 0.2f, -1.5f))
-            ->angle(140.0f)
-            ->build();
-
-    models.push_back(new ModelAdapter(adapter));
-
-    cube = cubeBuilder->color(glm::vec3(1.0f))->build();
-
-    adapter = builder
-            ->model(new Cube(cube))
-            ->position(glm::vec3(-1.3f, 1.0f, -1.5f))
-            ->angle(160.0f)
-            ->build();
-
-    models.push_back(new ModelAdapter(adapter));
+    models.push_back(createMonoColoredCube(glm::vec3(1.0f), glm::vec3(-1.3f, 1.0f, -1.5f), 160.0f));
 
     models.push_back(createDiffuseTexturedCube(glm::vec3(-3.0f, 0.0f, -2.0f), 0.0f, diffuseTexture));
 
