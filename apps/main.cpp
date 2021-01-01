@@ -4,6 +4,7 @@
 #include <gl_lib/LightSource.h>
 #include <gl_lib/Cube.h>
 #include <gl_lib/Textured.h>
+#include <gl_lib/DiffuseTextured.h>
 
 
 std::string assetsPath;
@@ -48,12 +49,40 @@ Drawable *createTexturedCube(
 }
 
 
+Drawable *createDiffuseTexturedCube(
+        glm::vec3 position,
+        float angle,
+        Texture *texture
+) {
+    gl_lib::Cube::Builder *cubeBuilder = Cube::builder()
+            ->color(glm::vec3(1.0f));
+
+    Cube cube = cubeBuilder->build();
+
+    ModelAdapter::Builder *builder = ModelAdapter::builder();
+
+    ModelAdapter adapter = builder
+            ->model(new Cube(cube))
+            ->position(position)
+            ->angle(angle)
+            ->build();
+
+    DiffuseTextured *texturedModel = new DiffuseTextured(
+            new ModelAdapter(adapter),
+            texture
+    );
+
+    return texturedModel;
+}
+
+
 std::vector<gl_lib::Drawable *> buildCubes() {
     std::vector<gl_lib::Drawable *> models;
 
     auto *containerTexture = new Texture(assetsPath + std::string("/textures/container.jpg"));
     auto *awesomefaceTexture = new Texture(assetsPath + std::string("/textures/awesomeface.png"));
     auto *wallTexture = new Texture(assetsPath + std::string("/textures/wall.jpg"));
+    auto *diffuseTexture = new Texture(assetsPath + std::string("/textures/container2.png"));
 
     models.push_back(createTexturedCube(glm::vec3(0.0f), 0.0f, containerTexture, awesomefaceTexture));
 
@@ -61,7 +90,8 @@ std::vector<gl_lib::Drawable *> buildCubes() {
 
     models.push_back(createTexturedCube(glm::vec3(-1.5f, -2.2f, -2.5f), 40.0f, wallTexture, wallTexture));
 
-    models.push_back(createTexturedCube(glm::vec3(-3.8f, -2.0f, -12.3f), 60.0f, awesomefaceTexture, awesomefaceTexture));
+    models.push_back(
+            createTexturedCube(glm::vec3(-3.8f, -2.0f, -12.3f), 60.0f, awesomefaceTexture, awesomefaceTexture));
 
     models.push_back(createTexturedCube(glm::vec3(2.4f, -0.4f, -3.5f), 70.0f, containerTexture, wallTexture));
 
@@ -116,6 +146,7 @@ std::vector<gl_lib::Drawable *> buildCubes() {
 
     models.push_back(new ModelAdapter(adapter));
 
+    models.push_back(createDiffuseTexturedCube(glm::vec3(-3.0f, 0.0f, -2.0f), 0.0f, diffuseTexture));
 
     return models;
 }
