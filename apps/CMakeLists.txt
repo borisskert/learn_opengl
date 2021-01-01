@@ -2,7 +2,8 @@ configure_file("${PROJECT_SOURCE_DIR}/assets/textures/container.jpg" "assets/tex
 configure_file("${PROJECT_SOURCE_DIR}/assets/textures/awesomeface.png" "assets/textures/awesomeface.png" COPYONLY)
 
 configure_file("${PROJECT_SOURCE_DIR}/assets/shader/vertex.shader" "assets/shader/vertex.shader" COPYONLY)
-configure_file("${PROJECT_SOURCE_DIR}/assets/shader/fragment.shader" "assets/shader/fragment.shader" COPYONLY)
+configure_file("${PROJECT_SOURCE_DIR}/assets/shader/colored.fragment.shader" "assets/shader/colored.fragment.shader" COPYONLY)
+configure_file("${PROJECT_SOURCE_DIR}/assets/shader/textured.fragment.shader" "assets/shader/textured.fragment.shader" COPYONLY)
 
 
 add_executable(game_of_life_app main.cpp)

@@ -3,6 +3,7 @@
 
 
 #include <map>
+#include <vector>
 #include "Context.h"
 #include "Drawable.h"
 

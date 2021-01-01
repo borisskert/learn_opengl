@@ -12,6 +12,8 @@ namespace gl_lib {
 
     void Textured::prepare(Context *context) {
         this->decorated->prepare(context);
+
+        context->shader->attachFragmentShader("assets/shader/textured.fragment.shader");
     }
 
 

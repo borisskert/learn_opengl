@@ -2,7 +2,6 @@
 #include <gl_lib/gl_lib.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
-#include <gl_lib/ShaderInitializationException.h>
 
 
 namespace gl_lib {
@@ -13,27 +12,28 @@ namespace gl_lib {
 
 
     void Shader::attachVertexShader(const char *path) {
-        std::string vertexCode = readFileContent(path);
-        vertexShader vertexShader = compileVertexShader(vertexCode.c_str());
-
-        glAttachShader(programId, vertexShader);
+        std::string vertexShaderCode = readFileContent(path);
+        this->attachedVertexShader = vertexShaderCode;
     }
 
 
     void Shader::attachFragmentShader(const char *path) {
-        std::string fragmentCode = readFileContent(path);
-        fragmentShader fragmentShader = compileFragmentShader(fragmentCode.c_str());
-
-        glAttachShader(programId, fragmentShader);
+        std::string fragmentShaderCode = readFileContent(path);
+        this->attachedFragmentShader = fragmentShaderCode;
     }
 
 
     void Shader::initialize() {
+        vertexShader vertexShaderId = compileVertexShader(this->attachedVertexShader.c_str());
+        glAttachShader(programId, vertexShaderId);
+
+        fragmentShader fragmentShaderId = compileFragmentShader(this->attachedFragmentShader.c_str());
+        glAttachShader(programId, fragmentShaderId);
+
         initializeShaderProgram(programId);
 
-        for (unsigned int attachedShader : attachedShaders) {
-            glDeleteShader(attachedShader);
-        }
+        glDeleteShader(vertexShaderId);
+        glDeleteShader(fragmentShaderId);
     }
 
 

@@ -28,7 +28,7 @@ namespace gl_lib {
 
     void ModelAdapter::prepare(Context *context) {
         context->shader->attachVertexShader("assets/shader/vertex.shader");
-        context->shader->attachFragmentShader("assets/shader/fragment.shader");
+        context->shader->attachFragmentShader("assets/shader/colored.fragment.shader");
     }
 
 

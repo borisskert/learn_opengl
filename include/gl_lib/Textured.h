@@ -4,6 +4,8 @@
 
 #include "Drawable.h"
 #include "Texture.h"
+#include <vector>
+
 
 namespace gl_lib {
 
