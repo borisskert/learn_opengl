@@ -20,6 +20,13 @@ namespace gl_lib {
 
         ModelAdapter();
 
+    protected:
+        glm::vec3 getModelPosition() override;
+
+        glm::mat4 getModelMatrix() override;
+
+        glm::mat4 getTransformMatrix() override;
+
     public:
         void prepare(Context *) override;
 

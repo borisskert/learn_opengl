@@ -135,4 +135,16 @@ namespace gl_lib {
     void LightSource::setColor(glm::vec3 value) {
         this->color = value;
     }
+
+    glm::vec3 LightSource::getModelPosition() {
+        return position;
+    }
+
+    glm::mat4 LightSource::getModelMatrix() {
+        return glm::mat4(1.0f);
+    }
+
+    glm::mat4 LightSource::getTransformMatrix() {
+        return glm::mat4(1.0f);
+    }
 }

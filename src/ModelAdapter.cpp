@@ -43,22 +43,8 @@ namespace gl_lib {
 
 
     void ModelAdapter::update(Context *context) {
-        Shader *shader = context->shader;
-
-        glm::mat4 modelMatrix = glm::mat4(1.0f);
-        modelMatrix = glm::translate(modelMatrix, position);
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-
-        double time = glfwGetTime();
-
-        modelMatrix = glm::rotate(modelMatrix, (float) time / 20 * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        shader->setMat4("model", modelMatrix);
-
-        glm::mat4 trans = glm::mat4(1.0f);
-        trans = glm::translate(trans, glm::vec3(glm::cos(time / 100), glm::sin(time / 100), 0.0f));
-        trans = glm::rotate(trans, (float) time / 50, glm::vec3(0.0f, 0.0f, 1.0f));
-
-        shader->setMat4("transform", trans);
+        context->shader->setMat4("model", this->getModelMatrix());
+        context->shader->setMat4("transform", this->getTransformMatrix());
     }
 
 
@@ -76,6 +62,18 @@ namespace gl_lib {
 
     ModelAdapter::Builder *ModelAdapter::builder() {
         return new Builder();
+    }
+
+    glm::vec3 ModelAdapter::getModelPosition() {
+        return position;
+    }
+
+    glm::mat4 ModelAdapter::getModelMatrix() {
+        return glm::translate(glm::mat4(1.0f), position);
+    }
+
+    glm::mat4 ModelAdapter::getTransformMatrix() {
+        return glm::mat4(1.0f);
     }
 
 

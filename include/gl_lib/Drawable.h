@@ -10,6 +10,12 @@ namespace gl_lib {
 
     class Drawable {
     public:
+        virtual glm::vec3 getModelPosition() = 0;
+
+        virtual glm::mat4 getModelMatrix() = 0;
+
+        virtual glm::mat4 getTransformMatrix() = 0;
+
         virtual void prepare(Context *) = 0;
 
         virtual void initialize(Context *) = 0;

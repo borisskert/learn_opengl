@@ -2,7 +2,7 @@
 
 namespace gl_lib {
 
-    Textured::Textured(gl_lib::Drawable *drawable) : decorated(drawable) {}
+    Textured::Textured(gl_lib::Drawable *drawable) : DrawableDecorator(drawable) {}
 
 
     void Textured::addTexture(gl_lib::Texture *texture) {

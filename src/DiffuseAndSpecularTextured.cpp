@@ -9,7 +9,7 @@ namespace gl_lib {
             Texture *diffuse,
             Texture *specular
     )
-            : decorated(drawable),
+            : DrawableDecorator(drawable),
               diffuse(diffuse),
               specular(specular) {}
 

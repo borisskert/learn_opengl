@@ -2,8 +2,8 @@
 #define LEARN_OPENGL_TEXTURED_H
 
 
-#include "Drawable.h"
 #include "Texture.h"
+#include "DrawableDecorator.h"
 #include <vector>
 
 
@@ -12,9 +12,8 @@ namespace gl_lib {
     /**
      * Decorator to add textures
      */
-    class Textured : public Drawable {
+    class Textured : public DrawableDecorator {
     private:
-        Drawable *decorated;
         std::vector<Texture *> textures;
 
     public:

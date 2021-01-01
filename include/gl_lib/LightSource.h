@@ -13,6 +13,13 @@ namespace gl_lib {
         float strength;
         glm::vec3 scale;
 
+    protected:
+        glm::vec3 getModelPosition() override;
+
+        glm::mat4 getModelMatrix() override;
+
+        glm::mat4 getTransformMatrix() override;
+
     public:
         LightSource();
 

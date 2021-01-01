@@ -3,7 +3,7 @@
 
 namespace gl_lib {
     DiffuseTextured::DiffuseTextured(gl_lib::Drawable *drawable, Texture *texture)
-            : decorated(drawable),
+            : DrawableDecorator(drawable),
               texture(texture) {}
 
 

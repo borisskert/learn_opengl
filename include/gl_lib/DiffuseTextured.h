@@ -2,14 +2,13 @@
 #define LEARN_OPENGL_DIFFUSETEXTURED_H
 
 
-#include "Drawable.h"
+#include "DrawableDecorator.h"
 #include "Texture.h"
 
 namespace gl_lib {
 
-    class DiffuseTextured : public Drawable {
+    class DiffuseTextured : public DrawableDecorator {
     private:
-        Drawable *decorated;
         Texture * texture;
 
     public:

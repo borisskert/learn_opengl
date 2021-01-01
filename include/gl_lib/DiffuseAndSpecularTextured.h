@@ -1,11 +1,12 @@
 #ifndef LEARN_OPENGL_DIFFUSEANDSPECULARTEXTURED_H
 #define LEARN_OPENGL_DIFFUSEANDSPECULARTEXTURED_H
 
+#include "DrawableDecorator.h"
+
 
 namespace gl_lib {
-    class DiffuseAndSpecularTextured : public Drawable {
+    class DiffuseAndSpecularTextured : public DrawableDecorator {
     private:
-        Drawable *decorated;
         Texture *diffuse;
         Texture *specular;
 

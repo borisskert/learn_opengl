@@ -6,6 +6,8 @@
 #include <gl_lib/Textured.h>
 #include <gl_lib/DiffuseTextured.h>
 #include <gl_lib/DiffuseAndSpecularTextured.h>
+#include <gl_lib/Rotating.h>
+#include <gl_lib/MovingInOrbit.h>
 
 
 std::string assetsPath;
@@ -98,13 +100,22 @@ Drawable *createDiffuseAndSpecularTexturedCube(
             ->angle(angle)
             ->build();
 
-    gl_lib::DiffuseAndSpecularTextured *texturedModel = new DiffuseAndSpecularTextured(
+    Drawable *drawable = new DiffuseAndSpecularTextured(
             new ModelAdapter(adapter),
             diffuse,
             specular
     );
 
-    return texturedModel;
+    drawable = new MovingInOrbit(drawable, .0801f, glm::vec2(5.51f, 2.5f), glm::vec3(0.0f), 20.0f);
+
+    drawable = new Rotating(
+            drawable,
+            angle,
+            1.5f,
+            glm::vec3(0.0f, 1.0f, 0.0f)
+    );
+
+    return drawable;
 }
 
 
@@ -117,7 +128,18 @@ Drawable *createMonoColoredCube(glm::vec3 color, glm::vec3 position, float angle
             ->angle(angle)
             ->build();
 
-    return new ModelAdapter(adapter);
+    Drawable* drawable = new ModelAdapter(adapter);
+
+    drawable = new MovingInOrbit(drawable, .1101f, glm::vec2(5.01f, 1.5f), glm::vec3(0.0f), 10.0f);
+
+    drawable = new Rotating(
+            drawable,
+            angle,
+            2.0f,
+            glm::vec3(0.0f, 1.0f, 0.0f)
+    );
+
+    return drawable;
 }
 
 
@@ -137,7 +159,18 @@ Drawable *createColoredCube(glm::vec3 position, float angle) {
             ->angle(angle)
             ->build();
 
-    return new ModelAdapter(adapter);
+    Drawable* drawable = new ModelAdapter(adapter);
+
+    drawable = new MovingInOrbit(drawable, 2.1101f, glm::vec2(2.01f, 0.5f), glm::vec3(0.0f), 12.0f);
+
+    drawable = new Rotating(
+            drawable,
+            angle,
+            0.10f,
+            glm::vec3(0.0f, 1.0f, 0.0f)
+    );
+
+    return drawable;
 }
 
 
@@ -150,7 +183,7 @@ std::vector<gl_lib::Drawable *> buildCubes() {
     auto *diffuseTexture = new Texture(assetsPath + std::string("/textures/container2.png"));
     auto *specularTexture = new Texture(assetsPath + std::string("/textures/container2_specular.png"));
 
-    models.push_back(createTexturedCube(glm::vec3(0.0f), 0.0f, containerTexture, awesomefaceTexture));
+    models.push_back(createTexturedCube(glm::vec3(3.0f), 3.0f, containerTexture, awesomefaceTexture));
 
     models.push_back(createTexturedCube(glm::vec3(2.0f, 5.0f, -15.0f), 20.0f, containerTexture, containerTexture));
 
@@ -167,9 +200,9 @@ std::vector<gl_lib::Drawable *> buildCubes() {
 
     models.push_back(createTexturedCube(glm::vec3(1.5f, 2.0f, -2.5f), 120.0f, containerTexture, wallTexture));
 
-    models.push_back(createColoredCube(glm::vec3(2.5f, 0.2f, -1.5f), 140.0f));
+    models.push_back(createColoredCube(glm::vec3(0.0f), 140.0f));
 
-    models.push_back(createMonoColoredCube(glm::vec3(1.0f), glm::vec3(-1.3f, 1.0f, -1.5f), 160.0f));
+    models.push_back(createMonoColoredCube(glm::vec3(1.0f), glm::vec3(0.0f), 160.0f));
 
     models.push_back(createDiffuseTexturedCube(glm::vec3(-3.0f, 0.0f, -2.0f), 0.0f, diffuseTexture));
 

@@ -154,15 +154,15 @@ void OpenGl::runEngine(
 
         clear();
 
-        lightSource.setPosition(
-                glm::vec3(5.0f * cos(watch.getCurrent() / 2), 5.0f * sin(watch.getCurrent() / 2), 0.0f));
+//        lightSource.setPosition(
+//                glm::vec3(5.0f * cos(watch.getCurrent() / 2), 5.0f * sin(watch.getCurrent() / 2), 0.0f));
+//
+//        glm::vec3 lightColor;
+//        lightColor.x = sin(glfwGetTime() * 2.0f);
+//        lightColor.y = sin(glfwGetTime() * 0.7f);
+//        lightColor.z = sin(glfwGetTime() * 1.3f);
 
-        glm::vec3 lightColor;
-        lightColor.x = sin(glfwGetTime() * 2.0f);
-        lightColor.y = sin(glfwGetTime() * 0.7f);
-        lightColor.z = sin(glfwGetTime() * 1.3f);
-
-        lightSource.setColor(lightColor);
+//        lightSource.setColor(lightColor);
 
         for (Drawable *drawable : contexts.getDrawables()) {
             Context context = contexts.getFor(drawable);
