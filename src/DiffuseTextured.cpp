@@ -10,7 +10,7 @@ namespace gl_lib {
     void DiffuseTextured::prepare(Context *context) {
         this->decorated->prepare(context);
 
-        context->shader->attachFragmentShader("assets/shader/textured.fragment.shader");
+        context->shader->attachFragmentShader("assets/shader/diffuse.textured.fragment.shader");
     }
 
 

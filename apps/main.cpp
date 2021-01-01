@@ -5,6 +5,7 @@
 #include <gl_lib/Cube.h>
 #include <gl_lib/Textured.h>
 #include <gl_lib/DiffuseTextured.h>
+#include <gl_lib/DiffuseAndSpecularTextured.h>
 
 
 std::string assetsPath;
@@ -13,6 +14,9 @@ std::string assetsPath;
 // settings
 const unsigned int SCREEN_WIDTH = 800;
 const unsigned int SCREEN_HEIGHT = 600;
+
+
+using namespace gl_lib;
 
 
 Drawable *createTexturedCube(
@@ -75,6 +79,34 @@ Drawable *createDiffuseTexturedCube(
     return texturedModel;
 }
 
+Drawable *createDiffuseAndSpecularTexturedCube(
+        glm::vec3 position,
+        float angle,
+        Texture *diffuse,
+        Texture *specular
+) {
+    gl_lib::Cube::Builder *cubeBuilder = Cube::builder()
+            ->color(glm::vec3(1.0f));
+
+    Cube cube = cubeBuilder->build();
+
+    ModelAdapter::Builder *builder = ModelAdapter::builder();
+
+    ModelAdapter adapter = builder
+            ->model(new Cube(cube))
+            ->position(position)
+            ->angle(angle)
+            ->build();
+
+    gl_lib::DiffuseAndSpecularTextured *texturedModel = new DiffuseAndSpecularTextured(
+            new ModelAdapter(adapter),
+            diffuse,
+            specular
+    );
+
+    return texturedModel;
+}
+
 
 Drawable *createMonoColoredCube(glm::vec3 color, glm::vec3 position, float angle) {
     Cube cube = Cube::builder()->color(color)->build();
@@ -116,6 +148,7 @@ std::vector<gl_lib::Drawable *> buildCubes() {
     auto *awesomefaceTexture = new Texture(assetsPath + std::string("/textures/awesomeface.png"));
     auto *wallTexture = new Texture(assetsPath + std::string("/textures/wall.jpg"));
     auto *diffuseTexture = new Texture(assetsPath + std::string("/textures/container2.png"));
+    auto *specularTexture = new Texture(assetsPath + std::string("/textures/container2_specular.png"));
 
     models.push_back(createTexturedCube(glm::vec3(0.0f), 0.0f, containerTexture, awesomefaceTexture));
 
@@ -139,6 +172,13 @@ std::vector<gl_lib::Drawable *> buildCubes() {
     models.push_back(createMonoColoredCube(glm::vec3(1.0f), glm::vec3(-1.3f, 1.0f, -1.5f), 160.0f));
 
     models.push_back(createDiffuseTexturedCube(glm::vec3(-3.0f, 0.0f, -2.0f), 0.0f, diffuseTexture));
+
+    models.push_back(
+            createDiffuseAndSpecularTexturedCube(
+                    glm::vec3(-5.0f, 2.0f, -4.0f),
+                    0.0f,
+                    diffuseTexture, specularTexture
+            ));
 
     return models;
 }
