@@ -115,8 +115,8 @@ namespace gl_lib {
         glm::vec3 diffuse = glm::vec3(0.5f) * color;
         glm::vec3 specular = glm::vec3(1.0f);
 
-        context->shader->setVec3("light.ambient",  ambient);
-        context->shader->setVec3("light.diffuse",  diffuse);
+        context->shader->setVec3("light.ambient", ambient);
+        context->shader->setVec3("light.diffuse", diffuse);
         context->shader->setVec3("light.specular", specular);
     }
 

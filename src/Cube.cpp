@@ -16,7 +16,7 @@ namespace gl_lib {
         this->f = other.f;
         this->g = other.g;
         this->h = other.h;
-        
+
         this->colorABD = other.colorABD;
         this->colorADE = other.colorADE;
         this->colorABE = other.colorABE;

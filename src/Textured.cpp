@@ -20,7 +20,7 @@ namespace gl_lib {
     void Textured::initialize(Context *context) {
         this->decorated->initialize(context);
 
-        for(Texture* texture : textures) {
+        for (Texture *texture : textures) {
             texture->initialize();
         }
 
