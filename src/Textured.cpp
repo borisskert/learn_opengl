@@ -13,7 +13,7 @@ namespace gl_lib {
     void Textured::prepare(Context *context) {
         this->decorated->prepare(context);
 
-        context->shader->attachFragmentShader("assets/shader/textured.fragment.shader");
+        context->shader->attachFragmentShader("assets/shader/fragment.double-textured.shader");
     }
 
 
@@ -47,6 +47,11 @@ namespace gl_lib {
             glActiveTexture(GL_TEXTURE0 + index);
             texture->bind();
         }
+
+        context->shader->setVec3("material.ambient", glm::vec3(1.0f));
+        context->shader->setVec3("material.diffuse", glm::vec3(1.0f));
+        context->shader->setVec3("material.specular", glm::vec3(0.5f));
+        context->shader->setFloat("material.shininess", 32.0f);
 
         this->decorated->draw(context);
     }

@@ -8,6 +8,7 @@
 #include <gl_lib/DiffuseAndSpecularTextured.h>
 #include <gl_lib/Rotating.h>
 #include <gl_lib/MovingInOrbit.h>
+#include <gl_lib/SimpleColored.h>
 
 
 std::string assetsPath;
@@ -106,7 +107,7 @@ Drawable *createDiffuseAndSpecularTexturedCube(
             specular
     );
 
-    drawable = new MovingInOrbit(drawable, .0801f, glm::vec2(5.51f, 2.5f), glm::vec3(0.0f), 20.0f);
+    drawable = new MovingInOrbit(drawable, .0801f, glm::vec2(2.51f, 2.5f), glm::vec3(0.0f), 20.0f);
 
     drawable = new Rotating(
             drawable,
@@ -129,6 +130,8 @@ Drawable *createOrbitingMonoColoredCube(glm::vec3 color, glm::vec3 position, flo
             ->build();
 
     Drawable* drawable = new ModelAdapter(adapter);
+
+    drawable = new SimpleColored(drawable);
 
     drawable = new MovingInOrbit(drawable, .1101f, glm::vec2(5.01f, 1.5f), glm::vec3(0.0f), 10.0f);
 
@@ -154,6 +157,8 @@ Drawable *createStaticMonoColoredCube(glm::vec3 color, glm::vec3 position, float
 
     Drawable* drawable = new ModelAdapter(adapter);
 
+    drawable = new SimpleColored(drawable);
+
     return drawable;
 }
 
@@ -175,6 +180,8 @@ Drawable *createColoredCube(glm::vec3 position, float angle) {
             ->build();
 
     Drawable* drawable = new ModelAdapter(adapter);
+
+    drawable = new SimpleColored(drawable);
 
     drawable = new MovingInOrbit(drawable, 2.1101f, glm::vec2(2.01f, 0.5f), glm::vec3(0.0f), 12.0f);
 

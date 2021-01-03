@@ -33,6 +33,8 @@ namespace gl_lib {
 
         void draw(Context *) override;
 
+        void prepareLight(Context *);
+
         void renderLight(Context *);
 
         void configureVertexArray() const;

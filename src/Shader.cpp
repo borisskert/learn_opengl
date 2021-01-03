@@ -13,27 +13,38 @@ namespace gl_lib {
 
     void Shader::attachVertexShader(const char *path) {
         std::string vertexShaderCode = readFileContent(path);
-        this->attachedVertexShader = vertexShaderCode;
+        this->attachedVertexShaders.push_back(vertexShaderCode);
     }
 
 
     void Shader::attachFragmentShader(const char *path) {
         std::string fragmentShaderCode = readFileContent(path);
-        this->attachedFragmentShader = fragmentShaderCode;
+        this->attachedFragmentShaders.push_back(fragmentShaderCode);
     }
 
 
     void Shader::initialize() {
-        vertexShader vertexShaderId = compileVertexShader(this->attachedVertexShader.c_str());
-        glAttachShader(programId, vertexShaderId);
+        std::vector<unsigned int> attachedShaders;
 
-        fragmentShader fragmentShaderId = compileFragmentShader(this->attachedFragmentShader.c_str());
-        glAttachShader(programId, fragmentShaderId);
+        for(const std::string& vertexShaderCode : this->attachedVertexShaders) {
+            vertexShader vertexShaderId = compileVertexShader(vertexShaderCode.c_str());
+            glAttachShader(programId, vertexShaderId);
+
+            attachedShaders.push_back(vertexShaderId);
+        }
+
+        for(const std::string& fragmentShaderCode : this->attachedFragmentShaders) {
+            fragmentShader fragmentShaderId = compileFragmentShader(fragmentShaderCode.c_str());
+            glAttachShader(programId, fragmentShaderId);
+
+            attachedShaders.push_back(fragmentShaderId);
+        }
 
         initializeShaderProgram(programId);
 
-        glDeleteShader(vertexShaderId);
-        glDeleteShader(fragmentShaderId);
+        for(unsigned int attachedShaderId : attachedShaders) {
+            glDeleteShader(attachedShaderId);
+        }
     }
 
 

@@ -4,6 +4,7 @@
 #include "gl_lib.h"
 #include <glm/glm.hpp>
 #include <string>
+#include <vector>
 
 
 namespace gl_lib {
@@ -11,8 +12,9 @@ namespace gl_lib {
     class Shader {
     private:
         shaderProgram programId;
-        std::string attachedVertexShader;
-        std::string attachedFragmentShader;
+
+        std::vector<std::string> attachedVertexShaders;
+        std::vector<std::string> attachedFragmentShaders;
 
     public:
         Shader();

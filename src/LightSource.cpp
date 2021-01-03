@@ -108,20 +108,24 @@ namespace gl_lib {
         glDrawArrays(GL_TRIANGLES, 0, 36);
     };
 
+    void LightSource::prepareLight(Context *context) {
+        context->shader->attachFragmentShader("assets/shader/fragment.simple-light.shader");
+    }
+
     void LightSource::renderLight(Context *context) {
-        context->shader->setVec3("lightPos", position);
+        context->shader->setVec3("pointLights[0].position", position);
 
         glm::vec3 ambient = glm::vec3(0.2f) * color;
         glm::vec3 diffuse = glm::vec3(0.5f) * color;
         glm::vec3 specular = glm::vec3(1.0f);
 
-        context->shader->setVec3("light.ambient", ambient);
-        context->shader->setVec3("light.diffuse", diffuse);
-        context->shader->setVec3("light.specular", specular);
+        context->shader->setVec3("pointLights[0].ambient", ambient);
+        context->shader->setVec3("pointLights[0].diffuse", diffuse);
+        context->shader->setVec3("pointLights[0].specular", specular);
 
-        context->shader->setFloat("light.constant",  1.0f);
-        context->shader->setFloat("light.linear",    0.09f);
-        context->shader->setFloat("light.quadratic", 0.032f);
+        context->shader->setFloat("pointLights[0].constant", 1.0f);
+        context->shader->setFloat("pointLights[0].linear",    0.09f);
+        context->shader->setFloat("pointLights[0].quadratic", 0.032f);
     }
 
     glm::vec3 LightSource::getColor() const {

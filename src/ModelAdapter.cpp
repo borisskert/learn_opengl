@@ -28,7 +28,7 @@ namespace gl_lib {
 
     void ModelAdapter::prepare(Context *context) {
         context->shader->attachVertexShader("assets/shader/vertex.shader");
-        context->shader->attachFragmentShader("assets/shader/colored.fragment.shader");
+        context->shader->attachFragmentShader("assets/shader/fragment.main.shader");
     }
 
 
@@ -50,12 +50,6 @@ namespace gl_lib {
 
     void ModelAdapter::draw(Context *context) {
         context->buffer->bindVertexArray();
-
-        context->shader->setVec3("material.ambient", glm::vec3(1.0f));
-        context->shader->setVec3("material.diffuse", glm::vec3(1.0f));
-        context->shader->setVec3("material.specular", glm::vec3(0.5f));
-        context->shader->setFloat("material.shininess", 32.0f);
-
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 

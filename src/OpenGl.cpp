@@ -129,6 +129,8 @@ void OpenGl::runEngine(
 
     for (Drawable *drawable : contexts.getDrawables()) {
         Context context = contexts.getFor(drawable);
+
+        lightSource.prepareLight(&context);
         drawable->prepare(&context);
     }
 

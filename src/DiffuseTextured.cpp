@@ -10,7 +10,7 @@ namespace gl_lib {
     void DiffuseTextured::prepare(Context *context) {
         this->decorated->prepare(context);
 
-        context->shader->attachFragmentShader("assets/shader/diffuse.textured.fragment.shader");
+        context->shader->attachFragmentShader("assets/shader/fragment.mono-texture.shader");
     }
 
 
@@ -20,8 +20,6 @@ namespace gl_lib {
 
         Shader *shader = context->shader;
         shader->use();
-
-        shader->setInt("material.diffuse", 0);
     }
 
     void DiffuseTextured::update(Context *context) {
@@ -29,6 +27,10 @@ namespace gl_lib {
     }
 
     void DiffuseTextured::draw(Context *context) {
+        context->shader->setInt("material.diffuse", 0);
+        context->shader->setVec3("material.specular", glm::vec3(0.5f));
+        context->shader->setFloat("material.shininess", 32.0f);
+
         glActiveTexture(GL_TEXTURE0);
         texture->bind();
 

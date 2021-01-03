@@ -17,7 +17,7 @@ namespace gl_lib {
     void DiffuseAndSpecularTextured::prepare(Context *context) {
         this->decorated->prepare(context);
 
-        context->shader->attachFragmentShader("assets/shader/diffuse-and-specular.textured.fragment.shader");
+        context->shader->attachFragmentShader("assets/shader/fragment.diffuse-and-specular-textured.shader");
     }
 
 
@@ -38,6 +38,11 @@ namespace gl_lib {
     }
 
     void DiffuseAndSpecularTextured::draw(Context *context) {
+        context->shader->setVec3("material.ambient", glm::vec3(1.0f));
+        context->shader->setVec3("material.diffuse", glm::vec3(1.0f));
+        context->shader->setVec3("material.specular", glm::vec3(0.5f));
+        context->shader->setFloat("material.shininess", 32.0f);
+
         glActiveTexture(GL_TEXTURE0);
         diffuse->bind();
 
