@@ -118,6 +118,10 @@ namespace gl_lib {
         context->shader->setVec3("light.ambient", ambient);
         context->shader->setVec3("light.diffuse", diffuse);
         context->shader->setVec3("light.specular", specular);
+
+        context->shader->setFloat("light.constant",  1.0f);
+        context->shader->setFloat("light.linear",    0.09f);
+        context->shader->setFloat("light.quadratic", 0.032f);
     }
 
     glm::vec3 LightSource::getColor() const {

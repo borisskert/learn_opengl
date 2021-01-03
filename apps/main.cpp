@@ -119,7 +119,7 @@ Drawable *createDiffuseAndSpecularTexturedCube(
 }
 
 
-Drawable *createMonoColoredCube(glm::vec3 color, glm::vec3 position, float angle) {
+Drawable *createOrbitingMonoColoredCube(glm::vec3 color, glm::vec3 position, float angle) {
     Cube cube = Cube::builder()->color(color)->build();
 
     ModelAdapter adapter = ModelAdapter::builder()
@@ -138,6 +138,21 @@ Drawable *createMonoColoredCube(glm::vec3 color, glm::vec3 position, float angle
             2.0f,
             glm::vec3(0.0f, 1.0f, 0.0f)
     );
+
+    return drawable;
+}
+
+
+Drawable *createStaticMonoColoredCube(glm::vec3 color, glm::vec3 position, float angle) {
+    Cube cube = Cube::builder()->color(color)->build();
+
+    ModelAdapter adapter = ModelAdapter::builder()
+            ->model(new Cube(cube))
+            ->position(position)
+            ->angle(angle)
+            ->build();
+
+    Drawable* drawable = new ModelAdapter(adapter);
 
     return drawable;
 }
@@ -192,6 +207,9 @@ std::vector<gl_lib::Drawable *> buildCubes() {
     models.push_back(
             createTexturedCube(glm::vec3(-3.8f, -2.0f, -12.3f), 60.0f, awesomefaceTexture, awesomefaceTexture));
 
+    models.push_back(
+            createTexturedCube(glm::vec3(15.8f, 3.0f, -82.3f), 60.0f, awesomefaceTexture, awesomefaceTexture));
+
     models.push_back(createTexturedCube(glm::vec3(2.4f, -0.4f, -3.5f), 70.0f, containerTexture, wallTexture));
 
     models.push_back(createTexturedCube(glm::vec3(-1.7f, 3.0f, -7.5f), 80.0f, wallTexture, containerTexture));
@@ -202,7 +220,8 @@ std::vector<gl_lib::Drawable *> buildCubes() {
 
     models.push_back(createColoredCube(glm::vec3(0.0f), 140.0f));
 
-    models.push_back(createMonoColoredCube(glm::vec3(1.0f), glm::vec3(0.0f), 160.0f));
+    models.push_back(createOrbitingMonoColoredCube(glm::vec3(1.0f), glm::vec3(0.0f), 160.0f));
+    models.push_back(createStaticMonoColoredCube(glm::vec3(1.0f), glm::vec3(0.0f, 0.0f, -30), 160.0f));
 
     models.push_back(createDiffuseTexturedCube(glm::vec3(-3.0f, 0.0f, -2.0f), 0.0f, diffuseTexture));
 
