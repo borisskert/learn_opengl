@@ -44,7 +44,7 @@ vec4 mixedTextureColor = mix(texture1Color, texture2Color, 0.2);
 
 
 vec3 CalcMaterialColor() {
-    return vec3(mixedTextureColor) * ourColor;
+    return ourColor;
 }
 
 

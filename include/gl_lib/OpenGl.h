@@ -32,14 +32,14 @@ namespace gl_lib {
 
         float fieldOfView = 45.0f;
 
-        LightSource lightSource;
+        std::vector<gl_lib::LightSource*> lights;
 
         ContextContainer createContext(const std::vector<Drawable *> &drawables);
 
     public:
         explicit OpenGl(unsigned int screenWidthInPixels, unsigned int screenHeightInPixels,
                         std::vector<Drawable *> models,
-                        gl_lib::LightSource source
+                        std::vector<gl_lib::LightSource*> lights
         );
 
         /**

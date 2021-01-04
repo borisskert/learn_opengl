@@ -1,6 +1,7 @@
 #include <gl_lib/OpenGl.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <utility>
 #include <gl_lib/ContextContainer.h>
 #include <gl_lib/LightSource.h>
 
@@ -9,12 +10,12 @@ using namespace gl_lib;
 
 OpenGl::OpenGl(
         unsigned int screenWidthInPixels, unsigned int screenHeightInPixels, std::vector<Drawable *> models,
-        gl_lib::LightSource lightSource
+        std::vector<gl_lib::LightSource*> lights
 )
         : screenHeight(screenHeightInPixels),
           screenWidth(screenWidthInPixels),
           models(std::move(models)),
-          lightSource(lightSource) {}
+          lights(std::move(lights)) {}
 
 
 void OpenGl::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
@@ -80,7 +81,10 @@ void OpenGl::processInput(GLFWwindow *window) {
 
 
 void OpenGl::clear() {
-    glm::vec3 backgroundColor = lightSource.getStrength() * 0.05f * lightSource.getColor();
+    glm::vec3 backgroundColor = glm::vec3(0.0f);
+    for(LightSource* light : lights) {
+        backgroundColor += light->getStrength() * 0.05f * light->getColor();
+    }
 
     glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -99,8 +103,10 @@ ContextContainer OpenGl::createContext(const std::vector<Drawable *> &drawables)
         contextContainer.store(drawable, context);
     }
 
-    Context model = createLightContext();
-    contextContainer.store(&lightSource, model);
+    for(LightSource* light : lights) {
+        Context model = createLightContext();
+        contextContainer.store(light, model);
+    }
 
     return contextContainer;
 }
@@ -130,7 +136,10 @@ void OpenGl::runEngine(
     for (Drawable *drawable : contexts.getDrawables()) {
         Context context = contexts.getFor(drawable);
 
-        lightSource.prepareLight(&context);
+        for(LightSource* lightSource : lights) {
+            lightSource->prepareLight(&context);
+        }
+
         drawable->prepare(&context);
     }
 
@@ -156,15 +165,17 @@ void OpenGl::runEngine(
 
         clear();
 
-//        lightSource.setPosition(
-//                glm::vec3(5.0f * cos(watch.getCurrent() / 2), 5.0f * sin(watch.getCurrent() / 2), 0.0f));
-//
-//        glm::vec3 lightColor;
-//        lightColor.x = sin(glfwGetTime() * 2.0f);
-//        lightColor.y = sin(glfwGetTime() * 0.7f);
-//        lightColor.z = sin(glfwGetTime() * 1.3f);
+        LightSource* lightSource = lights[1];
 
-//        lightSource.setColor(lightColor);
+        lightSource->setPosition(
+                glm::vec3(5.0f * cos(watch.getCurrent() / 2), 5.0f * sin(watch.getCurrent() / 2), 0.0f));
+
+        glm::vec3 lightColor;
+        lightColor.x = sin(glfwGetTime() * 2.0f);
+        lightColor.y = sin(glfwGetTime() * 0.7f);
+        lightColor.z = sin(glfwGetTime() * 1.3f);
+
+        lightSource->setColor(lightColor);
 
         for (Drawable *drawable : contexts.getDrawables()) {
             Context context = contexts.getFor(drawable);
@@ -179,7 +190,10 @@ void OpenGl::runEngine(
 
             drawable->update(&context);
 
-            lightSource.renderLight(&context);
+            for(LightSource* lightSource : lights) {
+                lightSource->renderLight(&context);
+            }
+
             drawable->draw(&context);
         }
 

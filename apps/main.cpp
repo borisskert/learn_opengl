@@ -254,6 +254,8 @@ int main(int argc, char **argv) {
 
     std::vector<gl_lib::Drawable *> models = buildCubes();
 
+    std::vector<gl_lib::LightSource*> lightSources;
+
     LightSource light(
             glm::vec3(0.0f),
             glm::vec3(1.0f, 0.9569, 0.5176),
@@ -261,8 +263,28 @@ int main(int argc, char **argv) {
             glm::vec3(0.1f)
     );
 
+    lightSources.push_back(&light);
+
+    LightSource light2(
+            glm::vec3(2.0f, 2.0f, 2.0f),
+            glm::vec3(1.0f, 0.9569, 0.5176),
+            1.0f,
+            glm::vec3(0.1f)
+    );
+
+    lightSources.push_back(&light2);
+
+    LightSource light3(
+            glm::vec3(16.0f, 0.0f, -80.3f),
+            glm::vec3(1.0f, 0.9569, 0.5176),
+            1.0f,
+            glm::vec3(0.1f)
+    );
+
+    lightSources.push_back(&light3);
+
     try {
-        gl_lib::OpenGl openGl(SCREEN_WIDTH, SCREEN_HEIGHT, models, light);
+        gl_lib::OpenGl openGl(SCREEN_WIDTH, SCREEN_HEIGHT, models, lightSources);
         openGl.start();
     }
     catch (const gl_lib::ShaderInitializationException &exception) {

@@ -6,12 +6,31 @@
 
 namespace gl_lib {
 
+    class LightSourceId {
+    private:
+        static LightSourceId *instance;
+
+        int latestId = -1;
+        unsigned int count = 0;
+
+        LightSourceId();
+
+    public:
+        int createNew();
+
+        unsigned int getCount() const;
+
+        static LightSourceId *getInstance();
+    };
+
     class LightSource : public Drawable {
     private:
         glm::vec3 position;
         glm::vec3 color;
         float strength;
         glm::vec3 scale;
+
+        const int id;
 
     protected:
         glm::vec3 getModelPosition() override;

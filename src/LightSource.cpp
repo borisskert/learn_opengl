@@ -1,4 +1,5 @@
 #include <glm/ext.hpp>
+#include <iostream>
 #include "gl_lib/LightSource.h"
 
 namespace gl_lib {
@@ -7,7 +8,8 @@ namespace gl_lib {
             : position(glm::vec3(0.0f, 0.0f, 0.0f)),
               color(glm::vec3(1.0f)),
               strength(1.0f),
-              scale(glm::vec3(1.0f)) {}
+              scale(glm::vec3(1.0f)),
+              id(LightSourceId::getInstance()->createNew()) {}
 
 
     LightSource::LightSource(
@@ -19,7 +21,8 @@ namespace gl_lib {
             : position(position),
               color(color),
               strength(strength),
-              scale(scale) {}
+              scale(scale),
+              id(LightSourceId::getInstance()->createNew()) {}
 
 
     void LightSource::configureVertexArray() const {
@@ -113,19 +116,22 @@ namespace gl_lib {
     }
 
     void LightSource::renderLight(Context *context) {
-        context->shader->setVec3("pointLights[0].position", position);
+        std::string idAsText = std::to_string(id);
+
+        context->shader->setInt("countLights", LightSourceId::getInstance()->getCount());
+        context->shader->setVec3("pointLights[" + idAsText + "].position", position);
 
         glm::vec3 ambient = glm::vec3(0.2f) * color;
-        glm::vec3 diffuse = glm::vec3(0.5f) * color;
+        glm::vec3 diffuse = glm::vec3(0.75f) * color;
         glm::vec3 specular = glm::vec3(1.0f);
 
-        context->shader->setVec3("pointLights[0].ambient", ambient);
-        context->shader->setVec3("pointLights[0].diffuse", diffuse);
-        context->shader->setVec3("pointLights[0].specular", specular);
+        context->shader->setVec3("pointLights[" + idAsText + "].ambient", ambient);
+        context->shader->setVec3("pointLights[" + idAsText + "].diffuse", diffuse);
+        context->shader->setVec3("pointLights[" + idAsText + "].specular", specular);
 
-        context->shader->setFloat("pointLights[0].constant", 1.0f);
-        context->shader->setFloat("pointLights[0].linear",    0.09f);
-        context->shader->setFloat("pointLights[0].quadratic", 0.032f);
+        context->shader->setFloat("pointLights[" + idAsText + "].constant", 1.0f);
+        context->shader->setFloat("pointLights[" + idAsText + "].linear", 0.09f);
+        context->shader->setFloat("pointLights[" + idAsText + "].quadratic", 0.032f);
     }
 
     glm::vec3 LightSource::getColor() const {
@@ -155,4 +161,27 @@ namespace gl_lib {
     glm::mat4 LightSource::getTransformMatrix() {
         return glm::mat4(1.0f);
     }
+
+    int LightSourceId::createNew() {
+        latestId++;
+        count++;
+
+        return latestId;
+    }
+
+    LightSourceId* LightSourceId::instance;
+
+    LightSourceId *LightSourceId::getInstance() {
+        if (LightSourceId::instance == nullptr) {
+            LightSourceId::instance = new LightSourceId();
+        }
+
+        return LightSourceId::instance;
+    }
+
+    unsigned int LightSourceId::getCount() const {
+        return count;
+    }
+
+    LightSourceId::LightSourceId() = default;
 }

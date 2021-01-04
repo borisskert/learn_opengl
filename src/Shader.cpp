@@ -2,6 +2,7 @@
 #include <gl_lib/gl_lib.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
+#include <algorithm>
 
 
 namespace gl_lib {
@@ -11,15 +12,32 @@ namespace gl_lib {
     }
 
 
+    bool contains(const std::vector<std::string>& strings, const std::string& s) {
+        for(const std::string& item : strings) {
+            if(item == s) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
     void Shader::attachVertexShader(const char *path) {
         std::string vertexShaderCode = readFileContent(path);
-        this->attachedVertexShaders.push_back(vertexShaderCode);
+
+        if(!contains(this->attachedVertexShaders, vertexShaderCode)) {
+            this->attachedVertexShaders.push_back(vertexShaderCode);
+        }
     }
 
 
     void Shader::attachFragmentShader(const char *path) {
         std::string fragmentShaderCode = readFileContent(path);
-        this->attachedFragmentShaders.push_back(fragmentShaderCode);
+
+        if(!contains(this->attachedFragmentShaders, fragmentShaderCode)) {
+            this->attachedFragmentShaders.push_back(fragmentShaderCode);
+        }
     }
 
 

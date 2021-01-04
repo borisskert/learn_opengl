@@ -30,8 +30,10 @@ struct PointLight {
     vec3 diffuse;
     vec3 specular;
 };
-#define NR_POINT_LIGHTS 1
-uniform PointLight pointLights[NR_POINT_LIGHTS];
+#define MAX_NR_POINT_LIGHTS 128
+
+uniform int countLights = 1;
+uniform PointLight pointLights[MAX_NR_POINT_LIGHTS];
 
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
@@ -53,7 +55,7 @@ vec3 CalcLight() {
     vec3 lightDir = normalize(lightPos - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
 
-    for (int i = 0; i < NR_POINT_LIGHTS; i++) {
+    for (int i = 0; i < countLights; i++) {
         lightResult += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
     }
 
