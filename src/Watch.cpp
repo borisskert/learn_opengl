@@ -15,12 +15,12 @@ namespace gl_lib {
     }
 
 
-    double Watch::getDelta() {
+    double Watch::getDelta() const {
         return currentFrame - lastFrame;
     }
 
 
-    double Watch::getCurrent() {
+    double Watch::getCurrent() const {
         return currentFrame;
     }
 }

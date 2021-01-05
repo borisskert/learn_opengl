@@ -15,6 +15,7 @@
 #include "MouseInputAdapter.h"
 #include "MousePosition.h"
 #include "LightSource.h"
+#include "Game.h"
 
 
 namespace gl_lib {
@@ -23,7 +24,7 @@ namespace gl_lib {
     private:
         unsigned int screenWidth;
         unsigned int screenHeight;
-        std::vector<Drawable *> models;
+
         Camera camera = Camera::create();
         Watch watch;
 
@@ -32,14 +33,13 @@ namespace gl_lib {
 
         float fieldOfView = 45.0f;
 
-        std::vector<gl_lib::LightSource *> lights;
-
         ContextContainer createContext(const std::vector<Drawable *> &drawables);
+
+        Game *game;
 
     public:
         explicit OpenGl(unsigned int screenWidthInPixels, unsigned int screenHeightInPixels,
-                        std::vector<Drawable *> models,
-                        std::vector<gl_lib::LightSource *> lights
+                        Game *game
         );
 
         /**
@@ -92,7 +92,7 @@ namespace gl_lib {
 
         Context createLightContext() const;
 
-        void updateRandomLight();
+        void updateViewProjection(Context *context);
     };
 }
 

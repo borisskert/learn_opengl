@@ -9,13 +9,11 @@
 using namespace gl_lib;
 
 OpenGl::OpenGl(
-        unsigned int screenWidthInPixels, unsigned int screenHeightInPixels, std::vector<Drawable *> models,
-        std::vector<gl_lib::LightSource *> lights
-)
-        : screenHeight(screenHeightInPixels),
-          screenWidth(screenWidthInPixels),
-          models(std::move(models)),
-          lights(std::move(lights)) {}
+        unsigned int screenWidthInPixels, unsigned int screenHeightInPixels,
+        Game *game
+) : screenHeight(screenHeightInPixels),
+    screenWidth(screenWidthInPixels),
+    game(game) {}
 
 
 void OpenGl::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
@@ -82,7 +80,7 @@ void OpenGl::processInput(GLFWwindow *window) {
 
 void OpenGl::clear() {
     glm::vec3 backgroundColor = glm::vec3(0.0f);
-    for (LightSource *light : lights) {
+    for (LightSource *light : game->getLights()) {
         backgroundColor += light->getStrength() * 0.05f * light->getColor();
     }
 
@@ -103,7 +101,7 @@ ContextContainer OpenGl::createContext(const std::vector<Drawable *> &drawables)
         contextContainer.store(drawable, context);
     }
 
-    for (LightSource *light : lights) {
+    for (LightSource *light : game->getLights()) {
         Context context = createLightContext();
         contextContainer.store(light, context);
     }
@@ -131,12 +129,12 @@ void OpenGl::runEngine(
     mouseInputAdapter->registerCallback(this);
 
 
-    ContextContainer contexts = createContext(models);
+    ContextContainer contexts = createContext(game->getObjects());
 
     for (Drawable *drawable : contexts.getDrawables()) {
         Context context = contexts.getFor(drawable);
 
-        for (LightSource *lightSource : lights) {
+        for (LightSource *lightSource : game->getLights()) {
             lightSource->prepareLight(&context);
         }
 
@@ -146,14 +144,7 @@ void OpenGl::runEngine(
     for (Drawable *drawable : contexts.getDrawables()) {
         Context context = contexts.getFor(drawable);
 
-        context.shader->use();
-        context.shader->setMat4("view", camera.getView());
-        context.shader->setVec3("viewPos", camera.getPosition());
-
-        glm::mat4 projection;
-        projection = glm::perspective(glm::radians(fieldOfView), (float) screenWidth / (float) screenHeight, 0.1f,
-                                      100.0f);
-        context.shader->setMat4("projection", projection);
+        updateViewProjection(&context);
 
         drawable->initialize(&context);
     }
@@ -165,22 +156,16 @@ void OpenGl::runEngine(
 
         clear();
 
-        updateRandomLight();
+        game->update(&watch);
 
         for (Drawable *drawable : contexts.getDrawables()) {
             Context context = contexts.getFor(drawable);
 
-            context.shader->use();
-            context.shader->setMat4("view", camera.getView());
-            context.shader->setVec3("viewPos", camera.getPosition());
-
-            glm::mat4 projection = glm::perspective(glm::radians(fieldOfView),
-                                                    (float) screenWidth / (float) screenHeight, 0.1f, 100.0f);
-            context.shader->setMat4("projection", projection);
+            updateViewProjection(&context);
 
             drawable->update(&context);
 
-            for (LightSource *light : lights) {
+            for (LightSource *light : game->getLights()) {
                 light->renderLight(&context);
             }
 
@@ -194,18 +179,19 @@ void OpenGl::runEngine(
     glfwTerminate();
 }
 
-void OpenGl::updateRandomLight() {
-    LightSource *lightSource = lights[1];
 
-    lightSource->setPosition(
-            glm::vec3(5.0f * cos(watch.getCurrent() / 2), 5.0f * sin(watch.getCurrent() / 2), 0.0f));
+void OpenGl::updateViewProjection(Context *context) {
+    context->shader->use();
+    context->shader->setMat4("view", camera.getView());
+    context->shader->setVec3("viewPos", camera.getPosition());
 
-    glm::vec3 lightColor;
-    lightColor.x = sin(glfwGetTime() * 2.0f);
-    lightColor.y = sin(glfwGetTime() * 0.7f);
-    lightColor.z = sin(glfwGetTime() * 1.3f);
-
-    lightSource->setColor(lightColor);
+    glm::mat4 projection = glm::perspective(
+            glm::radians(fieldOfView),
+            (float) screenWidth / (float) screenHeight,
+            0.1f,
+            100.0f
+    );
+    context->shader->setMat4("projection", projection);
 }
 
 

@@ -16,7 +16,8 @@ configure_file("${PROJECT_SOURCE_DIR}/assets/shader/fragment.simple-color.shader
 configure_file("${PROJECT_SOURCE_DIR}/assets/shader/fragment.simple-light.shader" "assets/shader/fragment.simple-light.shader" COPYONLY)
 
 
-add_executable(game_of_life_app main.cpp)
+file(GLOB_RECURSE SOURCES *.h *.cpp)
+add_executable(game_of_life_app ${SOURCES})
 target_link_libraries(game_of_life_app PRIVATE gl_lib)
 
 
