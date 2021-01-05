@@ -32,14 +32,14 @@ namespace gl_lib {
 
         float fieldOfView = 45.0f;
 
-        std::vector<gl_lib::LightSource*> lights;
+        std::vector<gl_lib::LightSource *> lights;
 
         ContextContainer createContext(const std::vector<Drawable *> &drawables);
 
     public:
         explicit OpenGl(unsigned int screenWidthInPixels, unsigned int screenHeightInPixels,
                         std::vector<Drawable *> models,
-                        std::vector<gl_lib::LightSource*> lights
+                        std::vector<gl_lib::LightSource *> lights
         );
 
         /**
@@ -91,6 +91,8 @@ namespace gl_lib {
         void onMouseScroll(GLFWwindow *window, double x, double y) override;
 
         Context createLightContext() const;
+
+        void updateRandomLight();
     };
 }
 

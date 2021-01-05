@@ -6,7 +6,7 @@
 
 namespace gl_lib {
 
-    class SimpleColored : public DrawableDecorator  {
+    class SimpleColored : public DrawableDecorator {
     public:
         explicit SimpleColored(Drawable *);
 

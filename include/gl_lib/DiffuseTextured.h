@@ -9,7 +9,7 @@ namespace gl_lib {
 
     class DiffuseTextured : public DrawableDecorator {
     private:
-        Texture * texture;
+        Texture *texture;
 
     public:
         explicit DiffuseTextured(Drawable *, Texture *);

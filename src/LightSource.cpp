@@ -169,7 +169,7 @@ namespace gl_lib {
         return latestId;
     }
 
-    LightSourceId* LightSourceId::instance;
+    LightSourceId *LightSourceId::instance;
 
     LightSourceId *LightSourceId::getInstance() {
         if (LightSourceId::instance == nullptr) {

@@ -10,7 +10,7 @@ using namespace gl_lib;
 
 OpenGl::OpenGl(
         unsigned int screenWidthInPixels, unsigned int screenHeightInPixels, std::vector<Drawable *> models,
-        std::vector<gl_lib::LightSource*> lights
+        std::vector<gl_lib::LightSource *> lights
 )
         : screenHeight(screenHeightInPixels),
           screenWidth(screenWidthInPixels),
@@ -82,7 +82,7 @@ void OpenGl::processInput(GLFWwindow *window) {
 
 void OpenGl::clear() {
     glm::vec3 backgroundColor = glm::vec3(0.0f);
-    for(LightSource* light : lights) {
+    for (LightSource *light : lights) {
         backgroundColor += light->getStrength() * 0.05f * light->getColor();
     }
 
@@ -103,9 +103,9 @@ ContextContainer OpenGl::createContext(const std::vector<Drawable *> &drawables)
         contextContainer.store(drawable, context);
     }
 
-    for(LightSource* light : lights) {
-        Context model = createLightContext();
-        contextContainer.store(light, model);
+    for (LightSource *light : lights) {
+        Context context = createLightContext();
+        contextContainer.store(light, context);
     }
 
     return contextContainer;
@@ -136,7 +136,7 @@ void OpenGl::runEngine(
     for (Drawable *drawable : contexts.getDrawables()) {
         Context context = contexts.getFor(drawable);
 
-        for(LightSource* lightSource : lights) {
+        for (LightSource *lightSource : lights) {
             lightSource->prepareLight(&context);
         }
 
@@ -165,17 +165,7 @@ void OpenGl::runEngine(
 
         clear();
 
-        LightSource* lightSource = lights[1];
-
-        lightSource->setPosition(
-                glm::vec3(5.0f * cos(watch.getCurrent() / 2), 5.0f * sin(watch.getCurrent() / 2), 0.0f));
-
-        glm::vec3 lightColor;
-        lightColor.x = sin(glfwGetTime() * 2.0f);
-        lightColor.y = sin(glfwGetTime() * 0.7f);
-        lightColor.z = sin(glfwGetTime() * 1.3f);
-
-        lightSource->setColor(lightColor);
+        updateRandomLight();
 
         for (Drawable *drawable : contexts.getDrawables()) {
             Context context = contexts.getFor(drawable);
@@ -190,8 +180,8 @@ void OpenGl::runEngine(
 
             drawable->update(&context);
 
-            for(LightSource* lightSource : lights) {
-                lightSource->renderLight(&context);
+            for (LightSource *light : lights) {
+                light->renderLight(&context);
             }
 
             drawable->draw(&context);
@@ -202,6 +192,20 @@ void OpenGl::runEngine(
     }
 
     glfwTerminate();
+}
+
+void OpenGl::updateRandomLight() {
+    LightSource *lightSource = lights[1];
+
+    lightSource->setPosition(
+            glm::vec3(5.0f * cos(watch.getCurrent() / 2), 5.0f * sin(watch.getCurrent() / 2), 0.0f));
+
+    glm::vec3 lightColor;
+    lightColor.x = sin(glfwGetTime() * 2.0f);
+    lightColor.y = sin(glfwGetTime() * 0.7f);
+    lightColor.z = sin(glfwGetTime() * 1.3f);
+
+    lightSource->setColor(lightColor);
 }
 
 

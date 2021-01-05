@@ -12,9 +12,9 @@ namespace gl_lib {
     }
 
 
-    bool contains(const std::vector<std::string>& strings, const std::string& s) {
-        for(const std::string& item : strings) {
-            if(item == s) {
+    bool contains(const std::vector<std::string> &strings, const std::string &s) {
+        for (const std::string &item : strings) {
+            if (item == s) {
                 return true;
             }
         }
@@ -26,7 +26,7 @@ namespace gl_lib {
     void Shader::attachVertexShader(const char *path) {
         std::string vertexShaderCode = readFileContent(path);
 
-        if(!contains(this->attachedVertexShaders, vertexShaderCode)) {
+        if (!contains(this->attachedVertexShaders, vertexShaderCode)) {
             this->attachedVertexShaders.push_back(vertexShaderCode);
         }
     }
@@ -35,7 +35,7 @@ namespace gl_lib {
     void Shader::attachFragmentShader(const char *path) {
         std::string fragmentShaderCode = readFileContent(path);
 
-        if(!contains(this->attachedFragmentShaders, fragmentShaderCode)) {
+        if (!contains(this->attachedFragmentShaders, fragmentShaderCode)) {
             this->attachedFragmentShaders.push_back(fragmentShaderCode);
         }
     }
@@ -44,14 +44,14 @@ namespace gl_lib {
     void Shader::initialize() {
         std::vector<unsigned int> attachedShaders;
 
-        for(const std::string& vertexShaderCode : this->attachedVertexShaders) {
+        for (const std::string &vertexShaderCode : this->attachedVertexShaders) {
             vertexShader vertexShaderId = compileVertexShader(vertexShaderCode.c_str());
             glAttachShader(programId, vertexShaderId);
 
             attachedShaders.push_back(vertexShaderId);
         }
 
-        for(const std::string& fragmentShaderCode : this->attachedFragmentShaders) {
+        for (const std::string &fragmentShaderCode : this->attachedFragmentShaders) {
             fragmentShader fragmentShaderId = compileFragmentShader(fragmentShaderCode.c_str());
             glAttachShader(programId, fragmentShaderId);
 
@@ -60,7 +60,7 @@ namespace gl_lib {
 
         initializeShaderProgram(programId);
 
-        for(unsigned int attachedShaderId : attachedShaders) {
+        for (unsigned int attachedShaderId : attachedShaders) {
             glDeleteShader(attachedShaderId);
         }
     }

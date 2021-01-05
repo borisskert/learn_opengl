@@ -129,7 +129,7 @@ Drawable *createOrbitingMonoColoredCube(glm::vec3 color, glm::vec3 position, flo
             ->angle(angle)
             ->build();
 
-    Drawable* drawable = new ModelAdapter(adapter);
+    Drawable *drawable = new ModelAdapter(adapter);
 
     drawable = new SimpleColored(drawable);
 
@@ -155,7 +155,7 @@ Drawable *createStaticMonoColoredCube(glm::vec3 color, glm::vec3 position, float
             ->angle(angle)
             ->build();
 
-    Drawable* drawable = new ModelAdapter(adapter);
+    Drawable *drawable = new ModelAdapter(adapter);
 
     drawable = new SimpleColored(drawable);
 
@@ -179,7 +179,7 @@ Drawable *createColoredCube(glm::vec3 position, float angle) {
             ->angle(angle)
             ->build();
 
-    Drawable* drawable = new ModelAdapter(adapter);
+    Drawable *drawable = new ModelAdapter(adapter);
 
     drawable = new SimpleColored(drawable);
 
@@ -254,7 +254,7 @@ int main(int argc, char **argv) {
 
     std::vector<gl_lib::Drawable *> models = buildCubes();
 
-    std::vector<gl_lib::LightSource*> lightSources;
+    std::vector<gl_lib::LightSource *> lightSources;
 
     LightSource light(
             glm::vec3(0.0f),

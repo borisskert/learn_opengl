@@ -66,7 +66,7 @@ namespace gl_lib {
 
         Triangle::Builder *color(glm::vec3);
 
-        Triangle::Builder *addTexture(Texture* texture);
+        Triangle::Builder *addTexture(Texture *texture);
 
         Triangle build();
     };
