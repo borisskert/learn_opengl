@@ -92,7 +92,13 @@ namespace gl_lib {
 
         Context createLightContext() const;
 
-        void updateViewProjection(Context *context);
+        void updateViewProjection(Shader *);
+
+        void prepareContexts(ContextContainer &contexts);
+
+        void initializeContexts(ContextContainer &contexts);
+
+        void draw(ContextContainer &contexts);
     };
 }
 

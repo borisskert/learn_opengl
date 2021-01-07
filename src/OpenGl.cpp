@@ -130,24 +130,8 @@ void OpenGl::runEngine(
 
 
     ContextContainer contexts = createContext(game->getObjects());
-
-    for (Drawable *drawable : contexts.getDrawables()) {
-        Context context = contexts.getFor(drawable);
-
-        for (LightSource *lightSource : game->getLights()) {
-            lightSource->prepareLight(&context);
-        }
-
-        drawable->prepare(&context);
-    }
-
-    for (Drawable *drawable : contexts.getDrawables()) {
-        Context context = contexts.getFor(drawable);
-
-        updateViewProjection(&context);
-
-        drawable->initialize(&context);
-    }
+    prepareContexts(contexts);
+    initializeContexts(contexts);
 
     while (!glfwWindowShouldClose(window)) {
         watch.startFrame();
@@ -158,19 +142,7 @@ void OpenGl::runEngine(
 
         game->update(&watch);
 
-        for (Drawable *drawable : contexts.getDrawables()) {
-            Context context = contexts.getFor(drawable);
-
-            updateViewProjection(&context);
-
-            drawable->update(&context);
-
-            for (LightSource *light : game->getLights()) {
-                light->renderLight(&context);
-            }
-
-            drawable->draw(&context);
-        }
+        draw(contexts);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -180,10 +152,51 @@ void OpenGl::runEngine(
 }
 
 
-void OpenGl::updateViewProjection(Context *context) {
-    context->shader->use();
-    context->shader->setMat4("view", camera.getView());
-    context->shader->setVec3("viewPos", camera.getPosition());
+void OpenGl::draw(ContextContainer &contexts) {
+    for (Drawable *drawable : contexts.getDrawables()) {
+        Context context = contexts.getFor(drawable);
+
+        updateViewProjection(context.shader);
+
+        drawable->update(&context);
+
+        for (LightSource *light : game->getLights()) {
+            light->renderLight(&context);
+        }
+
+        drawable->draw(&context);
+    }
+}
+
+
+void OpenGl::initializeContexts(ContextContainer &contexts) {
+    for (Drawable *drawable : contexts.getDrawables()) {
+        Context context = contexts.getFor(drawable);
+
+        updateViewProjection(context.shader);
+
+        drawable->initialize(&context);
+    }
+}
+
+
+void OpenGl::prepareContexts(ContextContainer &contexts) {
+    for (Drawable *drawable : contexts.getDrawables()) {
+        Context context = contexts.getFor(drawable);
+
+        for (LightSource *lightSource : game->getLights()) {
+            lightSource->prepareLight(&context);
+        }
+
+        drawable->prepare(&context);
+    }
+}
+
+
+void OpenGl::updateViewProjection(Shader *shader) {
+    shader->use();
+    shader->setMat4("view", camera.getView());
+    shader->setVec3("viewPos", camera.getPosition());
 
     glm::mat4 projection = glm::perspective(
             glm::radians(fieldOfView),
@@ -191,7 +204,8 @@ void OpenGl::updateViewProjection(Context *context) {
             0.1f,
             100.0f
     );
-    context->shader->setMat4("projection", projection);
+
+    shader->setMat4("projection", projection);
 }
 
 

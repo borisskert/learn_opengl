@@ -12,9 +12,6 @@
 #include "MyGame.h"
 
 
-std::string assetsPath;
-
-
 // settings
 const unsigned int SCREEN_WIDTH = 800;
 const unsigned int SCREEN_HEIGHT = 600;
@@ -23,7 +20,9 @@ const unsigned int SCREEN_HEIGHT = 600;
 using namespace gl_lib;
 
 
-int main(int argc, char **argv) {
+std::string readAssetsPath(int argc, char *const *argv) {
+    std::string assetsPath;
+
     for (int index = 0; index < argc; index++) {
         std::string argument(argv[index]);
 
@@ -31,6 +30,12 @@ int main(int argc, char **argv) {
             assetsPath = argv[index + 1];
         }
     }
+
+    return assetsPath;
+}
+
+int main(int argc, char **argv) {
+    std::string assetsPath = readAssetsPath(argc, argv);
 
     MyGame *game = new MyGame(assetsPath);
 
