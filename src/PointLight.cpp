@@ -1,10 +1,10 @@
 #include <glm/ext.hpp>
 #include <iostream>
-#include "gl_lib/LightSource.h"
+#include "gl_lib/PointLight.h"
 
 namespace gl_lib {
 
-    LightSource::LightSource()
+    PointLight::PointLight()
             : position(glm::vec3(0.0f, 0.0f, 0.0f)),
               color(glm::vec3(1.0f)),
               strength(1.0f),
@@ -12,20 +12,16 @@ namespace gl_lib {
               id(LightSourceId::getInstance()->createNew()) {}
 
 
-    LightSource::LightSource(
-            glm::vec3 position,
-            glm::vec3 color,
-            float strength,
-            glm::vec3 scale
-    )
+    PointLight::PointLight(
+            glm::vec3 position, glm::vec3 color, float strength, glm::vec3 scale)
             : position(position),
               color(color),
               strength(strength),
               scale(scale),
-              id(LightSourceId::getInstance()->createNew()) {}
+              id(LightSourceId::getInstance()->createNew()) {};
 
 
-    void LightSource::configureVertexArray() const {
+    void PointLight::configureVertexArray() const {
         float vertices[] = {
                 -0.5f, -0.5f, -0.5f,
                 0.5f, -0.5f, -0.5f,
@@ -77,13 +73,13 @@ namespace gl_lib {
     };
 
 
-    void LightSource::prepare(Context *context) {
+    void PointLight::prepare(Context *context) {
         context->shader->attachVertexShader("assets/shader/lightVertex.shader");
         context->shader->attachFragmentShader("assets/shader/lightFragment.shader");
     }
 
 
-    void LightSource::initialize(Context *context) {
+    void PointLight::initialize(Context *context) {
         context->shader->initialize();
         context->buffer->initialize();
 
@@ -92,11 +88,11 @@ namespace gl_lib {
     }
 
 
-    void LightSource::update(Context *context) {
+    void PointLight::update(Context *context) {
         context->shader->use();
     };
 
-    void LightSource::draw(Context *context) {
+    void PointLight::draw(Context *context) {
         context->shader->use();
 
         glm::mat4 model = glm::mat4(1.0f);
@@ -111,11 +107,11 @@ namespace gl_lib {
         glDrawArrays(GL_TRIANGLES, 0, 36);
     };
 
-    void LightSource::prepareLight(Context *context) {
+    void PointLight::prepareLight(Context *context) {
         context->shader->attachFragmentShader("assets/shader/fragment.simple-light.shader");
     }
 
-    void LightSource::renderLight(Context *context) {
+    void PointLight::renderLight(Context *context) {
         std::string idAsText = std::to_string(id);
 
         context->shader->setInt("countLights", LightSourceId::getInstance()->getCount());
@@ -134,54 +130,35 @@ namespace gl_lib {
         context->shader->setFloat("pointLights[" + idAsText + "].quadratic", 0.032f);
     }
 
-    glm::vec3 LightSource::getColor() const {
+    glm::vec3 PointLight::getColor() const {
         return color;
     }
 
-    float LightSource::getStrength() const {
+    float PointLight::getStrength() const {
         return strength;
     }
 
-    void LightSource::setPosition(glm::vec3 value) {
+    void PointLight::setPosition(glm::vec3 value) {
         this->position = value;
     }
 
-    void LightSource::setColor(glm::vec3 value) {
+    void PointLight::setColor(glm::vec3 value) {
         this->color = value;
     }
 
-    glm::vec3 LightSource::getModelPosition() {
+    glm::vec3 PointLight::getModelPosition() {
         return position;
     }
 
-    glm::mat4 LightSource::getModelMatrix() {
+    glm::mat4 PointLight::getModelMatrix() {
         return glm::mat4(1.0f);
     }
 
-    glm::mat4 LightSource::getTransformMatrix() {
+    glm::mat4 PointLight::getTransformMatrix() {
         return glm::mat4(1.0f);
     }
 
-    int LightSourceId::createNew() {
-        latestId++;
-        count++;
-
-        return latestId;
+    glm::vec3 PointLight::getBackgroundColor() const {
+        return this->getStrength() * 0.05f * this->getColor();
     }
-
-    LightSourceId *LightSourceId::instance;
-
-    LightSourceId *LightSourceId::getInstance() {
-        if (LightSourceId::instance == nullptr) {
-            LightSourceId::instance = new LightSourceId();
-        }
-
-        return LightSourceId::instance;
-    }
-
-    unsigned int LightSourceId::getCount() const {
-        return count;
-    }
-
-    LightSourceId::LightSourceId() = default;
 }

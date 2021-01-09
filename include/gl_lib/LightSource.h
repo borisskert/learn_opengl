@@ -1,72 +1,21 @@
-#ifndef LEARN_OPENGL_LIGHTSOURCE_H
-#define LEARN_OPENGL_LIGHTSOURCE_H
-
+#ifndef LEARN_OPENGL_POINTLIGHT_H
+#define LEARN_OPENGL_POINTLIGHT_H
 
 #include "Drawable.h"
+#include "LightSourceId.h"
+
 
 namespace gl_lib {
 
-    class LightSourceId {
-    private:
-        static LightSourceId *instance;
-
-        int latestId = -1;
-        unsigned int count = 0;
-
-        LightSourceId();
-
-    public:
-        int createNew();
-
-        unsigned int getCount() const;
-
-        static LightSourceId *getInstance();
-    };
-
     class LightSource : public Drawable {
-    private:
-        glm::vec3 position;
-        glm::vec3 color;
-        float strength;
-        glm::vec3 scale;
-
-        const int id;
-
-    protected:
-        glm::vec3 getModelPosition() override;
-
-        glm::mat4 getModelMatrix() override;
-
-        glm::mat4 getTransformMatrix() override;
-
     public:
-        LightSource();
+        virtual void prepareLight(Context *) = 0;
 
-        LightSource(glm::vec3 position, glm::vec3 color, float strength, glm::vec3 scale);
+        virtual void renderLight(Context *) = 0;
 
-        void prepare(Context *) override;
-
-        void initialize(Context *) override;
-
-        void update(Context *) override;
-
-        void draw(Context *) override;
-
-        void prepareLight(Context *);
-
-        void renderLight(Context *);
-
-        void configureVertexArray() const;
-
-        glm::vec3 getColor() const;
-
-        float getStrength() const;
-
-        void setPosition(glm::vec3);
-
-        void setColor(glm::vec3);
+        virtual glm::vec3 getBackgroundColor() const = 0;
     };
 }
 
 
-#endif //LEARN_OPENGL_LIGHTSOURCE_H
+#endif //LEARN_OPENGL_POINTLIGHT_H

@@ -81,7 +81,8 @@ void OpenGl::processInput(GLFWwindow *window) {
 void OpenGl::clear() {
     glm::vec3 backgroundColor = glm::vec3(0.0f);
     for (LightSource *light : game->getLights()) {
-        backgroundColor += light->getStrength() * 0.05f * light->getColor();
+//        backgroundColor += light->getStrength() * 0.05f * light->getColor();
+        backgroundColor += light->getBackgroundColor();
     }
 
     glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, 1.0f);

@@ -9,6 +9,8 @@
 #include <gl_lib/Textured.h>
 #include <gl_lib/DiffuseAndSpecularTextured.h>
 #include <gl_lib/DiffuseTextured.h>
+#include <gl_lib/PointLight.h>
+#include <gl_lib/DirectionalLight.h>
 #include "MyGame.h"
 
 
@@ -238,7 +240,7 @@ std::vector<Drawable *> buildCubes(const std::string &assetsPath) {
 std::vector<LightSource *> createLights() {
     std::vector<LightSource *> lightSources;
 
-    LightSource *light = new LightSource(
+    LightSource *light = new PointLight(
             glm::vec3(0.0f),
             glm::vec3(1.0f, 0.9569, 0.5176),
             1.0f,
@@ -247,7 +249,7 @@ std::vector<LightSource *> createLights() {
 
     lightSources.push_back(light);
 
-    LightSource *light2 = new LightSource(
+    LightSource *light2 = new PointLight(
             glm::vec3(2.0f, 2.0f, 2.0f),
             glm::vec3(1.0f, 0.9569, 0.5176),
             1.0f,
@@ -256,7 +258,7 @@ std::vector<LightSource *> createLights() {
 
     lightSources.push_back(light2);
 
-    LightSource *light3 = new LightSource(
+    LightSource *light3 = new PointLight(
             glm::vec3(16.0f, 0.0f, -80.3f),
             glm::vec3(1.0f, 0.9569, 0.5176),
             1.0f,
@@ -265,13 +267,22 @@ std::vector<LightSource *> createLights() {
 
     lightSources.push_back(light3);
 
+    LightSource *directionalLight = new DirectionalLight(
+            glm::vec3(-1.0f, -2.0f, -.5f),
+            glm::vec3(0.1f),
+            glm::vec3(0.7f),
+            glm::vec3(1.0f)
+    );
+    lightSources.push_back(directionalLight);
+
     return lightSources;
 }
 
 
 MyGame::MyGame(const std::string &assetsPath)
         : objects(buildCubes(assetsPath)),
-          lights(createLights()) {}
+          lights(createLights()),
+          movedLight((PointLight *) lights[1]) {}
 
 
 std::vector<Drawable *> MyGame::getObjects() {
@@ -284,7 +295,7 @@ std::vector<LightSource *> MyGame::getLights() {
 }
 
 
-void updateRandomLight(LightSource *lightSource, const Watch *watch) {
+void updateRandomLight(PointLight *lightSource, const Watch *watch) {
     lightSource->setPosition(
             glm::vec3(5.0f * cos(watch->getCurrent() / 2), 5.0f * sin(watch->getCurrent() / 2), 0.0f));
 
@@ -298,5 +309,5 @@ void updateRandomLight(LightSource *lightSource, const Watch *watch) {
 
 
 void MyGame::update(const Watch *watch) {
-    updateRandomLight(lights[1], watch);
+    updateRandomLight(movedLight, watch);
 }

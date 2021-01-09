@@ -3,12 +3,15 @@
 
 
 #include <gl_lib/Game.h>
+#include <gl_lib/PointLight.h>
 
 
 class MyGame : public gl_lib::Game {
 private:
     std::vector<gl_lib::Drawable *> objects;
     std::vector<gl_lib::LightSource *> lights;
+
+    gl_lib::PointLight *movedLight;
 
 public:
     explicit MyGame(const std::string &assetsPath);
