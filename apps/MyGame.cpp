@@ -308,6 +308,33 @@ void updateRandomLight(PointLight *lightSource, const Watch *watch) {
 }
 
 
-void MyGame::update(const Watch *watch) {
+void MyGame::processInput(GLFWwindow *window) {
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+    else {
+        const float cameraSpeed = 2.0f * watch->getDelta();
+
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            camera->forward(cameraSpeed);
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            camera->backward(cameraSpeed);
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            camera->strafeLeft(cameraSpeed);
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            camera->strafeRight(cameraSpeed);
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+            camera->goUp(cameraSpeed);
+        if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+            camera->goDown(cameraSpeed);
+    }
+}
+
+void MyGame::initialize(const gl_lib::Watch *watch, gl_lib::Camera *camera) {
+    this->camera = camera;
+    this->watch = watch;
+}
+
+
+void MyGame::update() {
     updateRandomLight(movedLight, watch);
 }

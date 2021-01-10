@@ -68,12 +68,6 @@ namespace gl_lib {
 
         void initializeViewport(GLFWwindow *window);
 
-        /**
-         * process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-         * @param window pointer to the window object
-         */
-        void processInput(GLFWwindow *window);
-
         void clear();
 
         /**

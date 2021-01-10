@@ -56,32 +56,9 @@ void OpenGl::initializeViewport(GLFWwindow *window) {
 }
 
 
-void OpenGl::processInput(GLFWwindow *window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    else {
-        const float cameraSpeed = 2.0f * watch.getDelta();
-
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-            camera.forward(cameraSpeed);
-        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-            camera.backward(cameraSpeed);
-        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-            camera.strafeLeft(cameraSpeed);
-        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-            camera.strafeRight(cameraSpeed);
-        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-            camera.goUp(cameraSpeed);
-        if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
-            camera.goDown(cameraSpeed);
-    }
-}
-
-
 void OpenGl::clear() {
     glm::vec3 backgroundColor = glm::vec3(0.0f);
     for (LightSource *light : game->getLights()) {
-//        backgroundColor += light->getStrength() * 0.05f * light->getColor();
         backgroundColor += light->getBackgroundColor();
     }
 
@@ -133,15 +110,16 @@ void OpenGl::runEngine(
     ContextContainer contexts = createContext(game->getObjects());
     prepareContexts(contexts);
     initializeContexts(contexts);
+    game->initialize(&watch, &camera);
 
     while (!glfwWindowShouldClose(window)) {
         watch.startFrame();
 
-        processInput(window);
+        game->processInput(window);
+
+        game->update();
 
         clear();
-
-        game->update(&watch);
 
         draw(contexts);
 

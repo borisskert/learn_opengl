@@ -12,6 +12,8 @@ private:
     std::vector<gl_lib::LightSource *> lights;
 
     gl_lib::PointLight *movedLight;
+    gl_lib::Camera *camera;
+    const gl_lib::Watch *watch;
 
 public:
     explicit MyGame(const std::string &assetsPath);
@@ -20,7 +22,11 @@ public:
 
     std::vector<gl_lib::LightSource *> getLights() override;
 
-    void update(const gl_lib::Watch *) override;
+    void initialize(const gl_lib::Watch *, gl_lib::Camera *) override;
+
+    void processInput(GLFWwindow *window) override;
+
+    void update() override;
 };
 
 

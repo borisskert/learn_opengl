@@ -5,6 +5,7 @@
 #include <gl_lib/Drawable.h>
 #include <gl_lib/LightSource.h>
 #include <gl_lib/Watch.h>
+#include <gl_lib/Camera.h>
 
 
 namespace gl_lib {
@@ -14,7 +15,11 @@ namespace gl_lib {
 
         virtual std::vector<gl_lib::LightSource *> getLights() = 0;
 
-        virtual void update(const Watch *) = 0;
+        virtual void initialize(const Watch *, Camera *) = 0;
+
+        virtual void processInput(GLFWwindow *window) = 0;
+
+        virtual void update() = 0;
     };
 }
 
