@@ -11,6 +11,7 @@
 #include <gl_lib/DiffuseTextured.h>
 #include <gl_lib/PointLight.h>
 #include <gl_lib/DirectionalLight.h>
+#include <gl_lib/FlashLight.h>
 #include "MyGame.h"
 
 
@@ -332,6 +333,9 @@ void MyGame::processInput(GLFWwindow *window) {
 void MyGame::initialize(const gl_lib::Watch *watch, gl_lib::Camera *camera) {
     this->camera = camera;
     this->watch = watch;
+
+    LightSource *flashLight = new FlashLight(camera);
+    this->lights.push_back(flashLight);
 }
 
 

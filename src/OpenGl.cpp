@@ -4,6 +4,7 @@
 #include <utility>
 #include <gl_lib/ContextContainer.h>
 #include <gl_lib/LightSource.h>
+#include <gl_lib/FlashLight.h>
 
 
 using namespace gl_lib;
@@ -67,10 +68,10 @@ void OpenGl::clear() {
 }
 
 
-ContextContainer OpenGl::createContext(const std::vector<Drawable *> &drawables) {
+ContextContainer OpenGl::createContext() {
     ContextContainer contextContainer;
 
-    for (Drawable *drawable : drawables) {
+    for (Drawable *drawable : game->getObjects()) {
         Context context{};
 
         context.shader = new Shader();
@@ -106,11 +107,11 @@ void OpenGl::runEngine(
     mouseInputAdapter = new MouseInputAdapter(window);
     mouseInputAdapter->registerCallback(this);
 
+    game->initialize(&watch, &camera);
 
-    ContextContainer contexts = createContext(game->getObjects());
+    ContextContainer contexts = createContext();
     prepareContexts(contexts);
     initializeContexts(contexts);
-    game->initialize(&watch, &camera);
 
     while (!glfwWindowShouldClose(window)) {
         watch.startFrame();

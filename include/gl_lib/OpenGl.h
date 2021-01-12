@@ -33,7 +33,7 @@ namespace gl_lib {
 
         float fieldOfView = 45.0f;
 
-        ContextContainer createContext(const std::vector<Drawable *> &drawables);
+        ContextContainer createContext();
 
         Game *game;
 

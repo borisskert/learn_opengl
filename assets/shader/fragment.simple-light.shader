@@ -35,6 +35,21 @@ struct PointLight {
 uniform int countLights = 1;
 uniform PointLight pointLights[MAX_NR_POINT_LIGHTS];
 
+struct FlashLight {
+    vec3 position;
+    vec3 direction;
+    float cutOff;
+    float outerCutOff;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+
+    float constant;
+    float linear;
+    float quadratic;
+};
+uniform FlashLight flashlight;
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
@@ -42,6 +57,7 @@ vec3 CalcAmbientColor();
 vec3 CalcDiffuseColor();
 vec3 CalcSpecularColor();
 float CalcMaterialShininess();
+vec3 CalcSpotLight(FlashLight light, vec3 norm, vec3 FragPos, vec3 viewDir);
 
 
 vec3 CalcLight() {
@@ -58,6 +74,8 @@ vec3 CalcLight() {
     for (int i = 0; i < countLights; i++) {
         lightResult += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
     }
+
+    lightResult += CalcSpotLight(flashlight, norm, FragPos, viewDir);
 
     return lightResult;
 }
@@ -114,4 +132,42 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     specular *= attenuation;
 
     return (ambient + diffuse + specular);
+}
+
+
+vec3 CalcSpotLight(FlashLight light, vec3 norm, vec3 FragPos, vec3 viewDir) {
+    vec3 lightDir = normalize(light.position - FragPos);
+
+    // check if lighting is inside the spotlight cone
+    float theta = dot(lightDir, normalize(-light.direction));
+
+    if(theta > light.cutOff) // remember that we're working with angles as cosines instead of degrees so a '>' is used.
+    {
+        // ambient
+        vec3 ambient = light.ambient * CalcAmbientColor();
+
+        // diffuse
+        float diff = max(dot(norm, lightDir), 0.0);
+        vec3 diffuse = light.diffuse * diff * CalcDiffuseColor();
+
+        // specular
+        vec3 reflectDir = reflect(-lightDir, norm);
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), CalcMaterialShininess());
+        vec3 specular = light.specular * spec * CalcSpecularColor();
+
+        // attenuation
+        float distance    = length(light.position - FragPos);
+        float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+
+        // ambient  *= attenuation; // remove attenuation from ambient, as otherwise at large distances the light would be darker inside than outside the spotlight due the ambient term in the else branche
+        diffuse   *= attenuation;
+        specular *= attenuation;
+
+        return ambient + diffuse + specular;
+    }
+    else
+    {
+        // else, use ambient light so scene isn't completely dark outside the spotlight.
+        return vec3(0.0f);
+    }
 }
