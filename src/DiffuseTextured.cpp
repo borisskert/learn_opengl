@@ -2,7 +2,7 @@
 
 
 namespace gl_lib {
-    DiffuseTextured::DiffuseTextured(gl_lib::Drawable *drawable, Texture *texture)
+    DiffuseTextured::DiffuseTextured(gl_lib::Drawable *drawable, FileTexture *texture)
             : DrawableDecorator(drawable),
               texture(texture) {}
 

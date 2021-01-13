@@ -1,15 +1,15 @@
 #include <gl_lib/Image.h>
 #include <utility>
-#include "gl_lib/Texture.h"
+#include "gl_lib/FileTexture.h"
 #include "stb_image.h"
 
 
 namespace gl_lib {
 
-    Texture::Texture(std::string path) : path(std::move(path)) {}
+    FileTexture::FileTexture(std::string path) : path(std::move(path)) {}
 
 
-    void Texture::initialize() {
+    void FileTexture::initialize() {
         Image image = loadImage(this->path.c_str());
 
         this->id = createTexture();
@@ -36,7 +36,7 @@ namespace gl_lib {
     }
 
 
-    void Texture::bind() {
+    void FileTexture::bind() {
         glBindTexture(GL_TEXTURE_2D, this->id);
     }
 }

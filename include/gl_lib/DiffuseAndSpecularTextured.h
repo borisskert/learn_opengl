@@ -7,11 +7,11 @@
 namespace gl_lib {
     class DiffuseAndSpecularTextured : public DrawableDecorator {
     private:
-        Texture *diffuse;
-        Texture *specular;
+        FileTexture *diffuse;
+        FileTexture *specular;
 
     public:
-        explicit DiffuseAndSpecularTextured(Drawable *, Texture *diffuse, Texture *specular);
+        explicit DiffuseAndSpecularTextured(Drawable *, FileTexture *diffuse, FileTexture *specular);
 
         void prepare(Context *) override;
 

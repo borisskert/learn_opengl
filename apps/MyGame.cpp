@@ -1,4 +1,4 @@
-#include <gl_lib/Texture.h>
+#include <gl_lib/FileTexture.h>
 #include <gl_lib/Cube.h>
 #include <gl_lib/ModelAdapter.h>
 #include <gl_lib/SimpleColored.h>
@@ -96,8 +96,8 @@ Drawable *createStaticMonoColoredCube(glm::vec3 color, glm::vec3 position, float
 Drawable *createTexturedCube(
         glm::vec3 position,
         float angle,
-        Texture *first,
-        Texture *second
+        FileTexture *first,
+        FileTexture *second
 ) {
     Cube::Builder *cubeBuilder = Cube::builder()
             ->colorA(glm::vec3(0.0f, 0.0f, 1.0f))
@@ -130,7 +130,7 @@ Drawable *createTexturedCube(
 Drawable *createDiffuseTexturedCube(
         glm::vec3 position,
         float angle,
-        Texture *texture
+        FileTexture *texture
 ) {
     Cube::Builder *cubeBuilder = Cube::builder()
             ->color(glm::vec3(1.0f));
@@ -156,8 +156,8 @@ Drawable *createDiffuseTexturedCube(
 Drawable *createDiffuseAndSpecularTexturedCube(
         glm::vec3 position,
         float angle,
-        Texture *diffuse,
-        Texture *specular
+        FileTexture *diffuse,
+        FileTexture *specular
 ) {
     Cube::Builder *cubeBuilder = Cube::builder()
             ->color(glm::vec3(1.0f));
@@ -194,11 +194,11 @@ Drawable *createDiffuseAndSpecularTexturedCube(
 std::vector<Drawable *> buildCubes(const std::string &assetsPath) {
     std::vector<Drawable *> models;
 
-    auto *containerTexture = new Texture(assetsPath + std::string("/textures/container.jpg"));
-    auto *awesomefaceTexture = new Texture(assetsPath + std::string("/textures/awesomeface.png"));
-    auto *wallTexture = new Texture(assetsPath + std::string("/textures/wall.jpg"));
-    auto *diffuseTexture = new Texture(assetsPath + std::string("/textures/container2.png"));
-    auto *specularTexture = new Texture(assetsPath + std::string("/textures/container2_specular.png"));
+    auto *containerTexture = new FileTexture(assetsPath + std::string("/textures/container.jpg"));
+    auto *awesomefaceTexture = new FileTexture(assetsPath + std::string("/textures/awesomeface.png"));
+    auto *wallTexture = new FileTexture(assetsPath + std::string("/textures/wall.jpg"));
+    auto *diffuseTexture = new FileTexture(assetsPath + std::string("/textures/container2.png"));
+    auto *specularTexture = new FileTexture(assetsPath + std::string("/textures/container2_specular.png"));
 
     models.push_back(createTexturedCube(glm::vec3(3.0f), 3.0f, containerTexture, awesomefaceTexture));
 

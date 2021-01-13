@@ -2,7 +2,7 @@
 #define LEARN_OPENGL_TEXTURED_H
 
 
-#include "Texture.h"
+#include "FileTexture.h"
 #include "DrawableDecorator.h"
 #include <vector>
 
@@ -14,12 +14,12 @@ namespace gl_lib {
      */
     class Textured : public DrawableDecorator {
     private:
-        std::vector<Texture *> textures;
+        std::vector<FileTexture *> textures;
 
     public:
         explicit Textured(Drawable *);
 
-        void addTexture(Texture *);
+        void addTexture(FileTexture *);
 
         void prepare(Context *) override;
 

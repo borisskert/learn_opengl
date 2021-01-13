@@ -1,18 +1,18 @@
-#ifndef LEARN_OPENGL_TEXTURE_H
-#define LEARN_OPENGL_TEXTURE_H
+#ifndef LEARN_OPENGL_FILETEXTURE_H
+#define LEARN_OPENGL_FILETEXTURE_H
 
 #include <gl_lib/gl_lib.h>
 
 
 namespace gl_lib {
 
-    class Texture {
+    class FileTexture {
     private:
         textureId id;
         const std::string path;
 
     public:
-        explicit Texture(std::string path);
+        explicit FileTexture(std::string path);
 
         void initialize();
 
@@ -22,4 +22,4 @@ namespace gl_lib {
 }
 
 
-#endif //LEARN_OPENGL_TEXTURE_H
+#endif //LEARN_OPENGL_FILETEXTURE_H

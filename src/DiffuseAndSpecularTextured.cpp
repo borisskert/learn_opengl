@@ -1,13 +1,13 @@
 #include <gl_lib/Drawable.h>
-#include <gl_lib/Texture.h>
+#include <gl_lib/FileTexture.h>
 #include "gl_lib/DiffuseAndSpecularTextured.h"
 
 
 namespace gl_lib {
     DiffuseAndSpecularTextured::DiffuseAndSpecularTextured(
             gl_lib::Drawable *drawable,
-            Texture *diffuse,
-            Texture *specular
+            FileTexture *diffuse,
+            FileTexture *specular
     )
             : DrawableDecorator(drawable),
               diffuse(diffuse),

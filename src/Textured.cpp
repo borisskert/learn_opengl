@@ -5,7 +5,7 @@ namespace gl_lib {
     Textured::Textured(gl_lib::Drawable *drawable) : DrawableDecorator(drawable) {}
 
 
-    void Textured::addTexture(gl_lib::Texture *texture) {
+    void Textured::addTexture(gl_lib::FileTexture *texture) {
         this->textures.push_back(texture);
     }
 
@@ -20,7 +20,7 @@ namespace gl_lib {
     void Textured::initialize(Context *context) {
         this->decorated->initialize(context);
 
-        for (Texture *texture : textures) {
+        for (FileTexture *texture : textures) {
             texture->initialize();
         }
 
@@ -42,7 +42,7 @@ namespace gl_lib {
 
     void Textured::draw(Context *context) {
         for (int index = 0; index < this->textures.size(); index++) {
-            Texture *texture = this->textures[index];
+            FileTexture *texture = this->textures[index];
 
             glActiveTexture(GL_TEXTURE0 + index);
             texture->bind();

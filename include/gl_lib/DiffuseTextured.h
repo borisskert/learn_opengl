@@ -3,16 +3,16 @@
 
 
 #include "DrawableDecorator.h"
-#include "Texture.h"
+#include "FileTexture.h"
 
 namespace gl_lib {
 
     class DiffuseTextured : public DrawableDecorator {
     private:
-        Texture *texture;
+        FileTexture *texture;
 
     public:
-        explicit DiffuseTextured(Drawable *, Texture *);
+        explicit DiffuseTextured(Drawable *, FileTexture *);
 
         void prepare(Context *) override;
 

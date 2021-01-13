@@ -4,7 +4,7 @@
 #include <vector>
 #include "glm/glm.hpp"
 #include "Model.h"
-#include "Texture.h"
+#include "FileTexture.h"
 
 
 namespace gl_lib {
@@ -66,7 +66,7 @@ namespace gl_lib {
 
         Triangle::Builder *color(glm::vec3);
 
-        Triangle::Builder *addTexture(Texture *texture);
+        Triangle::Builder *addTexture(FileTexture *texture);
 
         Triangle build();
     };
