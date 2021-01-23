@@ -20,4 +20,4 @@ RUN apt-get install -y python3 \
 COPY . /usr/local/src
 WORKDIR /usr/local/src/out
 
-RUN cmake .. && make && ./tests/test_gl_lib
+RUN cmake .. -DASSIMP_BUILD_TESTS=OFF && make && ./tests/test_gl_lib

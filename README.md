@@ -2,6 +2,10 @@
 
 ## Build
 
+### CMake
+
+Run CMake with `-DASSIMP_BUILD_TESTS=OFF` variable.
+
 ### Windows
 
 ```shell script
@@ -13,4 +17,3 @@ cmake --build . --config Release
 cd apps
 cmake --install .
 ```
-

@@ -18,7 +18,6 @@ endif()
 add_subdirectory(extern/glfw)
 add_subdirectory(extern/glad)
 add_subdirectory(extern/glm)
-set(ASSIMP_BUILD_TESTS OFF)
 add_subdirectory(extern/assimp)
 
 add_subdirectory(src)
